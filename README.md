@@ -9,4 +9,4 @@ Group Members:
 - Baisalbek Urustanbekov
 - Shannon Weston
 
-Link to group-names.txt: ![](https://github.com/sriharikuduva/checkin1/blob/master/group-names.txt) 
+Link to group-names.txt: ![here](https://github.com/sriharikuduva/checkin1/blob/master/group-names.txt) 
