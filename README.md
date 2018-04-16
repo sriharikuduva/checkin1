@@ -1,6 +1,5 @@
 # README FILE
 ## TCSS 360 Group 5
-### File Contains contents for checkin1 assignment.
 ### Group Members:
 - Hari G Kuduva
 - Maurice Chiu
