@@ -14,3 +14,5 @@
 [Link to Group Minutes](https://docs.google.com/document/d/1AW1vr8lJPKLV0_aBfhnQxpRyoLTxvaZr859NZHW2Wko/edit)
 
 [Link to Group Task Matrix](https://docs.google.com/spreadsheets/d/1yuhCj5pR-rDOueMGsau_kcCr1FG8CLg-wd5gr36mmhM/edit#gid=0)
+
+[Link to checkin2](https://github.com/sriharikuduva/checkin1/blob/master/CheckIn2/checkin2.pdf)
