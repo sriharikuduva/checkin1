@@ -2,14 +2,14 @@ import java.util.*;
 import java.time.Clock;
 
 public class Auction {
-    private String Organization;
+    private String organization;
     private ArrayList<Items> items;
     private Clock startClock;
     private Clock endClock;
     
-    public Auction(String organization, Clock startClock) {
-        organization = organization;
-        startClock = startClock;
-        endClock = endClock;
+    public Auction(String organization, Clock startClock, Clock endClock) {
+        this.organization = organization;
+        this.startClock = startClock;
+        this.endClock = endClock;
     }
 }

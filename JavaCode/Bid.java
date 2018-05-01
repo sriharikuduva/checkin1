@@ -5,7 +5,7 @@ public class Bid {
     private String itemName;
     private int amount;
 
-    public Bid(String biddername, String itemName, int amount) {
+    public Bid(String bidderName, String itemName, int amount) {
         this.bidderName = bidderName;
         this.itemName = itemName;
         this.amount = amount;
