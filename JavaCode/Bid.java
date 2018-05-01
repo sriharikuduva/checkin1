@@ -4,22 +4,22 @@ public class Bid {
     private String bidderName;
     private String itemName;
     private int amount;
-    
+
     public Bid(String biddername, String itemName, int amount) {
-        bidderName = bidderName;
-        itemName = itemName;
-        amount = amount;
+        this.bidderName = bidderName;
+        this.itemName = itemName;
+        this.amount = amount;
     }
     
     public String getBidder(){
-        return bidderName;
+        return this.bidderName;
     }
     
     public String getItem() {
-        return itemName;
+        return this.itemName;
     }
     
     public int getAmount() {
-        return amount;
+        return this.aount;
     }
 }
