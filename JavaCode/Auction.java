@@ -12,3 +12,4 @@ public class Auction {
         startClock = startClock;
         endClock = endClock;
     }
+}
