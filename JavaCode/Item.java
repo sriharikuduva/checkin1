@@ -19,3 +19,8 @@ public class Item {
     public void addBid(Bid bid) {
         bids.add(bid);
     }
+    
+    public String getName() {
+        return this.name;
+    }
+}
