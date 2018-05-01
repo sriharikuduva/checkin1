@@ -35,7 +35,9 @@ public class Bidder {
 //          item.addBid(Name, amount);
 //      }
     
-        bids.add(new Bid(item, amount));
+        bid = new Bid(this.name, item.getName(), amount);
+        item.addBid(bid);
+        bids.add(bid);
     }
  
     public ArrayList<Bid> getBids() {
