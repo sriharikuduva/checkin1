@@ -20,6 +20,6 @@ public class Bid {
     }
     
     public int getAmount() {
-        return this.aount;
+        return this.amount;
     }
 }
