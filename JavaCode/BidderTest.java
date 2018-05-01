@@ -13,7 +13,7 @@ public class BidderTest {
     }
     @Test
     public void placeBid_bidIsAtLeastEqualToMinimumBidForItem_True() {
-        bidder.placeBid(amountAtLeastEqualToMinimum, item)
+        bidder.placeBid(amountAtLeastEqualToMinimum, item);
         assertTrue(bidder.getBids().size() == 1);
     }
 }
