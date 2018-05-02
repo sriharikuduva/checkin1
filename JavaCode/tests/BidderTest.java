@@ -1,7 +1,6 @@
 import org.junit.Before;
 import org.junit.Test;
 import java.time.Clock;
-
 import java.time.Clock;
 import java.time.LocalDateTime;
 
