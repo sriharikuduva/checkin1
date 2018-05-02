@@ -26,7 +26,7 @@ public class Bidder {
     public void placeBid(final int amount, final Item item) {
         //(in UI) UI should check if amount is valid before placeBid() is called.
         /*if(amount >= item.getMinimumBid()) {
-            item.addBid(Name, amount);
+            item.addBid(Name, amount) ;
         }*/
     
         Bid bid = new Bid(this.name, item.getName(), amount);
