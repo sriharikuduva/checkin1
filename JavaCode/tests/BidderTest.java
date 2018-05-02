@@ -35,7 +35,7 @@ public class BidderTest {
     @Test
     public void placeBidAuction_DayBeforeAuctionStarts_PASS() {
         Auction auctionOneDayStartingFromNow = new Auction("Boys and Girls Club",
-                this.auctionStartDate.plusDays(1), this.auctionEndDate);
+                this.auctionStartDate.plusDays(1), this.auctionEndDate.plusDays(1));
         this.bidder.placeBidAuction(this.averageBidAmount, auctionOneDayStartingFromNow, item);
         assertTrue(this.bidder.getBids().size() == 1);
     }
@@ -53,7 +53,7 @@ public class BidderTest {
     @Test
     public void placeBidAuction_AfterAuctionEndDate_FAIL() {
         Auction auctionEndDateOneDayBeforeNow = new Auction("American Cancer Society",
-                this.auctionStartDate.minusDays(2), this.auctionEndDate.minusDays(1));
+                this.auctionStartDate.minusDays(2), this.auctionEndDate.minusDays(2));
         this.bidder.placeBidAuction(this.averageBidAmount, auctionEndDateOneDayBeforeNow, item);
         assertTrue(this.bidder.getBids().size() == 0);
     }
