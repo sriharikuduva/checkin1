@@ -9,11 +9,12 @@ public class Item {
     private ArrayList<Bid> bids;
     
     public Item(String name, int quantity, int startingPrice, String description, String imagePath) {
-        name = name;
-        quantity = quantity;
-        startingPrice = startingPrice;
-        description = description;
-        imagePath = imagePath;
+        this.name = name;
+        this.quantity = quantity;
+        this.startingPrice = startingPrice;
+        this.description = description;
+        this.imagePath = imagePath;
+        this.bids = new ArrayList<>();
     }
 
     public void addBid(Bid bid) {

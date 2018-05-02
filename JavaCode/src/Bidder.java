@@ -31,10 +31,10 @@ public class Bidder {
     
         Bid bid = new Bid(this.name, item.getName(), amount);
         item.addBid(bid);
-        bids.add(bid);
+        this.bids.add(bid);
     }
  
     public ArrayList<Bid> getBids() {
-        return bids;
+        return this.bids;
     }
 }

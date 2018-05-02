@@ -21,6 +21,6 @@ public class BidderTest {
     @Test
     public void placeBid_bidIsAtLeastEqualToMinimumBidForItem_True() {
         this.bidder.placeBid(amountAtLeastEqualToMinimum, item);
-        assertTrue(bidder.getBids().size() == 1);
+        assertTrue(this.bidder.getBids().size() == 1);
     }
 }
