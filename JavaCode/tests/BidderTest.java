@@ -18,13 +18,7 @@ public class BidderTest {
         this.auctionEndDate = this.auctionStartDate.plusDays(1);
     }
 
-    /*No bids can be placed on or after 12:00am on the starting date of the auction
-                (date and time is in the local time zone for the auction).
-        -Bidder wants to change bid the day before an auction PASS
-        -Bidder wants to place bid on the auction date FAIL
-        -Bidder wants to place bid the day after an auction ends FAIL */
-
-    //5b, Test1
+    //Hari Kuduva
     @Test
     public void isBidPlaceable_DayBeforeAuctionStarts_PASS() {
         Auction auctionOneDayStartingFromNow = new Auction("Boys and Girls Club",
@@ -32,7 +26,7 @@ public class BidderTest {
         assertTrue(this.bidder.isBidPlaceable(auctionOneDayStartingFromNow));
     }
 
-    //5b, Test2
+    //Hari Kuduva
     @Test
     public void isBidPlaceable_SameDayAsAuctionStartDate_FAIL() {
         Auction auctionSameDayFromNow = new Auction("American Red Cross",
@@ -40,7 +34,7 @@ public class BidderTest {
         assertFalse(this.bidder.isBidPlaceable(auctionSameDayFromNow));
     }
 
-    //5b, Test3
+    //Hari Kuduva
     @Test
     public void isBidPlaceable_AfterAuctionEndDate_FAIL() {
         Auction auctionEndDateOneDayBeforeNow = new Auction("American Cancer Society",
