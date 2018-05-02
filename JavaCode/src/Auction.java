@@ -1,9 +1,10 @@
 import java.util.*;
 import java.time.Clock;
 
+
 public class Auction {
     private String organization;
-    private ArrayList<Items> items;
+    private ArrayList<Item> items;
     private Clock startClock;
     private Clock endClock;
     

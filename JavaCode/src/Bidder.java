@@ -9,13 +9,6 @@ public class Bidder {
     private ArrayList<Bid> bids;
     private int balance;
   
-  //item class
-    //minimum bid
-  //bid class
-    //amount 
-    //item
-  
-  
   //constructor
     public Bidder(final String name,final String email, final String username,
            final String address, final String phoneNumber, final int balance) {
