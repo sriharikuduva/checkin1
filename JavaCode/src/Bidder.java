@@ -23,6 +23,7 @@ public class Bidder {
     }
 
     public boolean isBidPlaceable(final Auction auction) {
+        //When method is invoked,
         return (LocalDateTime.now().compareTo(auction.getStartDate()) < 0); // only pass condition
     }
  
