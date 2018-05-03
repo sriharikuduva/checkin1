@@ -6,7 +6,7 @@ public class Auction {
     private ArrayList<Item> items;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    
+
     public Auction(String organization, LocalDateTime startClock, LocalDateTime endClock) {
         this.organization = organization;
         this.startDate = startClock;
