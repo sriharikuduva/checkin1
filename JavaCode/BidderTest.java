@@ -1,6 +1,9 @@
+import static org.junit.Assert.*;
 import java.util.*;
-import org.junit.*;
-import Bidder.java;
+import org.junit.Before;
+import org.junit.Test;
+
+//import static org.junit.Assert.*;
 
 public class BidderTest {
     private Bidder bidder;
@@ -17,7 +20,7 @@ public class BidderTest {
         item = new Item("Sweater", 1, 50, "Blue Polka Dot Knit Sweater", "Path/To/File.jpg");
         amountEqualToMinimum = 50;
         amountGreaterThanMinimum = 55;
-	amountLessThanMinimum = 49; 
+        amountLessThanMinimum = 49; 
     }
 
     //Group
