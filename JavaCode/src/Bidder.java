@@ -30,7 +30,7 @@ public class Bidder {
 
     //Hari Kuduva
     public boolean isBidPlaceable(final Auction auction) {
-        //When method is invoked,
+        //When method is invoked, Bid is attempting to be placed NOW
         return (LocalDateTime.now().compareTo(auction.getStartDate()) < 0); // only pass condition
     }
      
