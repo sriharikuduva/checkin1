@@ -39,10 +39,9 @@ public class UI_Starter {
     }
 
     private static void verifyAndLaunchSpecificUser(boolean isNonProfit, String username) {
-        boolean toSend = false;
         if (isNonProfit && dataControl.isNonProfitValid(username)) {
-            new NPConsole(dataControl.getNPByUsername(username), dataControl).invokeMenu();
-        } else if (dataControl.isBidderValid(username)) {
+            new NPConsole(dataControl.getNPContactByUsername(username), dataControl).invokeMenu();
+        } else if (!isNonProfit && dataControl.isBidderValid(username)) {
             new BidderConsole(dataControl.getBidderByUsername(username), dataControl).invokeMenu();
         } else {
             stringBuilder.append("\nYou have entered an invalid login credential... terminating.");

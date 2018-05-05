@@ -1,16 +1,13 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.*;
 public class DataControlCenter {
 
     private HashSet<Bidder> masterBidderList;
-    private File file;
+    private HashSet<NPContact> masterNPContactList;
     private Scanner inputScanner;
 
     public DataControlCenter() {
-        this.file = null;
         this.masterBidderList = getBidderList();
+        this.masterNPContactList = getNPContactList();
     }
 
     private HashSet<Bidder> getBidderList() {
@@ -26,6 +23,18 @@ public class DataControlCenter {
         return toSend;
     }
 
+    private HashSet<NPContact> getNPContactList() {
+        HashSet<NPContact> toSend = new HashSet<>();
+        this.inputScanner = new Scanner(getClass()
+                .getResourceAsStream("masterNPContactList.txt"));
+        while (this.inputScanner.hasNextLine()) {
+            String parts[] = this.inputScanner.nextLine().split(",");
+            this.cleanParts(parts);
+            toSend.add(new NPContact(parts[0], parts[1], parts[2], parts[3], parts[4]));
+        }
+        return toSend;
+    }
+
 
     private void cleanParts(String parts[]) {
         for (int i = 0; i < parts.length; i++) {
@@ -35,7 +44,6 @@ public class DataControlCenter {
 
     public boolean isBidderValid(String username) {
         for (Bidder bidder : this.masterBidderList) {
-            String bidderUserName = bidder.getUsername();
             if (bidder.getUsername().equals(username)) {
                 return true;
             }
@@ -44,6 +52,11 @@ public class DataControlCenter {
     }
 
     public boolean isNonProfitValid(String username) {
+        for (NPContact contact : this.masterNPContactList) {
+            if (contact.getUsername().equals(username)) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -56,14 +69,48 @@ public class DataControlCenter {
         return null;
     }
 
-    public NPContact getNPByUsername(String username) {
+    public NPContact getNPContactByUsername(String username) {
+        for (NPContact contact : this.masterNPContactList) {
+            if (contact.getUsername().equals(username)) {
+                return contact;
+            }
+        }
         return null;
     }
 
     public HashSet<Auction> getAuctionsCurrBidderHasBids(Bidder currBidder) {
         HashSet<Auction> toSend = new HashSet<>();
         //TODO: return a Set of auctions that the bidder has bids in
-        System.out.println("** NEEDS IMPLEMENTATION **");
+        System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
+        return toSend;
+    }
+
+    public HashSet<Item> getItemsCurrBidderHasBidsOnInAnAuction(Bidder currBidder, Auction specifc) {
+        HashSet<Item> toSend = new HashSet<>();
+        //TODO: return a Set of Items the Bidder has bids on in the specific Auction
+        System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
+        return toSend;
+    }
+
+    public HashSet<Auction> getAuctionsCurrBidderCanBidOn(Bidder currBidder) {
+        HashSet<Auction> toSend = new HashSet<>();
+        //TODO: return a Set of Auctions currBidder can place bids on
+        System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
+        return toSend;
+    }
+
+    public void makeBid (Auction auction, Bidder currBidder) {
+        System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
+        //TODO: make bid if placebale
+        /* Implementation could look something like this??? */
+            //currBidder.isBidPlaceable(auction);
+            //currBidder.placeBid(new Bid(...));
+    }
+
+    public HashSet<Auction> getSubmittedAuctionsByNPContact(NPContact currContact) {
+        HashSet<Auction> toSend = new HashSet<>();
+        //TODO: return auctions submitted by currContact
+        System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
         return toSend;
     }
 }

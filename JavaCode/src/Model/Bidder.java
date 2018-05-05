@@ -46,11 +46,8 @@ public class Bidder {
 
     @Override
     public String toString() {
+        //For debugging
         return name + "\n" + email + "\n" + username + "\n" + address + "\n" + phoneNumber + "\n" + balance;
-        //return to
-
-
-        //return toSend;
     }
 
     public String getUsername() {

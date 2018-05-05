@@ -1,4 +1,4 @@
-Hari Kuduva, hk@uw.edu, harikuduva, 123 Elm Street, 4251234561, 1000
-Baisal U, bu@uw.edu, baisalu, 123 Elm Street, 4251234561, 1000
-Shannon Weston, sw@uw.edu, shannonweston, 123 Elm Street, 4251234561, 1000
-Maurice Chui, mc@uw.edu, mauricechui, 123 Elm Street, 4251234561, 1000
+Hari Kuduva, hk@uw.edu, harikuduva, 123 Elm Street, 4251234567, 1000
+Baisal U, bu@uw.edu, baisalu, 124 Elm Street, 4251234568, 1000
+Shannon Weston, sw@uw.edu, shannonweston, 125 Elm Street, 4251234569, 1000
+Maurice Chui, mc@uw.edu, mauricechui, 126 Elm Street, 4251234561, 1000
