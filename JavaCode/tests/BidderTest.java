@@ -30,7 +30,6 @@ public class BidderTest {
         //Group
         this.bidder = new Bidder("John Smith", "john@uw.edu", "john@uw.edu",
                 "123 Elm Street, Tacoma, WA", "2061234567", 10000);
-        
         //Hari Kuduva
         this.auctionStartDate = LocalDateTime.now();
         this.auctionEndDate = this.auctionStartDate.plusDays(1);

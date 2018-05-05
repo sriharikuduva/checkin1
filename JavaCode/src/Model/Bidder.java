@@ -30,7 +30,7 @@ public class Bidder {
 
     //Hari Kuduva
     public boolean isBidPlaceable(final Auction auction) {
-        //When method is invoked, Bid is attempting to be placed NOW
+        //When method is invoked, Model.Bid is attempting to be placed NOW
         return (LocalDateTime.now().compareTo(auction.getStartDate()) < 0); // only pass condition
     }
 
@@ -42,5 +42,18 @@ public class Bidder {
     //Group
     public ArrayList<Bid> getBids() {
         return this.bids;
+    }
+
+    @Override
+    public String toString() {
+        return name + "\n" + email + "\n" + username + "\n" + address + "\n" + phoneNumber + "\n" + balance;
+        //return to
+
+
+        //return toSend;
+    }
+
+    public String getUsername() {
+        return this.username;
     }
 }
