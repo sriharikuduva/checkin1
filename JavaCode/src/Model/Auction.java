@@ -14,6 +14,10 @@ public class Auction {
         this.items = new ArrayList<>();
     }
 
+    public Auction () {
+
+    }
+
     public LocalDateTime getStartDate() {
         return this.startDate;
     }

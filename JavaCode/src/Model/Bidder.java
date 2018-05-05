@@ -22,7 +22,7 @@ public class Bidder {
          this.balance = balance;
          this.bids = new ArrayList<Bid>();
     }
-    
+
     //Shannon Weston
     public String getName() {
         return this.name;
@@ -30,10 +30,10 @@ public class Bidder {
 
     //Hari Kuduva
     public boolean isBidPlaceable(final Auction auction) {
-        //When method is invoked,
+        //When method is invoked, Model.Bid is attempting to be placed NOW
         return (LocalDateTime.now().compareTo(auction.getStartDate()) < 0); // only pass condition
     }
-     
+
     //Shannon Weston
     public boolean isBidPlaceable(final Item item, final Bid bid) {
         return (item.getCurrentBid() <= bid.getAmount());
@@ -42,5 +42,15 @@ public class Bidder {
     //Group
     public ArrayList<Bid> getBids() {
         return this.bids;
+    }
+
+    @Override
+    public String toString() {
+        //For debugging
+        return name + "\n" + email + "\n" + username + "\n" + address + "\n" + phoneNumber + "\n" + balance;
+    }
+
+    public String getUsername() {
+        return this.username;
     }
 }
