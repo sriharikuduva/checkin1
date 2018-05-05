@@ -35,6 +35,7 @@ public class DataControlCenter {
 
     public boolean isBidderValid(String username) {
         for (Bidder bidder : this.masterBidderList) {
+            String bidderUserName = bidder.getUsername();
             if (bidder.getUsername().equals(username)) {
                 return true;
             }
@@ -46,4 +47,23 @@ public class DataControlCenter {
         return false;
     }
 
+    public Bidder getBidderByUsername(String username) {
+        for (Bidder bidder : this.masterBidderList) {
+            if (bidder.getUsername().equals(username)) {
+                return bidder;
+            }
+        }
+        return null;
+    }
+
+    public NPContact getNPByUsername(String username) {
+        return null;
+    }
+
+    public HashSet<Auction> getAuctionsCurrBidderHasBids(Bidder currBidder) {
+        HashSet<Auction> toSend = new HashSet<>();
+        //TODO: return a Set of auctions that the bidder has bids in
+        System.out.println("** NEEDS IMPLEMENTATION **");
+        return toSend;
+    }
 }
