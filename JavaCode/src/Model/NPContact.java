@@ -1,29 +1,18 @@
 import java.util.Arrays;
 
-public class NPContact {
+public class NPContact extends User{
 
     private String orgName;
-    private String email;
-    private String username;
-    private String address;
-    private String phoneNum;
-
 
     public NPContact(String orgName, String email,
-                     String username, String address, String phoneNum) {
+                     String username, String address, String phoneNumber) {
 
+    		super(email, username, address, phoneNumber);
         this.orgName = orgName;
-        this.email = email;
-        this.username = username;
-        this.address = address;
-        this.phoneNum = phoneNum;
-
-
-
     }
 
     public String getUsername() {
-        return this.username;
+        return super.username;
     }
 
     public String getName() {
