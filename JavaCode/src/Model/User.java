@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.HashSet;
 
 
 /**
@@ -18,7 +17,7 @@ public class User {
 	protected String phoneNumber;
 	
 	/** Contains all the auction that the bidder has placed bids in. */
-	protected HashSet<Auction> auctions;
+	protected ArrayList<Auction> auctions;
 	
 
   //constructor - Group
@@ -29,7 +28,7 @@ public class User {
          this.username = username;
          this.address = address;
          this.phoneNumber = phoneNumber;
-         this.auctions = new HashSet<>();
+         this.auctions = new ArrayList<>();
     }
 
 }
