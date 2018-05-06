@@ -30,7 +30,7 @@ public class NPConsole {
         this.sb.append("\ta) View all submitted auction requests\n");
         this.sb.append("\tb) Submit an auction request\n");
         this.sb.append("\n\tx) Logout and Terminate\n");
-        this.sb.append("Please enter your option letter (and press ENTER): ");
+        this.sb.append("\nPlease enter your option letter (and press ENTER): ");
         System.out.print(this.sb);
         this.sb.setLength(0);
     }

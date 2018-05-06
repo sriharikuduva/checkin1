@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
 
-public class Bidder extends User {
+public class Bidder extends User implements Serializable {
     //Group
     private ArrayList<Bid> bids;
     private String name;
