@@ -1,5 +1,14 @@
 import java.util.*;
 
+/**
+ * Contains all the information about an item.
+ * 
+ * @author HariKuduva
+ * @author ShannonWeston
+ * @author BaisalUrustanbekov
+ * @author MauriceChiu
+ * @version 
+ */
 public class Item {
     //Group
     private String name;

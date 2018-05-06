@@ -2,13 +2,27 @@ import static org.junit.Assert.assertArrayEquals;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Scanner;
 
+import javax.naming.AuthenticationNotSupportedException;
 import javax.naming.ldap.PagedResultsControl;
 
-public class BidderConsole {
+import com.sun.imageio.plugins.common.SubImageInputStream;
 
+
+/**
+ * User interface for user logged in as bidders.
+ * 
+ * @author HariKuduva
+ * @author ShannonWeston
+ * @author BaisalUrustanbekov
+ * @author MauriceChiu
+ * @version 
+ */
+public class BidderConsole {
     private Bidder currBidder;
     private DataControlCenter dataControl;
     private StringBuilder sb;
@@ -31,14 +45,35 @@ public class BidderConsole {
         
         //Populate bidder's inventory
         String fileName = currBidder.getName();
+        
         this.inputScanner = new Scanner(getClass()
         		.getResourceAsStream(fileName + ".txt"));
+        
+        String parts[] = this.inputScanner.nextLine().split(",");
+		this.cleanParts(parts);
+		
+        Auction auctionToAdd = new Auction(parts[0], LocalDateTime.parse(parts[1], formatter), LocalDateTime.parse(parts[2], formatter));
+		Item itemToAdd = new Item(parts[3], Integer.parseInt(parts[4].trim()), Integer.parseInt(parts[5].trim()), parts[6], parts[7]);
+		auctionToAdd.items.add(itemToAdd);
+		String orgName = auctionToAdd.getOrganization();
+						
         	while (this.inputScanner.hasNextLine()) {
-        		String parts[] = this.inputScanner.nextLine().split(",");
+        		parts = this.inputScanner.nextLine().split(",");
         		this.cleanParts(parts);
-        		Auction auctionToAdd = new Auction(parts[0], LocalDateTime.parse(parts[1], formatter), LocalDateTime.parse(parts[2], formatter));
-        		Item itemToAdd = new Item(parts[3], Integer.parseInt(parts[4].trim()), Integer.parseInt(parts[5].trim()), parts[6], parts[7]);
-        		auctionToAdd.items.add(itemToAdd);
+        		
+        		if (orgName == parts[0]) {
+        			itemToAdd = new Item(parts[3], Integer.parseInt(parts[4].trim()), Integer.parseInt(parts[5].trim()), parts[6], parts[7]);
+        			auctionToAdd.items.add(itemToAdd);
+        		} else {
+        			auctionToAdd = new Auction(parts[0], LocalDateTime.parse(parts[1], formatter), LocalDateTime.parse(parts[2], formatter));
+        			itemToAdd = new Item(parts[3], Integer.parseInt(parts[4].trim()), Integer.parseInt(parts[5].trim()), parts[6], parts[7]);
+        			auctionToAdd.items.add(itemToAdd);
+        			orgName = auctionToAdd.getOrganization();	
+        		}
+//        		System.out.println(orgName);
+//        		for (Item itm : auctionToAdd.items) {
+//        			System.out.println(itm.getName());
+//        		}
         		currBidder.auctions.add(auctionToAdd);
         	}
         
@@ -64,7 +99,6 @@ public class BidderConsole {
         		this.sb.append("\tb) View Items I Have Placed Bids On (In An Auction)\n");
         		this.sb.append("\tc) View Items I Have Placed Bids On (In All Auctions)\n");
         }
-        //if ()
         this.sb.append("\td) View Auctions I Can Place Bids On\n");
         this.sb.append("\te) Bid For An Item In An Auction\n\n");
         this.sb.append("\tx) Logout and Terminate\n");
@@ -98,24 +132,56 @@ public class BidderConsole {
     private void choiceLogic(Character choice) {
         if (choice == 'a') {
             /** View Auctions I Have Placed Bids On **/
-            HashSet<Auction> result =
-                    this.dataControl.getAuctionsCurrBidderHasBids(currBidder);
+            //HashSet<Auction> result =
+            //        this.dataControl.getAuctionsCurrBidderHasBids(currBidder);
             //TODO: Go to this.dataControl.getAuctionsCurrBidderHasBids(currBidder) and implement logic
             //TODO: Display result to user
+        		StringBuilder sb = new StringBuilder();
+            //char option = 'a';
+        		int i = 1;
+            for (Auction auc : currBidder.auctions) {
+            		sb.append("\t" + i + ". ");
+            		sb.append(auc.getOrganization());
+            		sb.append("\n");
+            		//option++;
+            		i++;
+            }
+            System.out.print(sb);
+            
             this.revert();
         } else if (choice == 'b') {
             /** View Items I Have Placed Bids On (In An Auction) **/
             /* Need to get the auction choice from the user before hand and pass in as currAuction */
-            Auction dummyAuction = new Auction();
-            this.dataControl.getItemsCurrBidderHasBidsOnInAnAuction(currBidder, dummyAuction);
+            //Auction dummyAuction = new Auction();
+            //this.dataControl.getItemsCurrBidderHasBidsOnInAnAuction(currBidder, dummyAuction);
             //TODO: Go to this.getItemsCurrBidderHasBidsOnInAnAuction(currBidder, currAuction) and implement logic
             //TODO: Display result to user (Items in that specific auction)
+        		StringBuilder sb = new StringBuilder();
+        		char option = 'a';
+        		for (Auction auc : currBidder.auctions) {
+        			sb.append("\t" + option + ") ");
+          		sb.append(auc.getOrganization());
+          		sb.append("\n");
+          		option++;
+        		}
+        		System.out.print(sb);
             this.revert();
         } else if (choice == 'c') {
             /** View Items I Have Placed Bids On (In All Auctions) **/
-            HashSet<Auction> result =
-                    this.dataControl.getAuctionsCurrBidderHasBids(currBidder);
+            //HashSet<Auction> result =
+            //        this.dataControl.getAuctionsCurrBidderHasBids(currBidder);
             //TODO: Display result to user (Not the auctions, but items in each auction)
+	        	StringBuilder sb = new StringBuilder();
+	    		int num = 1;
+	    		for (Auction auc : currBidder.auctions) {
+	    			for (Item itm : auc.items) {
+		    			sb.append("\t" + num + ". ");
+		      		sb.append(itm.getName());
+		      		sb.append("\n");
+		      		num++;
+	    			}
+	    		}
+	    		System.out.print(sb);
             this.revert();
         } else if (choice == 'd') {
             /** View Auctions I Can Place Bids On **/

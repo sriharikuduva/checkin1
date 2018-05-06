@@ -1,5 +1,14 @@
 import java.util.Scanner;
 
+/**
+ * Kick starts the user interface.
+ * 
+ * @author HariKuduva
+ * @author ShannonWeston
+ * @author BaisalUrustanbekov
+ * @author MauriceChiu
+ * @version 
+ */
 public class UI_Starter {
 
     private static DataControlCenter dataControl;

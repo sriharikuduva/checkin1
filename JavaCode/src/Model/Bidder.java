@@ -1,6 +1,16 @@
 import java.time.LocalDateTime;
 import java.util.*;
 
+/**
+ * Carries extra information specific to bidders and defines
+ * what a bidder can or cannot do.
+ * 
+ * @author HariKuduva
+ * @author ShannonWeston
+ * @author BaisalUrustanbekov
+ * @author MauriceChiu
+ * @version 
+ */
 public class Bidder extends User {
     //Group
     private ArrayList<Bid> bids;

@@ -1,4 +1,14 @@
 import java.util.*;
+
+/**
+ * Read in list of existing bidders and contacts from files.
+ * 
+ * @author HariKuduva
+ * @author ShannonWeston
+ * @author BaisalUrustanbekov
+ * @author MauriceChiu
+ * @version 
+ */
 public class DataControlCenter {
 
     private HashSet<Bidder> masterBidderList;
@@ -79,28 +89,38 @@ public class DataControlCenter {
     }
 
     public HashSet<Auction> getAuctionsCurrBidderHasBids(Bidder currBidder) {
-        HashSet<Auction> toSend = new HashSet<>();
+        HashSet<Auction> toSend = new HashSet<>(currBidder.auctions);
         //TODO: return a Set of auctions that the bidder has bids in
-        System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
+        //System.out.println("** NOTICE1: NEEDS IMPLEMENTATION! **");
+        
+//        StringBuilder sb = new StringBuilder();
+//        char option = 'a';
+//        for (Auction auc : currBidder.auctions) {
+//        		sb.append("\t" + option + ") ");
+//        		sb.append(auc.getOrganization());
+//        		sb.append("\n");
+//        		option++;
+//        }
+//        System.out.print(sb);
         return toSend;
     }
 
     public HashSet<Item> getItemsCurrBidderHasBidsOnInAnAuction(Bidder currBidder, Auction specifc) {
         HashSet<Item> toSend = new HashSet<>();
         //TODO: return a Set of Items the Bidder has bids on in the specific Auction
-        System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
+        System.out.println("** NOTICE2: NEEDS IMPLEMENTATION! **");
         return toSend;
     }
 
     public HashSet<Auction> getAuctionsCurrBidderCanBidOn(Bidder currBidder) {
         HashSet<Auction> toSend = new HashSet<>();
         //TODO: return a Set of Auctions currBidder can place bids on
-        System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
+        System.out.println("** NOTICE3: NEEDS IMPLEMENTATION! **");
         return toSend;
     }
 
     public void makeBid (Auction auction, Bidder currBidder) {
-        System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
+        System.out.println("** NOTICE4: NEEDS IMPLEMENTATION! **");
         //TODO: make bid if placebale
         /* Implementation could look something like this??? */
             //currBidder.isBidPlaceable(auction);
@@ -110,7 +130,7 @@ public class DataControlCenter {
     public HashSet<Auction> getSubmittedAuctionsByNPContact(NPContact currContact) {
         HashSet<Auction> toSend = new HashSet<>();
         //TODO: return auctions submitted by currContact
-        System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
+        System.out.println("** NOTICE5: NEEDS IMPLEMENTATION! **");
         return toSend;
     }
 }

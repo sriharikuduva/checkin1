@@ -1,14 +1,25 @@
 import java.util.ArrayList;
 import java.util.HashSet;
 
+
+/**
+ * Contains all the information about an user of the program.
+ * 
+ * @author HariKuduva
+ * @author ShannonWeston
+ * @author BaisalUrustanbekov
+ * @author MauriceChiu
+ * @version 
+ */
 public class User {
 	protected String email;
 	protected String username;
 	protected String address;
 	protected String phoneNumber;
+	
+	/** Contains all the auction that the bidder has placed bids in. */
 	protected HashSet<Auction> auctions;
-	protected ArrayList<Item> items; // TODO: Might not need this
-    
+	
 
   //constructor - Group
     public User(final String email, final String username,
@@ -19,7 +30,6 @@ public class User {
          this.address = address;
          this.phoneNumber = phoneNumber;
          this.auctions = new HashSet<>();
-         this.items = new ArrayList<>();
     }
 
 }

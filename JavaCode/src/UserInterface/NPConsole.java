@@ -8,7 +8,15 @@ public class NPConsole {
     private StringBuilder sb;
     private Scanner input;
 
-
+    /**
+     * User interface for user logged in as contacts.
+     * 
+     * @author HariKuduva
+     * @author ShannonWeston
+     * @author BaisalUrustanbekov
+     * @author MauriceChiu
+     * @version 
+     */
     public NPConsole(NPContact currContact, DataControlCenter dataControl) {
         this.currContact = currContact;
         this.dataControl = dataControl;

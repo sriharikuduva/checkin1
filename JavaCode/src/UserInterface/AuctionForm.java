@@ -1,3 +1,13 @@
+/**
+ * User interface that guides through a non-profit contact to submitting
+ * a auction request form.
+ * 
+ * @author HariKuduva
+ * @author ShannonWeston
+ * @author BaisalUrustanbekov
+ * @author MauriceChiu
+ * @version 
+ */
 public class AuctionForm {
 
 
