@@ -11,7 +11,7 @@ public class AuctionForm {
 	private static final int MAX_SCHEDULE_OUT_DAYS = 60;
 	
 	//Set with MAX_SCHEDULE_OUT_DAYS
-	private LocalDateTime farthestDate;
+	private LocalDate farthestDate;
 	
     private NPContact currContact;
     private StringBuilder sb;
@@ -21,10 +21,13 @@ public class AuctionForm {
     private Scanner input;
     
     private NPConsole npConsole;
+    private DateTimeFormatter fmt;
+    private String requestedDate;
 
     public AuctionForm(NPContact currcontact, NPConsole npConsole) {
         this.currContact = currcontact;
-        farthestDate = LocalDateTime.now().plusDays(MAX_SCHEDULE_OUT_DAYS);
+        farthestDate = LocalDate.now().plusDays(MAX_SCHEDULE_OUT_DAYS);
+        //farthestDate = LocalDateTime.now().plusDays(MAX_SCHEDULE_OUT_DAYS);
         sb = new StringBuilder();
         
         newAuction = new Auction(currContact.getName());
@@ -34,12 +37,14 @@ public class AuctionForm {
         //"Go Back" location
         this.npConsole = npConsole;
         
+        fmt = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
+        requestedDate = LocalDateTime.now().toString();
+        
     }
 
     public void startAuctionApplication() {
-        System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
+        //System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
         //TODO: Needs implementation on auction creation process
-        
         
         sb.append("Welcome to the Auction Creation Form! \n");
         System.out.println(sb.toString());
@@ -48,36 +53,32 @@ public class AuctionForm {
     
     public void setAuctionDate() {
     	sb.setLength(0);
-        sb.append("We are currently accepting auctions up through " + farthestDate + ". \n");
+    	String farthestDateFormatted = farthestDate.format(fmt);
+        sb.append("We are currently accepting auctions up through " + farthestDateFormatted + ". \n");
+        //sb.append("We are currently accepting auctions up through " + farthestDate + ". \n");
     	sb.append("Please enter your desired auction date below. \n");
-    	//sb.append("\tr) Go Back \n");
     	sb.append("\n");
-        sb.append("Enter your date as follows: MM.DD.YY HH:MMam/pm (ex: 12.31.2019 11:59pm) \n");
-        //sb.append("Requested Date: ");
+        sb.append("Enter your date as follows: MM.DD.YY HH:MMam/pm (ex: 5/6/18 3:44 PM) \n");
+        System.out.print(sb.toString());
         
-        System.out.println(sb.toString());
-        
-        String requestedDate = input.next();
+        requestedDate= input.next();
+
         
         if(requestedDate.equals("r")) {
         	npConsole.invokeMenu();
+        } else if(!requestedDate.contains(" : ")) {
+        	sb.setLength(0);
+        	sb.append("Please include a start time for your auction.");
+        	setAuctionDate();
         }
-        
-        LocalDateTime date = LocalDateTime.now().format(new DateTimeFormatter(null, null, null, null, null, null, null));
-        
-        //LocalDateTime date = LocalDateTime.parse(requestedDate, DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT));        		
-        		//MM.DD.YY HH:MMam/pm
-        
+
         //Check that date is within farthestDate limit.
-//        if(isRequestedAuctionDateAvailable(date)) {
-//        	setAuctionTime();
-//        	if(isRequestedAuctionTimeAvailable()) {
-//            	confirmAuctionDateTime(date);
-//        	}
-//        }
+        if(isRequestedAuctionDateAvailable(requestedDate)) {
+        	setAuctionTime();
+        }
     }
     
-    public boolean isRequestedAuctionDateAvailable(LocalDateTime date) {
+    public boolean isRequestedAuctionDateAvailable(String date) {
     	boolean available = true;
     	//probably a System check
 //    	if(numberOfExistingAuctionsOnDate(date) < MAX_AUCTIONS_PER_DAY) {
@@ -87,7 +88,7 @@ public class AuctionForm {
     	return available;
     }
     
-    public int numberOfAvailableAuctionTimes(LocalDateTime date) {
+    public int numberOfAvailableAuctionTimes(String date) {
     	return 1;
     }
     
@@ -95,8 +96,12 @@ public class AuctionForm {
     	//display available auction times for date
     	
     	//back to date selection option in case user doesn't like times available
-    	if(true) {
-    		setAuctionDate();
+//    	if(false) {
+//    		setAuctionDate();
+//    	}
+    	
+    	if(isRequestedAuctionTimeAvailable()) {
+        	confirmAuctionDateTime(requestedDate);
     	}
     }
     
@@ -106,7 +111,7 @@ public class AuctionForm {
     	return available;
     }
     
-    public void confirmAuctionDateTime(LocalDateTime date) {
+    public void confirmAuctionDateTime(String date) {
     	sb.append("Your Auction is scheduled for: " + date + ". Thank you! \n");
     	npConsole.invokeMenu();
     }
