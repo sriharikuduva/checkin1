@@ -1,0 +1,3 @@
+American Cancer Society, 2017-03-09 00:00, 2019-04-12 00:00, Kidney, 2, 500, Used, url/image1
+American Cancer Society, 2017-03-09 00:00, 2019-04-12 00:00, Liver, 1, 400, Used, url/image2
+American Red Cross, 2016-05-19 00:00, 2019-05-06 00:00, Needle, 1, 10, Used, url/image3

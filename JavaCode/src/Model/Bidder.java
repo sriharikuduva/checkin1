@@ -14,7 +14,7 @@ public class Bidder extends User {
     		super(email, username, address, phoneNumber);
     		this.name = name;
     		this.balance = balance;
-        this.bids = new ArrayList<Bid>();
+    		this.bids = new ArrayList<Bid>();
     }
 
     //Shannon Weston

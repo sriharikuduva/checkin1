@@ -1,5 +1,11 @@
+import static org.junit.Assert.assertArrayEquals;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Scanner;
+
+import javax.naming.ldap.PagedResultsControl;
 
 public class BidderConsole {
 
@@ -7,6 +13,10 @@ public class BidderConsole {
     private DataControlCenter dataControl;
     private StringBuilder sb;
     private Scanner input;
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    
+    /** This is for scanning in bidder's inventory */
+    private Scanner inputScanner;
 
     public BidderConsole(Bidder currBidder, DataControlCenter dataControl) {
         this.currBidder = currBidder;
@@ -18,10 +28,51 @@ public class BidderConsole {
     public void invokeMenu() {
         this.sb.append("\nWelcome " + this.currBidder.getName() +
                 "! You have been logged in as a Bidder.\n");
-        this.displayOptions();
+        
+        //Populate bidder's inventory
+        String fileName = currBidder.getName();
+        this.inputScanner = new Scanner(getClass()
+        		.getResourceAsStream(fileName + ".txt"));
+        	while (this.inputScanner.hasNextLine()) {
+        		String parts[] = this.inputScanner.nextLine().split(",");
+        		this.cleanParts(parts);
+        		Auction auctionToAdd = new Auction(parts[0], LocalDateTime.parse(parts[1], formatter), LocalDateTime.parse(parts[2], formatter));
+        		Item itemToAdd = new Item(parts[3], Integer.parseInt(parts[4].trim()), Integer.parseInt(parts[5].trim()), parts[6], parts[7]);
+        		auctionToAdd.items.add(itemToAdd);
+        		currBidder.auctions.add(auctionToAdd);
+        	}
+        
+        	this.displayOptionsWithCheck();
+        //this.displayOptions();
         this.choiceLogic(this.input.next().charAt(0));
     }
 
+    /**
+     * Helper method for getting rid the paddings.
+     * @param parts
+     */
+    private void cleanParts(String parts[]) {
+        for (int i = 0; i < parts.length; i++) {
+            parts[i] = parts[i].trim();
+        }
+    }
+    
+    private void displayOptionsWithCheck() {
+    	this.sb.append("\nHere are your options: \n");
+        if (currBidder.auctions.size() > 0) { // Don't show this option if bidder has no bids.
+    			this.sb.append("\ta) View Auctions I Have Placed Bids On\n");
+        		this.sb.append("\tb) View Items I Have Placed Bids On (In An Auction)\n");
+        		this.sb.append("\tc) View Items I Have Placed Bids On (In All Auctions)\n");
+        }
+        //if ()
+        this.sb.append("\td) View Auctions I Can Place Bids On\n");
+        this.sb.append("\te) Bid For An Item In An Auction\n\n");
+        this.sb.append("\tx) Logout and Terminate\n");
+        this.sb.append("Please enter your option letter (and press ENTER): ");
+        System.out.print(this.sb);
+        this.sb.setLength(0);
+    }
+    
     private void displayOptions() {
         this.sb.append("\nHere are your options: \n");
         this.sb.append("\ta) View Auctions I Have Placed Bids On\n");

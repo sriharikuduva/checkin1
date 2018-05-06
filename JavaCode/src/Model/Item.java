@@ -11,7 +11,7 @@ public class Item {
 
     //Group
     public Item(String name, int quantity, int startingBid, String description, String imagePath) {
-        this.name = name;
+    		this.name = name;
         this.quantity = quantity;
         this.startingBid = startingBid;
         this.description = description;

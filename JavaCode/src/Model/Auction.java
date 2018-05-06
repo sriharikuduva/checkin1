@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Auction {
     private String organization;
-    private ArrayList<Item> items;
+    protected ArrayList<Item> items;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 

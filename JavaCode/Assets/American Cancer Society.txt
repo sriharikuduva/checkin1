@@ -1,0 +1,2 @@
+Kidney, 2, 500, Used, url/image1
+Liver, 1, 400, Used, url/image2
