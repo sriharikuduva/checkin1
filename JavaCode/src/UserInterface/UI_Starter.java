@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.Scanner;
 
 public class UI_Starter {
@@ -10,7 +9,7 @@ public class UI_Starter {
     /** Private constructor to prevent instantiation.*/
     private UI_Starter() { }
 
-    public static void main(String... args) throws IOException, ClassNotFoundException {
+    public static void main(String... args) {
         initVariables();
         invokeLoginScreen();
         input.close();
@@ -23,7 +22,7 @@ public class UI_Starter {
         input = new Scanner(System.in);
     }
 
-    private static void invokeLoginScreen() throws IOException, ClassNotFoundException {
+    private static void invokeLoginScreen() {
         stringBuilder.append("Welcome User!\n");
         stringBuilder.append("Here are your options: \n");
         stringBuilder.append("\ta) Bidder Sign In\n");
@@ -39,7 +38,7 @@ public class UI_Starter {
         verifyAndLaunchSpecificUser(isNonProfit, username);
     }
 
-    private static void verifyAndLaunchSpecificUser(boolean isNonProfit, String username) throws IOException, ClassNotFoundException {
+    private static void verifyAndLaunchSpecificUser(boolean isNonProfit, String username) {
         if (isNonProfit && dataControl.isNonProfitValid(username)) {
             new NPConsole(dataControl.getNPContactByUsername(username), dataControl).invokeMenu();
         } else if (!isNonProfit && dataControl.isBidderValid(username)) {

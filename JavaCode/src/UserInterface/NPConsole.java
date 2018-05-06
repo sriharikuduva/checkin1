@@ -30,7 +30,7 @@ public class NPConsole {
         this.sb.append("\ta) View all submitted auction requests\n");
         this.sb.append("\tb) Submit an auction request\n");
         this.sb.append("\n\tx) Logout and Terminate\n");
-        this.sb.append("\nPlease enter your option letter (and press ENTER): ");
+        this.sb.append("Please enter your option letter (and press ENTER): ");
         System.out.print(this.sb);
         this.sb.setLength(0);
     }
@@ -51,7 +51,7 @@ public class NPConsole {
             this.revert();
         } else if (choice == 'b') {
             /** Submit an auction request **/
-            new AuctionForm(currContact).startAuctionApplication();
+            new AuctionForm(currContact, this).startAuctionApplication();
             //TODO: Go to AuctionForm.startAuctionApplication and implement logic
             //TODO: Diplay auction creation success/failiure to user
             this.revert();
