@@ -1,26 +1,21 @@
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
 
-public class Bidder {
+public class Bidder extends User implements Serializable {
     //Group
-    private String name;
-    private String email;
-    private String username;
-    private String address;
-    private String phoneNumber;
     private ArrayList<Bid> bids;
+    private String name;
     private int balance;
+    public static final int MAX_ITEMS_WITH_BID_IN_AN_AUCTION = 4;
 
     //constructor - Group
     public Bidder(final String name,final String email, final String username,
             final String address, final String phoneNumber, final int balance) {
-         this.name = name;
-         this.email = email;
-         this.username = username;
-         this.address = address;
-         this.phoneNumber = phoneNumber;
-         this.balance = balance;
-         this.bids = new ArrayList<Bid>();
+    		super(email, username, address, phoneNumber);
+    		this.name = name;
+    		this.balance = balance;
+        this.bids = new ArrayList<Bid>();
     }
 
     //Shannon Weston
@@ -29,16 +24,25 @@ public class Bidder {
     }
 
     //Hari Kuduva
-    public boolean isBidPlaceable(final Auction auction) {
+    public boolean isBidPlaceableAuctionDate(final Auction auction) {
         //When method is invoked, Model.Bid is attempting to be placed NOW
         return (LocalDateTime.now().compareTo(auction.getStartDate()) < 0); // only pass condition
     }
 
     //Shannon Weston
-    public boolean isBidPlaceable(final Item item, final Bid bid) {
+    public boolean isBidPlaceableMinimumBid(final Item item, final Bid bid) {
         return (item.getCurrentBid() <= bid.getAmount());
     }
 
+    //Maurice Chiu
+    public boolean isBidPlaceableItemWithBids(int numberOfItemsWithBidInAnAuction) {
+		if (numberOfItemsWithBidInAnAuction < MAX_ITEMS_WITH_BID_IN_AN_AUCTION) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+    
     //Group
     public ArrayList<Bid> getBids() {
         return this.bids;
