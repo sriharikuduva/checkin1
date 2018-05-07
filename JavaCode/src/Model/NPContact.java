@@ -8,14 +8,14 @@ public class NPContact extends User implements Serializable {
     public NPContact(String orgName, String email,
                      String username, String address, String phoneNumber) {
 
-    		super(email, username, address, phoneNumber);
+    	super(email, username, address, phoneNumber);
         this.orgName = orgName;
     }
 
     public String getUsername() {
         return super.username;
     }
-
+    
     public String getName() {
         return this.orgName;
     }
