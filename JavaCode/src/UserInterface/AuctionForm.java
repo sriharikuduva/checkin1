@@ -92,7 +92,7 @@ public class AuctionForm {
         	boolean available = dataControl.isRequestedAuctionDateAvailable(parts);
         	if(available) {
         		checkTime(parts);
-        	} else {
+         } else {
         		System.out.println("Your Date is valid, your time is not available. Please Try Again.");
         		setAuctionDate();
         	}
