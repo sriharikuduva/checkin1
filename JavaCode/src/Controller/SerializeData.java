@@ -11,8 +11,8 @@ public class SerializeData {
     public static void main(String... args) throws IOException {
         /* NOTICE::: ONLY RUN THIS WHEN BIDDERS.BIN AND NPCONTACT.BIN ARE NOT IN ASSETS FOLDER
             OR IF THEIR ORIGINAL TXT FILES HAVE BEEN UPDATED (THEN DELETE THE OLD .BIN FILES AND RUN THIS) */
-        serializeBidders("./JavaCode/Assets/bidders.bin");
-        //serializeNPContact("./JavaCode/Assets/npcontact.bin");
+        serializeBidders("./bidders.bin");
+        serializeNPContact("./npcontact.bin");
     }
     
     private static void serializeBidders(String output) throws IOException {
