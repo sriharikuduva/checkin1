@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class User implements Serializable {
 	protected String name;
@@ -6,6 +7,8 @@ public class User implements Serializable {
     protected String username;
     protected String address;
     protected String phoneNumber;
+    /** Contains all the auction that the bidder has placed bids in. */
+	protected ArrayList<Auction> auctions;
 
   //constructor - Group
     public User(final String email, final String username,
