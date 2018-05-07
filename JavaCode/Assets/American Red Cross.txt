@@ -1,0 +1,3 @@
+AirPort Express, 1, 99, New, url/image5
+Chicken on A Stick, 2, 50, A Bunch, url/image6
+Baisal's Secrete Stash, 1, 100, Stinky, url/image7

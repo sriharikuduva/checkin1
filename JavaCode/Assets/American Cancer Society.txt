@@ -1,0 +1,2 @@
+MacBook Pro, 1, 1200, Used, url/image1
+AirPort Extreme, 1, 200, Used, url/image2
