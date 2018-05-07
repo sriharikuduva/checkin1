@@ -3,6 +3,7 @@ import java.util.HashSet;
 import java.util.Scanner;
 
 public class NPConsole {
+	private static final int CHOICE = (int) 'a';
 
     private NPContact currContact;
     private DataControlCenter dataControl;
@@ -44,6 +45,7 @@ public class NPConsole {
         if (choice == 'a') {
             /** View all submitted auction requests **/
             HashSet<Auction> result = this.dataControl.getSubmittedAuctionsByNPContact(currContact);
+            //TODO: Read existing auctions from file
             //TODO: Go to this.dataControl.getSubmittedAuctionsByNPContact(currContact) and implement logic
             //TODO: Display result to user - Done
             
@@ -51,9 +53,8 @@ public class NPConsole {
             this.revert();
         } else if (choice == 'b') {
             /** Submit an auction request **/
+        	//TODO: Save new auction to file
             new AuctionForm(currContact, this, dataControl).startAuctionApplication();
-            //TODO: Go to AuctionForm.startAuctionApplication and implement logic
-            //TODO: Display auction creation success/failure to user - Done
             this.revert();
         } else if (choice == 'x') {
             this.sb.append("You have been logged out, terminating...\n");
@@ -76,10 +77,8 @@ public class NPConsole {
     private void viewAuctions(HashSet<Auction> auctions) {
         sb.append("Here are all of your auctions: \n");
         for(Auction auction : auctions)  {
-        	//97 is not a magic number, it is the ascii value of a
-        	//This builds a menu of initially unknown size.
-        	int i = 97;
-        	sb.append("\t" + (char) i + ")" + auction.toString());
+        	int i = CHOICE;
+        	sb.append("\t" + i + ")" + auction.toString());
         	i++;
         }
         sb.append("You may choose an auction to view items. \n");

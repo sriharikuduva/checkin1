@@ -115,7 +115,7 @@ public class DataControlCenter {
 
     public void makeBid (Auction auction, Bidder currBidder) {
         System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
-        //TODO: make bid if placebale
+        //TODO: make bid if placeable
         /* Implementation could look something like this??? */
             //currBidder.isBidPlaceable(auction);
             //currBidder.placeBid(new Bid(...));
