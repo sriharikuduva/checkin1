@@ -4,7 +4,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.*;
 
-import javax.naming.AuthenticationNotSupportedException;
 public class DataControlCenter {
 	private static final int MAX_AUCTIONS_PER_DAY = 2;
 
@@ -12,7 +11,7 @@ public class DataControlCenter {
     private ArrayList<Auction> masterListOfAuctions;
 
     public DataControlCenter() {
-    	masterListOfAuctions = new ArrayList<Auction>();
+        this.masterListOfAuctions = new ArrayList<>();
     }
 
     private HashSet<NPContact> deserializeAllNPContacts() throws IOException, ClassNotFoundException {
@@ -23,6 +22,11 @@ public class DataControlCenter {
     private HashSet<Bidder> deserializeAllBidders() throws IOException, ClassNotFoundException {
         return (HashSet<Bidder>) new ObjectInputStream(getClass().
                 getResourceAsStream("bidders.bin")).readObject();
+    }
+
+    public HashSet<Auction> deserializeAllAuctions() throws IOException, ClassNotFoundException {
+        return (HashSet<Auction>) new ObjectInputStream(getClass()
+                .getResourceAsStream("auctions.bin")).readObject();
     }
 
     public boolean isBidderValid(String username) throws IOException, ClassNotFoundException {
@@ -98,7 +102,15 @@ public class DataControlCenter {
     }
     
     public void addAuction(Auction auction) {
-    	this.masterListOfAuctions.add(auction);
+        boolean wasAdded = true;
+    	if (wasAdded) {
+
+        } else {
+    	    //error trace
+        }
+
+
+
     }
     
     public ArrayList<Auction> getAuctions() {

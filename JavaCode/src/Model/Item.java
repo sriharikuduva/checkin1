@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.*;
 
-public class Item {
+public class Item implements Serializable {
     //Group
     private String name;
     private int quantity;

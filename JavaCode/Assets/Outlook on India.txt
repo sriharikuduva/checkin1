@@ -1,2 +1,2 @@
-42" TV, 1, 550, LG, url/image8
-Maurice's Special Chair, 1, 12000, Marvolus, url/image9
+42" TV, 1, 550, LG, url/image8, 5
+Maurice's Special Chair, 1, 1500, Marvolus, url/image9, 5
