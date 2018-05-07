@@ -42,7 +42,12 @@ public class Bidder extends User implements Serializable {
 			return false;
 		}
 	}
-    
+
+	//Baisal Urustanbekov
+    public boolean isBidPlaceableInFutureAuctions(final Auction auction, ArrayList<Item> item) {
+        //When method is invoked
+        return ((LocalDateTime.now().compareTo(auction.getEnd()) < 0) && item.size() <= 10);
+    }
     //Group
     public ArrayList<Bid> getBids() {
         return this.bids;
