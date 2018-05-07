@@ -4,6 +4,6 @@
 	<classpathentry kind="src" path="JavaCode/src/Controller"/>
 	<classpathentry kind="src" path="JavaCode/src/Model"/>
 	<classpathentry excluding="System.java" kind="src" path="JavaCode/src/UserInterface"/>
-	<classpathentry kind="src" path="JavaCode/Assets"/>
+	<classpathentry kind="src" output="JavaCode/Assets" path="JavaCode/Assets"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
