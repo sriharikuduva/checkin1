@@ -24,6 +24,16 @@ public class UI_Starter {
         stringBuilder = new StringBuilder();
         input = new Scanner(System.in);
         HashSet<Auction> test = dataControl.deserializeAllAuctions();
+        printOutAllAuctions(test);
+    }
+
+    /** DEBUGGING PURPOSE **/
+    private static void printOutAllAuctions(HashSet<Auction> auctions) {
+        System.out.println("Here are the auctions from the serialized file: ");
+        for (Auction auction : auctions) {
+            System.out.println(auction.getOrganization());
+        }
+        System.out.println();
     }
 
     private static void invokeLoginScreen() throws IOException, ClassNotFoundException {

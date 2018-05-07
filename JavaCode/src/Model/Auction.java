@@ -82,4 +82,5 @@ public class Auction implements Serializable {
     public void setOnlineStart(LocalDateTime startOnline) {
         this.onlineStart = startOnline;
     }
+
 }

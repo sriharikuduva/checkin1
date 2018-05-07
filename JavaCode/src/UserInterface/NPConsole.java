@@ -58,6 +58,7 @@ public class NPConsole {
             this.revert();
         } else if (choice == 'x') {
             this.sb.append("You have been logged out, terminating...\n");
+            this.dataControl.logOutNP();
         }
         System.out.print(this.sb);
         this.sb.setLength(0);

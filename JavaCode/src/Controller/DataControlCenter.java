@@ -16,11 +16,11 @@ public class DataControlCenter {
 	private static final int MAX_AUCTIONS_PER_DAY = 2;
 	/**Time distance (minimum) between end of one auction and start of next.*/
 	private static final int STOP_TO_START_HOUR_GAP = 2;
-    private ArrayList<Auction> masterListOfAuctions;
+    private HashSet<Auction> masterListOfAuctions;
     private Scanner inputScanner;
 
-    public DataControlCenter() {
-        this.masterListOfAuctions = new ArrayList<>();
+    public DataControlCenter() throws IOException, ClassNotFoundException {
+        this.masterListOfAuctions = deserializeAllAuctions();
     }
     private HashSet<NPContact> deserializeAllNPContacts() throws IOException, ClassNotFoundException {
         return (HashSet<NPContact>) new ObjectInputStream(getClass().
@@ -125,10 +125,23 @@ public class DataControlCenter {
         }
         return toSend;
     }
+
+    public void logOutNP() throws IOException {
+
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./JavaCode/Assets/auctions.bin"));
+        oos.writeObject(this.masterListOfAuctions);
+    }
     
     public void addAuction(Auction auction) throws ClassNotFoundException, IOException {
 		HashSet<Auction> updateAuctions = new HashSet<Auction>();
 
+		/* hari's code: */
+        HashSet<Auction> allAuctionsTillNow = this.deserializeAllAuctions();
+        this.masterListOfAuctions.add(auction);
+        //WHEN NPCONTACT LOGS OUT THEN WE WRITE TO FILE...
+
+//Shannon's Code:
+/*
     	try {
     		//System.out.println("Creating updateAuctions");
     		updateAuctions = this.getAuctions();
@@ -162,12 +175,12 @@ public class DataControlCenter {
     	} catch (Exception e){
     		System.out.println("Could Not Save Auction.");
     		e.printStackTrace();
-    	}
+    	}*/
     }
     
     public HashSet<Auction> getAuctions() throws ClassNotFoundException, IOException {
     	HashSet<Auction> allAuctions = new HashSet<Auction>();
-    	for(Auction auction : this.deserializeAllAuctions()) {
+    	for(Auction auction : this.masterListOfAuctions) {
     		allAuctions.add(auction);
     	}
 
