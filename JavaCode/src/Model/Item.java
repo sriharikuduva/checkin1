@@ -1,14 +1,5 @@
 import java.util.*;
 
-/**
- * Contains all the information about an item.
- * 
- * @author HariKuduva
- * @author ShannonWeston
- * @author BaisalUrustanbekov
- * @author MauriceChiu
- * @version 
- */
 public class Item {
     //Group
     private String name;
@@ -20,7 +11,7 @@ public class Item {
 
     //Group
     public Item(String name, int quantity, int startingBid, String description, String imagePath) {
-    		this.name = name;
+        this.name = name;
         this.quantity = quantity;
         this.startingBid = startingBid;
         this.description = description;

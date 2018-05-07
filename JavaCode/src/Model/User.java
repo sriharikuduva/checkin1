@@ -1,24 +1,14 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-
-/**
- * Contains all the information about an user of the program.
- * 
- * @author HariKuduva
- * @author ShannonWeston
- * @author BaisalUrustanbekov
- * @author MauriceChiu
- * @version 
- */
-public class User {
+public class User implements Serializable {
+	protected String name;
 	protected String email;
-	protected String username;
-	protected String address;
-	protected String phoneNumber;
-	
-	/** Contains all the auction that the bidder has placed bids in. */
+    protected String username;
+    protected String address;
+    protected String phoneNumber;
+    /** Contains all the auction that the bidder has placed bids in. */
 	protected ArrayList<Auction> auctions;
-	
 
   //constructor - Group
     public User(final String email, final String username,
@@ -28,7 +18,6 @@ public class User {
          this.username = username;
          this.address = address;
          this.phoneNumber = phoneNumber;
-         this.auctions = new ArrayList<>();
     }
 
 }

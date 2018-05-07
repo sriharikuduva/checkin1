@@ -1,15 +1,6 @@
 
 import java.util.*;
-
-/**
- * Contains all the information about a bid.
- * 
- * @author HariKuduva
- * @author ShannonWeston
- * @author BaisalUrustanbekov
- * @author MauriceChiu
- * @version 
- */
+  
 public class Bid {
     //Group
     private String bidderName;

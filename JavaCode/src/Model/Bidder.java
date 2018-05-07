@@ -1,17 +1,8 @@
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
 
-/**
- * Carries extra information specific to bidders and defines
- * what a bidder can or cannot do.
- * 
- * @author HariKuduva
- * @author ShannonWeston
- * @author BaisalUrustanbekov
- * @author MauriceChiu
- * @version 
- */
-public class Bidder extends User {
+public class Bidder extends User implements Serializable {
     //Group
     private ArrayList<Bid> bids;
     private String name;
@@ -24,7 +15,7 @@ public class Bidder extends User {
     		super(email, username, address, phoneNumber);
     		this.name = name;
     		this.balance = balance;
-    		this.bids = new ArrayList<Bid>();
+        this.bids = new ArrayList<Bid>();
     }
 
     //Shannon Weston
@@ -35,7 +26,7 @@ public class Bidder extends User {
     //Hari Kuduva
     public boolean isBidPlaceableAuctionDate(final Auction auction) {
         //When method is invoked, Model.Bid is attempting to be placed NOW
-        return (LocalDateTime.now().compareTo(auction.getStartDate()) < 0); // only pass condition
+        return (LocalDateTime.now().compareTo(auction.getStart()) < 0); // only pass condition
     }
 
     //Shannon Weston

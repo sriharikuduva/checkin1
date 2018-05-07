@@ -1,34 +1,15 @@
-import static org.junit.Assert.assertArrayEquals;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Scanner;
 
-import javax.naming.AuthenticationNotSupportedException;
-import javax.naming.ldap.PagedResultsControl;
-
-import com.sun.imageio.plugins.common.SubImageInputStream;
-
-
-/**
- * User interface for user logged in as bidders.
- * 
- * @author HariKuduva
- * @author ShannonWeston
- * @author BaisalUrustanbekov
- * @author MauriceChiu
- * @version 
- */
 public class BidderConsole {
+
     private Bidder currBidder;
     private DataControlCenter dataControl;
     private StringBuilder sb;
     private Scanner input;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-    
     /** This is for scanning in bidder's inventory */
     private Scanner inputScanner;
 
@@ -37,12 +18,13 @@ public class BidderConsole {
         this.dataControl = dataControl;
         this.sb = new StringBuilder();
         this.input = new Scanner(System.in);
+        
     }
 
     public void invokeMenu() {
         this.sb.append("\nWelcome " + this.currBidder.getName() +
                 "! You have been logged in as a Bidder.\n");
-        
+      
         //Populate bidder's inventory
         String fileName = currBidder.getName();
         
@@ -81,7 +63,7 @@ public class BidderConsole {
         //this.displayOptions();
         this.choiceLogic(this.input.next().charAt(0));
     }
-
+    
     /**
      * Helper method for getting rid the paddings.
      * @param parts
@@ -93,7 +75,7 @@ public class BidderConsole {
     }
     
     private void displayOptionsWithCheck() {
-    	this.sb.append("\nHere are your options: \n");
+    		this.sb.append("\nHere are your options: \n");
         if (currBidder.auctions.size() > 0) { // Don't show this option if bidder has no bids.
     			this.sb.append("\ta) View Auctions I Have Placed Bids On\n");
         		this.sb.append("\tb) View Items I Have Placed Bids On (In An Auction)\n");
@@ -106,7 +88,6 @@ public class BidderConsole {
         System.out.print(this.sb);
         this.sb.setLength(0);
     }
-    
     private void displayOptions() {
         this.sb.append("\nHere are your options: \n");
         this.sb.append("\ta) View Auctions I Have Placed Bids On\n");
@@ -132,11 +113,10 @@ public class BidderConsole {
     private void choiceLogic(Character choice) {
         if (choice == 'a') {
             /** View Auctions I Have Placed Bids On **/
-            //HashSet<Auction> result =
-            //        this.dataControl.getAuctionsCurrBidderHasBids(currBidder);
+            //HashSet<Auction> result = this.dataControl.getAuctionsCurrBidderHasBids(currBidder);
             //TODO: Go to this.dataControl.getAuctionsCurrBidderHasBids(currBidder) and implement logic
             //TODO: Display result to user
-        		StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             //char option = 'a';
         		int i = 1;
             for (Auction auc : currBidder.auctions) {
@@ -156,22 +136,22 @@ public class BidderConsole {
             //this.dataControl.getItemsCurrBidderHasBidsOnInAnAuction(currBidder, dummyAuction);
             //TODO: Go to this.getItemsCurrBidderHasBidsOnInAnAuction(currBidder, currAuction) and implement logic
             //TODO: Display result to user (Items in that specific auction)
-        		StringBuilder sb = new StringBuilder();
-        		char option = 'a';
-        		for (Auction auc : currBidder.auctions) {
-        			sb.append("\t" + option + ") ");
-          		sb.append(auc.getOrganization());
-          		sb.append("\n");
-          		option++;
-        		}
-        		System.out.print(sb);
+            StringBuilder sb = new StringBuilder();
+    			char option = 'a';
+    			for (Auction auc : currBidder.auctions) {
+    				sb.append("\t" + option + ") ");
+    				sb.append(auc.getOrganization());
+    				sb.append("\n");
+    				option++;
+    			}
+    			System.out.print(sb);
+            
             this.revert();
         } else if (choice == 'c') {
             /** View Items I Have Placed Bids On (In All Auctions) **/
-            //HashSet<Auction> result =
-            //        this.dataControl.getAuctionsCurrBidderHasBids(currBidder);
+            //HashSet<Auction> result = this.dataControl.getAuctionsCurrBidderHasBids(currBidder);
             //TODO: Display result to user (Not the auctions, but items in each auction)
-	        	StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
 	    		int num = 1;
 	    		for (Auction auc : currBidder.auctions) {
 	    			for (Item itm : auc.items) {

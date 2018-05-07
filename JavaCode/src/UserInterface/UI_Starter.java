@@ -1,14 +1,8 @@
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
 
-/**
- * Kick starts the user interface.
- * 
- * @author HariKuduva
- * @author ShannonWeston
- * @author BaisalUrustanbekov
- * @author MauriceChiu
- * @version 
- */
 public class UI_Starter {
 
     private static DataControlCenter dataControl;
@@ -18,7 +12,8 @@ public class UI_Starter {
     /** Private constructor to prevent instantiation.*/
     private UI_Starter() { }
 
-    public static void main(String... args) {
+
+    public static void main(String... args) throws IOException, ClassNotFoundException {
         initVariables();
         invokeLoginScreen();
         input.close();
@@ -31,7 +26,7 @@ public class UI_Starter {
         input = new Scanner(System.in);
     }
 
-    private static void invokeLoginScreen() {
+    private static void invokeLoginScreen() throws IOException, ClassNotFoundException {
         stringBuilder.append("Welcome User!\n");
         stringBuilder.append("Here are your options: \n");
         stringBuilder.append("\ta) Bidder Sign In\n");
@@ -47,7 +42,7 @@ public class UI_Starter {
         verifyAndLaunchSpecificUser(isNonProfit, username);
     }
 
-    private static void verifyAndLaunchSpecificUser(boolean isNonProfit, String username) {
+    private static void verifyAndLaunchSpecificUser(boolean isNonProfit, String username) throws IOException, ClassNotFoundException {
         if (isNonProfit && dataControl.isNonProfitValid(username)) {
             new NPConsole(dataControl.getNPContactByUsername(username), dataControl).invokeMenu();
         } else if (!isNonProfit && dataControl.isBidderValid(username)) {

@@ -8,15 +8,7 @@ public class NPConsole {
     private StringBuilder sb;
     private Scanner input;
 
-    /**
-     * User interface for user logged in as contacts.
-     * 
-     * @author HariKuduva
-     * @author ShannonWeston
-     * @author BaisalUrustanbekov
-     * @author MauriceChiu
-     * @version 
-     */
+
     public NPConsole(NPContact currContact, DataControlCenter dataControl) {
         this.currContact = currContact;
         this.dataControl = dataControl;
@@ -59,7 +51,7 @@ public class NPConsole {
             this.revert();
         } else if (choice == 'b') {
             /** Submit an auction request **/
-            new AuctionForm(currContact).startAuctionApplication();
+            new AuctionForm(currContact, this, dataControl).startAuctionApplication();
             //TODO: Go to AuctionForm.startAuctionApplication and implement logic
             //TODO: Diplay auction creation success/failiure to user
             this.revert();
