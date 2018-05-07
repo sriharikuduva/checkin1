@@ -1,6 +1,7 @@
 import org.junit.Before;
 import org.junit.Test;
 import java.time.LocalDateTime;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -27,7 +28,12 @@ public class BidderTest {
     //Maurice Chiu
 	private Bidder bidderWithLessBiddedItemsThanMaximum;
 	private Bidder bidderWithMaxNumberOfBiddedItems;
-    
+
+	//Baisal Urustanbekov
+    private ArrayList<Item> itemsExceeded;
+    private ArrayList<Item> itemsNotExceeded;
+    private Item itemOne, itemTwo, itemThree, itemFour, itemFive, itemSix, itemSeven, itemEight, itemNine, itemTen;
+
 
 
     @Before
@@ -38,18 +44,53 @@ public class BidderTest {
         //Hari Kuduva
         this.auctionStartDate = LocalDateTime.now();
         this.auctionEndDate = this.auctionStartDate.plusDays(1);
-        
+
         //Shannon Weston
         this.item = new Item("Sweater", 1, STARTING_BID, "Blue Polka Dot Knit Sweater", "Path/To/File.jpg");
         this.equalBid = new Bid(this.bidder.getName(), item.getName(), EQUAL_BID);
         this.greaterBid = new Bid(this.bidder.getName(), item.getName(), GREATER_BID);
         this.lessBid = new Bid(this.bidder.getName(), item.getName(), LESS_BID);
-        
+
         //Maurice Chiu
-        this.bidderWithLessBiddedItemsThanMaximum = 
+        this.bidderWithLessBiddedItemsThanMaximum =
 				new Bidder("Aaron", "aaron@uw.edu", "aaron@uw.edu", "234 1st St, Tacoma, WA", "2069876543", 20100);
-		this.bidderWithMaxNumberOfBiddedItems = 
+		this.bidderWithMaxNumberOfBiddedItems =
 				new Bidder("Betty", "betty@uw.edu", "betty@uw.edu", "345 2nd St, Tacoma, WA", "2064567891", 19800);
+
+		//Baislabek Urustanbekov
+        itemsExceeded = new ArrayList<Item>();
+        itemsNotExceeded = new ArrayList<Item>();
+        this.item = new Item("Sweater", 1, STARTING_BID, "Blue Polka Dot Knit Sweater", "Path/To/File.jpg");
+        this.itemsExceeded.add(item);
+        this.itemsNotExceeded.add(item);
+        this.itemOne = new Item("Backback", 1, STARTING_BID, "Customizable black Backpack", "Path/To/File.jpg");
+        this.itemsExceeded.add(itemOne);
+        this.itemsNotExceeded.add(itemOne);
+        this.itemTwo = new Item("Watch", 1, STARTING_BID, "Golden Watch", "Path/To/File.jpg");
+        this.itemsExceeded.add(itemTwo);
+        this.itemsNotExceeded.add(itemTwo);
+        this.itemThree = new Item("Table", 1, STARTING_BID, "Coffee Table", "Path/To/File.jpg");
+        this.itemsExceeded.add(itemThree);
+        this.itemsNotExceeded.add(itemThree);
+        this.itemFour = new Item("TV", 1, STARTING_BID, "New Release Sumsung", "Path/To/File.jpg");
+        this.itemsExceeded.add(itemFour);
+        this.itemsNotExceeded.add(itemFour);
+        this.itemFive = new Item("Table", 1, STARTING_BID, "Desktop Table", "Path/To/File.jpg");
+        this.itemsExceeded.add(itemFive);
+        this.itemsNotExceeded.add(itemFive);
+        this.itemSix = new Item("Bed", 1, STARTING_BID, "King Size Bed ", "Path/To/File.jpg");
+        this.itemsExceeded.add(itemSix);
+        this.itemsNotExceeded.add(itemSix);
+        this.itemSeven = new Item("Computer", 1, STARTING_BID, "Desktop Computer", "Path/To/File.jpg");
+        this.itemsExceeded.add(itemSeven);
+        this.itemsNotExceeded.add(itemSeven);
+        this.itemEight = new Item("Phone", 1, STARTING_BID, "Sumsumg Galaxy 8", "Path/To/File.jpg");
+        this.itemsExceeded.add(itemEight);
+        this.itemsNotExceeded.add(itemEight);
+        this.itemNine = new Item("Coffee Machine", 1, STARTING_BID, "Coffee Brewer", "Path/To/File.jpg");
+        this.itemsExceeded.add(itemNine);
+        this.itemTen = new Item("Car", 1, STARTING_BID, "Honda Civic 2013", "Path/To/File.jpg");
+        this.itemsExceeded.add(itemTen);
 
     }
 
@@ -108,4 +149,36 @@ public class BidderTest {
 		assertFalse(bidderWithMaxNumberOfBiddedItems.
 				isBidPlaceableItemWithBids(Bidder.MAX_ITEMS_WITH_BID_IN_AN_AUCTION));
 	}
+
+	//Baisal Urustanbekov
+    @Test
+    public void isBidPlaceableInFutureAuctions_bidderNotExceededMaxItem_true() {
+        Auction auction = new Auction("Boys and Girls Club",
+                this.auctionStartDate.plusDays(1), this.auctionEndDate.plusDays(1));
+        assertTrue(this.bidder.isBidPlaceableInFutureAuctions(auction,itemsNotExceeded));
+    }
+
+    //Baisal Urustanbekov
+    @Test
+    public void isBidPlaceableInFutureAuctions_bidderNotExceededMaxItem_fasle() {
+        Auction auction = new Auction("Boys and Girls Club",
+                this.auctionStartDate.plusDays(1), this.auctionEndDate.plusDays(1));
+        assertFalse(this.bidder.isBidPlaceableInFutureAuctions(auction,itemsExceeded));
+    }
+
+    //Baisal Urustanbekov
+    @Test
+    public void isBidPlaceableInFutureAuctions_bidderExceededMaxItem_true() {
+        Auction auction = new Auction("Boys and Girls Club",
+                this.auctionStartDate.plusDays(1), this.auctionEndDate.plusDays(1));
+        assertTrue(this.bidder.isBidPlaceableInFutureAuctions(auction,itemsNotExceeded));
+    }
+
+    //Baisal Urustanbekov
+    @Test
+    public void isBidPlaceableInFutureAuctions_bidderExceededMaxItem_fasle() {
+        Auction auction = new Auction("Boys and Girls Club",
+                this.auctionStartDate.plusDays(1), this.auctionEndDate.plusDays(1));
+        assertFalse(this.bidder.isBidPlaceableInFutureAuctions(auction,itemsExceeded));
+    }
 }
