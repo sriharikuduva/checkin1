@@ -1,49 +1,23 @@
+import java.io.*;
 import java.util.*;
 public class DataControlCenter {
 
-    private HashSet<Bidder> masterBidderList;
-    private HashSet<NPContact> masterNPContactList;
     private Scanner inputScanner;
 
-    public DataControlCenter() {
-        this.masterBidderList = getBidderList();
-        this.masterNPContactList = getNPContactList();
+    public DataControlCenter() { }
+
+    private HashSet<NPContact> deserializeAllNPContacts() throws IOException, ClassNotFoundException {
+        return (HashSet<NPContact>) new ObjectInputStream(getClass().
+                getResourceAsStream("npcontact.bin")).readObject();
     }
 
-    private HashSet<Bidder> getBidderList() {
-        HashSet<Bidder> toSend = new HashSet<>();
-        this.inputScanner = new Scanner(getClass()
-                    .getResourceAsStream("masterBidderList.txt"));
-        while (this.inputScanner.hasNextLine()) {
-            String parts[] = this.inputScanner.nextLine().split(",");
-            this.cleanParts(parts);
-            toSend.add(new Bidder(parts[0], parts[1], parts[2],
-                    parts[3], parts[4], Integer.parseInt(parts[5].trim())));
-        }
-        return toSend;
+    private HashSet<Bidder> deserializeAllBidders() throws IOException, ClassNotFoundException {
+        return (HashSet<Bidder>) new ObjectInputStream(getClass().
+                getResourceAsStream("bidders.bin")).readObject();
     }
 
-    private HashSet<NPContact> getNPContactList() {
-        HashSet<NPContact> toSend = new HashSet<>();
-        this.inputScanner = new Scanner(getClass()
-                .getResourceAsStream("masterNPContactList.txt"));
-        while (this.inputScanner.hasNextLine()) {
-            String parts[] = this.inputScanner.nextLine().split(",");
-            this.cleanParts(parts);
-            toSend.add(new NPContact(parts[0], parts[1], parts[2], parts[3], parts[4]));
-        }
-        return toSend;
-    }
-
-
-    private void cleanParts(String parts[]) {
-        for (int i = 0; i < parts.length; i++) {
-            parts[i] = parts[i].trim();
-        }
-    }
-
-    public boolean isBidderValid(String username) {
-        for (Bidder bidder : this.masterBidderList) {
+    public boolean isBidderValid(String username) throws IOException, ClassNotFoundException {
+        for (Bidder bidder : this.deserializeAllBidders()) {
             if (bidder.getUsername().equals(username)) {
                 return true;
             }
@@ -51,8 +25,8 @@ public class DataControlCenter {
         return false;
     }
 
-    public boolean isNonProfitValid(String username) {
-        for (NPContact contact : this.masterNPContactList) {
+    public boolean isNonProfitValid(String username) throws IOException, ClassNotFoundException {
+        for (NPContact contact : this.deserializeAllNPContacts()) {
             if (contact.getUsername().equals(username)) {
                 return true;
             }
@@ -60,8 +34,8 @@ public class DataControlCenter {
         return false;
     }
 
-    public Bidder getBidderByUsername(String username) {
-        for (Bidder bidder : this.masterBidderList) {
+    public Bidder getBidderByUsername(String username) throws IOException, ClassNotFoundException {
+        for (Bidder bidder : this.deserializeAllBidders()) {
             if (bidder.getUsername().equals(username)) {
                 return bidder;
             }
@@ -69,8 +43,8 @@ public class DataControlCenter {
         return null;
     }
 
-    public NPContact getNPContactByUsername(String username) {
-        for (NPContact contact : this.masterNPContactList) {
+    public NPContact getNPContactByUsername(String username) throws IOException, ClassNotFoundException {
+        for (NPContact contact : this.deserializeAllNPContacts()) {
             if (contact.getUsername().equals(username)) {
                 return contact;
             }
