@@ -78,4 +78,8 @@ public class Auction implements Serializable {
     public int getAuctionID() {
         return this.auctionID;
     }
+
+    public void setOnlineStart(LocalDateTime startOnline) {
+        this.onlineStart = startOnline;
+    }
 }
