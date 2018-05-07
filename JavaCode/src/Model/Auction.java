@@ -1,7 +1,10 @@
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
 
-public class Auction {
+public class Auction implements Serializable {
+	private static final long serializableUID = 1L;
+	
     private String organization;
     private ArrayList<Item> items;
     private LocalDateTime start;
@@ -53,7 +56,7 @@ public class Auction {
     	return this.end;
     }
     
-    public void setOnlneStart(LocalDateTime date) {
+    public void setOnlineStart(LocalDateTime date) {
     	this.onlineStart = date;
     }
     
@@ -67,5 +70,16 @@ public class Auction {
     
     public ArrayList<Item> getItems() {
     	return this.items;
+    }
+    
+    @Override
+    public String toString() {
+    	StringBuilder sb = new StringBuilder();
+    	sb.append("Start Date: " + this.start);
+    	sb.append("End Date: " + this.end);
+    	sb.append("Opened Online: " + this.onlineStart);
+    	sb.append("Number of Items: " + this.items.size());
+    	
+    	return sb.toString();
     }
 }
