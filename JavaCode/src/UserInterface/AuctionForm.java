@@ -1,4 +1,4 @@
-//Shannon
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -6,17 +6,19 @@ import java.io.IOException;
 import java.time.*;
 import java.util.*;
 
+/**
+ * Creates an auction from user input and adds it to the master list of auctions.
+ * @author Shannon Weston
+ * @version 5/7/2018
+ */
 public class AuctionForm {
-	//These values can be adjusted per company policy.
-	//Auctions will not be scheduled beyond this limit.
+	//These values need to be adjusted per company policy.
 	private static final int MAX_SCHEDULE_OUT_DAYS = 60;
 	private static final int MIN_SCHEDULE_OUT_DAYS = 14;
 	
-	//Set by static constants 
 	private LocalDate farthestDate;
 	private LocalDate nearestDate;
 	
-	//input from NPConsole
     private NPConsole npConsole;
     private NPContact currContact;
     private DataControlCenter dataControl;
@@ -44,9 +46,6 @@ public class AuctionForm {
     }
 
     public void startAuctionApplication() throws IOException, ClassNotFoundException {
-        //System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
-        //TODO: Needs implementation on auction creation process
-        
         sb.append("\nWelcome to the Auction Creation Form! \n");
         System.out.println(sb.toString());
         setAuctionDate();
@@ -144,19 +143,16 @@ public class AuctionForm {
         		System.out.println("Your date or time is unavailable. Please try again. \n");
         	}
     	} else {
-    		//Date is too soon or too far away
     		System.out.println("Your requested date is too soon or too far away. Please try again");
     		setAuctionDate();
     	}
     }
     
     public void confirmAuctionDateTime() throws IOException, ClassNotFoundException {
-    	String date = "";
-    	
     	String inputFormatted = inputDate.format(fmt);
-    	sb.append("Your Auction is scheduled for: " + inputFormatted.toString() + ". Thank you! \n");
+    	sb.append("Your auction is scheduled for: " + inputFormatted.toString() + ". Thank you! \n");
     	createAuction();
-    	//Auction available for online bidding LocalDateTime.now().plusDays(MIN_SCHEDULE_OUT_DAYS);
+    	sb.append("Your auction will be open for online bidding on: " + inputDate.plusDays(MIN_SCHEDULE_OUT_DAYS).format(fmt));
     	System.out.println(sb.toString());
     	
     	npConsole.invokeMenu();
@@ -168,8 +164,6 @@ public class AuctionForm {
     	
     	LocalDateTime startOnline = LocalDateTime.now().plusDays(MIN_SCHEDULE_OUT_DAYS);
     	LocalDateTime start = inputDate;
-    	
-    	//This needs to be the given date
     	LocalDateTime end = endDate;
     	
     	auction.setStart(start);
