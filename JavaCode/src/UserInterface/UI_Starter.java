@@ -10,6 +10,7 @@ public class UI_Starter {
     /** Private constructor to prevent instantiation.*/
     private UI_Starter() { }
 
+
     public static void main(String... args) throws IOException, ClassNotFoundException {
         initVariables();
         invokeLoginScreen();
@@ -17,7 +18,7 @@ public class UI_Starter {
         stringBuilder.setLength(0);
     }
 
-    private static void initVariables() {
+    private static void initVariables() throws IOException {
         dataControl = new DataControlCenter();
         stringBuilder = new StringBuilder();
         input = new Scanner(System.in);

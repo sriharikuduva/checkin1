@@ -4,48 +4,7 @@ public class DataControlCenter {
 
     private Scanner inputScanner;
 
-    public DataControlCenter() {
-        try {
-            this.makeBiddersBinary("./JavaCode/Assets/bidders.bin");
-            this.makeNPContactBinary("./JavaCode/Assets/npcontact.bin");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void makeBiddersBinary(String output) throws IOException {
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(output));
-        this.inputScanner = new Scanner(getClass()
-                .getResourceAsStream("masterBidderList.txt"));
-        HashSet<Bidder> toSerialize = new HashSet<>();
-        while (this.inputScanner.hasNextLine()) {
-            String parts[] = this.inputScanner.nextLine().split(",");
-            this.cleanParts(parts);
-            toSerialize.add(new Bidder(parts[0], parts[1], parts[2],
-                    parts[3], parts[4], Integer.parseInt(parts[5].trim())));
-        }
-        oos.writeObject(toSerialize);
-    }
-
-    private void makeNPContactBinary(String output) throws IOException {
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(output));
-        this.inputScanner = new Scanner(getClass()
-                .getResourceAsStream("masterNPContactList.txt"));
-        HashSet<NPContact> toSerialize = new HashSet<>();
-        while (this.inputScanner.hasNextLine()) {
-            String parts[] = this.inputScanner.nextLine().split(",");
-            this.cleanParts(parts);
-            toSerialize.add(new NPContact(parts[0], parts[1], parts[2],
-                    parts[3], parts[4]));
-        }
-        oos.writeObject(toSerialize);
-    }
-
-    private void cleanParts(String parts[]) {
-        for (int i = 0; i < parts.length; i++) {
-            parts[i] = parts[i].trim();
-        }
-    }
+    public DataControlCenter() { }
 
     private HashSet<NPContact> deserializeAllNPContacts() throws IOException, ClassNotFoundException {
         return (HashSet<NPContact>) new ObjectInputStream(getClass().
