@@ -1,5 +1,7 @@
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Scanner;
 
@@ -21,7 +23,7 @@ public class BidderConsole {
         
     }
 
-    public void invokeMenu() {
+    public void invokeMenu() throws ClassNotFoundException, IOException {
         this.sb.append("\nWelcome " + this.currBidder.getName() +
                 "! You have been logged in as a Bidder.\n");
       
@@ -110,7 +112,7 @@ public class BidderConsole {
     [e] - Bid For An Item In An Auction
      */
     
-    private void choiceLogic(Character choice) {
+    private void choiceLogic(Character choice) throws ClassNotFoundException, IOException {
         if (choice == 'a') {
             /** View Auctions I Have Placed Bids On **/
             //HashSet<Auction> result = this.dataControl.getAuctionsCurrBidderHasBids(currBidder);
@@ -185,7 +187,7 @@ public class BidderConsole {
         this.sb.setLength(0);
     }
 
-    private void revert() {
+    private void revert() throws ClassNotFoundException, IOException {
         this.sb.append("\n\tr) Revert to main menu" +
                 "\nPlease enter your option letter (and press ENTER): ");
         System.out.print(this.sb);

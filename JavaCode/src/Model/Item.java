@@ -29,6 +29,10 @@ public class Item {
         return this.name;
     }
     
+    public ArrayList<Bid> getBids() {
+    	return this.bids;
+    }
+    
     //Shannon Weston
     public int getCurrentBid() {
         int bid = 0;
