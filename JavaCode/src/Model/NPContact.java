@@ -1,7 +1,6 @@
-import java.io.Serializable;
 import java.util.Arrays;
 
-public class NPContact extends User implements Serializable {
+public class NPContact extends User{
 
     private String orgName;
 
@@ -19,5 +18,4 @@ public class NPContact extends User implements Serializable {
     public String getName() {
         return this.orgName;
     }
-
 }

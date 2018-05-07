@@ -30,9 +30,10 @@ public class BidderConsole {
         this.sb.append("\td) View Auctions I Can Place Bids On\n");
         this.sb.append("\te) Bid For An Item In An Auction\n\n");
         this.sb.append("\tx) Logout and Terminate\n");
-        this.sb.append("\nPlease enter your option letter (and press ENTER): ");
+        this.sb.append("Please enter your option letter (and press ENTER): ");
         System.out.print(this.sb);
         this.sb.setLength(0);
+
     }
 
     /*

@@ -18,7 +18,7 @@ public class UI_Starter {
         stringBuilder.setLength(0);
     }
 
-    private static void initVariables() throws IOException {
+    private static void initVariables() {
         dataControl = new DataControlCenter();
         stringBuilder = new StringBuilder();
         input = new Scanner(System.in);
