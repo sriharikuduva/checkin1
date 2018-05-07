@@ -62,16 +62,21 @@ public class AuctionForm {
         sb.append("Enter your date as follows: MM.DD.YY HH:MMam/pm (ex: 5/6/18 3:44 PM) \n");
         System.out.print(sb.toString());
         
-        requestedDate= input.next();
+        requestedDate = input.next();
 
         
+        //Go Back
         if(requestedDate.equals("r")) {
         	npConsole.invokeMenu();
-        } else if(!requestedDate.contains(" : ")) {
-        	sb.setLength(0);
-        	sb.append("Please include a start time for your auction.");
-        	setAuctionDate();
         }
+//        else if(requestedDate.contains(":")) {
+//        	System.out.println("Found a time");
+//        } else if(!requestedDate.contains(":")) {
+//        	sb.setLength(0);
+//        	sb.append("Please include a start time for your auction.");
+//        	System.out.println(sb.toString());
+//        	setAuctionDate();
+//        }
 
         //Check that date is within farthestDate limit.
         if(isRequestedAuctionDateAvailable(requestedDate)) {
