@@ -26,7 +26,7 @@ public class Bidder extends User implements Serializable {
     //Hari Kuduva
     public boolean isBidPlaceableAuctionDate(final Auction auction) {
         //When method is invoked, Model.Bid is attempting to be placed NOW
-        return (LocalDateTime.now().compareTo(auction.getStartDate()) < 0); // only pass condition
+        return (LocalDateTime.now().compareTo(auction.getStart()) < 0); // only pass condition
     }
 
     //Shannon Weston

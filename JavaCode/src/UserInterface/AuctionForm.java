@@ -7,40 +7,38 @@ import java.util.*;
 
 public class AuctionForm {
 	//These values can be adjusted per company policy.
-	private static final int MAX_AUCTIONS_PER_DAY = 2;
 	//Auctions will not be scheduled beyond this limit.
 	private static final int MAX_SCHEDULE_OUT_DAYS = 60;
+	private static final int MIN_SCHEDULE_OUT_DAYS = 14;
 	
-	//Set with MAX_SCHEDULE_OUT_DAYS
+	//Set by constants
 	private LocalDate farthestDate;
+	private LocalDate nearestDate;
 	
-    private NPContact currContact;
-    private StringBuilder sb;
-    
-    private Auction newAuction;
-    
-    private Scanner input;
-    
+	//input from NPConsole
     private NPConsole npConsole;
+    private NPContact currContact;
+    private DataControlCenter dataControl;
+    
+    private StringBuilder sb;
+    private Scanner input;
     private DateTimeFormatter fmt;
-    private String requestedDate;
+    private String requestedDateAndTime;
 
-    public AuctionForm(NPContact currcontact, NPConsole npConsole) {
+    public AuctionForm(NPContact currcontact, NPConsole npConsole, DataControlCenter dataControl) {
         this.currContact = currcontact;
         farthestDate = LocalDate.now().plusDays(MAX_SCHEDULE_OUT_DAYS);
-        //farthestDate = LocalDateTime.now().plusDays(MAX_SCHEDULE_OUT_DAYS);
+        nearestDate = LocalDate.now().plusDays(MIN_SCHEDULE_OUT_DAYS);
         sb = new StringBuilder();
-        
-        newAuction = new Auction(currContact.getName());
         
         input = new Scanner(System.in);
         
         //"Go Back" location
         this.npConsole = npConsole;
+        this.dataControl = dataControl;
         
         fmt = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-        requestedDate = LocalDateTime.now().toString();
-        
+        requestedDateAndTime = "";
     }
 
     public void startAuctionApplication() {
@@ -55,70 +53,96 @@ public class AuctionForm {
     public void setAuctionDate() {
     	sb.setLength(0);
     	String farthestDateFormatted = farthestDate.format(fmt);
-        sb.append("We are currently accepting auctions up through " + farthestDateFormatted + ". \n");
-        //sb.append("We are currently accepting auctions up through " + farthestDate + ". \n");
+    	String nearestDateFormatted = nearestDate.format(fmt);
+
+        sb.append("We are currently accepting auctions from "+ nearestDateFormatted + " up to " + farthestDateFormatted + ". \n");
     	sb.append("Please enter your desired auction date below. \n");
-    	sb.append("\n");
-        sb.append("Enter your date as follows: MM.DD.YY HH:MMam/pm (ex: 5/6/18 3:44 PM) \n");
+    	//sb.append("\n");
+        sb.append("Enter your date as follows: MM/DD/YY HH:MM AM/PM (ex: 5/6/18 3:44 PM) \n");
+        sb.append("\tr) Return to Non-Profit Contact Main Menu. \n");
         System.out.print(sb.toString());
+        sb.setLength(0);
+    	
+        requestedDateAndTime = input.nextLine();
         
-        requestedDate = input.next();
+        String[] parts = requestedDateAndTime.split(" ");
+        //This is not a magic number, it is based on the required input to parse the date and time.
+        while(parts.length < 3) {
+        	sb.append("**ERROR**Please use format: MM/DD/YY HH:MM AM/PM (ex: 5/6/18 3:44 PM) \n \n");
 
+            sb.append("We are currently accepting auctions up through " + farthestDateFormatted + ". \n");
+        	sb.append("Please enter your desired auction date below. \n");
+        	//sb.append("\n");
+            sb.append("Enter your date as follows or revert: MM/DD/YY HH:MM AM/PM (ex: 5/6/18 3:44 PM) \n");
+            sb.append("\tr) Revert to main menu. \n");
+            System.out.print(sb.toString());
+            sb.setLength(0);
+            
+            requestedDateAndTime = input.nextLine();
+            parts = requestedDateAndTime.split(" ");
+        }
         
-        //Go Back
-        if(requestedDate.equals("r")) {
-        	npConsole.invokeMenu();
-        }
-//        else if(requestedDate.contains(":")) {
-//        	System.out.println("Found a time");
-//        } else if(!requestedDate.contains(":")) {
-//        	sb.setLength(0);
-//        	sb.append("Please include a start time for your auction.");
-//        	System.out.println(sb.toString());
-//        	setAuctionDate();
-//        }
+        checkAuction(parts);
+    }
 
-        //Check that date is within farthestDate limit.
-        if(isRequestedAuctionDateAvailable(requestedDate)) {
-        	setAuctionTime();
-        }
-    }
-    
-    public boolean isRequestedAuctionDateAvailable(String date) {
-    	boolean available = true;
-    	//probably a System check
-//    	if(numberOfExistingAuctionsOnDate(date) < MAX_AUCTIONS_PER_DAY) {
-//    		return false;
-//    	} 
-    	
-    	return available;
-    }
-    
-    public int numberOfAvailableAuctionTimes(String date) {
-    	return 1;
-    }
-    
-    public void setAuctionTime() {
-    	//display available auction times for date
-    	
-    	//back to date selection option in case user doesn't like times available
-//    	if(false) {
-//    		setAuctionDate();
-//    	}
-    	
-    	if(isRequestedAuctionTimeAvailable()) {
-        	confirmAuctionDateTime(requestedDate);
+    //Unit Test
+    public void checkAuction(String[] parts) {
+    	boolean valid = dataControl.isRequestedAuctionDateValid(parts);
+    	if(valid) {
+        	boolean available = dataControl.isRequestedAuctionDateAvailable(parts);
+        	if(available) {
+        		checkTime(parts);
+        	} else {
+        		System.out.println("Your Date is valid, your time is not available. Please Try Again.");
+        		setAuctionDate();
+        	}
+    	} else {
+    		//Date is too soon or too far away
+    		System.out.println("Your Date is too soon or too far away. Please try again");
+    		setAuctionDate();
     	}
     }
     
-    //Controller
-    public boolean isRequestedAuctionTimeAvailable() {
-    	boolean available = true;
-    	return available;
+    public void checkTime(String[] parts) {
+    	boolean available = dataControl.isTimeAvailable(parts);
+    	if(available) {
+    		confirmAuctionDateTime(parts);
+    	}
+    }
+  
+    
+    public void confirmAuctionDateTime(String[] parts) {
+    	String date = "";
+    	for(int i = 0; i < parts.length; i++) {
+    		date = date + parts[i];
+    	}
+    	sb.append("Your Auction is scheduled for: " + date + ". Thank you! \n");
+    	createAuction(parts);
+    	sb.append("Your Auction is now available online.");
+
+    	System.out.println(sb.toString());
+    	
+    	npConsole.invokeMenu();
     }
     
-    public void confirmAuctionDateTime(String date) {
-    	sb.append("Your Auction is scheduled for: " + date + ". Thank you! \n");
-    	npConsole.invokeMenu();
+    public void createAuction(String[] parts) {
+    	
+    	String date = parts[0];
+    	String time = parts[1];
+    	time.concat(parts[2]);
+    	
+    	Auction auction = new Auction();
+    	auction.setOrganization(currContact.getName());
+    	
+    	LocalDateTime start = LocalDateTime.now();
+    	
+    	//This needs to be the given date
+    	LocalDateTime end = LocalDateTime.now();
+    	
+    	auction.setStart(start);
+    	auction.setEnd(end);
+
+    	dataControl.addAuction(auction);
+    	
     }
 }

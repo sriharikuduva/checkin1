@@ -1,10 +1,19 @@
 import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.*;
+
+import javax.naming.AuthenticationNotSupportedException;
 public class DataControlCenter {
+	private static final int MAX_AUCTIONS_PER_DAY = 2;
 
     private Scanner inputScanner;
+    private ArrayList<Auction> masterListOfAuctions;
 
-    public DataControlCenter() { }
+    public DataControlCenter() {
+    	masterListOfAuctions = new ArrayList<Auction>();
+    }
 
     private HashSet<NPContact> deserializeAllNPContacts() throws IOException, ClassNotFoundException {
         return (HashSet<NPContact>) new ObjectInputStream(getClass().
@@ -86,5 +95,57 @@ public class DataControlCenter {
         //TODO: return auctions submitted by currContact
         System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
         return toSend;
+    }
+    
+    public void addAuction(Auction auction) {
+    	this.masterListOfAuctions.add(auction);
+    }
+    
+    public ArrayList<Auction> getAuctions() {
+    	return this.masterListOfAuctions;
+    }
+    
+    //For Unit Test
+    //No auction can be scheduled more than a set number of days from the current date, default of 60 days.
+    //No auction can be scheduled less than a set number of days from the current date, default of 14.
+    public boolean isRequestedAuctionDateValid(String[] parts) {
+    	boolean available = true;
+    	//is date > 14 days from now
+    	//is date < 60 days from now
+    	
+    	return available;
+    }
+    
+    //For Unit Test
+    //No more than two auctions can occur on the same day in the entire system
+    public boolean isRequestedAuctionDateAvailable(String[] parts) {
+    	boolean available = true;
+    	
+    	int count = 0;
+    	if(masterListOfAuctions.size() != 0) {
+        	for(int i = 0; i < masterListOfAuctions.size(); i++) {
+        		LocalDateTime dateTime = masterListOfAuctions.get(i).getStart();
+        		dateTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT));
+        		String[] parseDate = dateTime.toString().split(" ");
+        		
+        		for(int j = 0; j < parts.length; j++) {
+        			if(parts[j] == parseDate[j]) {
+        				count++;
+        			}
+        		}
+        		
+        		if(count == MAX_AUCTIONS_PER_DAY) {
+        			available = false;
+        		}
+        	}
+    	}
+
+    	return available;
+    }
+    
+    public boolean isTimeAvailable(String[] parts) {
+    	boolean available = true;
+    	
+    	return available;
     }
 }

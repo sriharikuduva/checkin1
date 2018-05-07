@@ -51,7 +51,7 @@ public class NPConsole {
             this.revert();
         } else if (choice == 'b') {
             /** Submit an auction request **/
-            new AuctionForm(currContact, this).startAuctionApplication();
+            new AuctionForm(currContact, this, dataControl).startAuctionApplication();
             //TODO: Go to AuctionForm.startAuctionApplication and implement logic
             //TODO: Diplay auction creation success/failiure to user
             this.revert();
