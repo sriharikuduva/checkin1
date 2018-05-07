@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Scanner;
 
 public class UI_Starter {
@@ -18,10 +19,11 @@ public class UI_Starter {
         stringBuilder.setLength(0);
     }
 
-    private static void initVariables() {
+    private static void initVariables() throws IOException, ClassNotFoundException {
         dataControl = new DataControlCenter();
         stringBuilder = new StringBuilder();
         input = new Scanner(System.in);
+        HashSet<Auction> test = dataControl.deserializeAllAuctions();
     }
 
     private static void invokeLoginScreen() throws IOException, ClassNotFoundException {

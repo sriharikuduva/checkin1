@@ -1,2 +1,2 @@
-Stinky Tofu, 1, 25, Stinks, url/image10
-Naan, 1, 25, Tasty, url/image11
+Stinky Tofu, 1, 25, Stinks, url/image10, 6
+Naan, 1, 25, Tasty, url/image11, 6
