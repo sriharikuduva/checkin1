@@ -246,6 +246,9 @@ public class DataControlCenter {
     	return allAuctions;
     }
 
+    /** Returns true if the auction date is valid
+     * @param inputDate the input date
+     * @return true if date is valid */
     public boolean isRequestedAuctionDateValid(LocalDateTime inputDate) {
     	boolean available = true;
     	LocalDate earliest = LocalDate.now().plusDays(MIN_SCHEDULE_OUT_DAYS);
@@ -261,14 +264,14 @@ public class DataControlCenter {
     	}
     	return available;
     }
-    
-    //For Unit Test
-    //No more than two auctions can occur on the same day in the entire system
+
+    /** Returns a boolean value depending if the auction date is available.
+     * @param inputDate start date of auction
+     * @param endDate end date of auction
+     * @return true if auction date is available */
     public boolean isRequestedAuctionDateAvailable(LocalDateTime inputDate, LocalDateTime endDate) throws IOException, ClassNotFoundException {
     	boolean available = true;
     	int count = 0;
-
-    	//iterate through hashSet of auctions
     	if(this.getAuctions().isEmpty()) {
     		return available;
     	}
@@ -278,13 +281,11 @@ public class DataControlCenter {
         	System.out.println("requested: " + inputDate.toString());
 
             if (auction.getStart().equals(inputDate)) {
-            	//System.out.println("Found date");
                 count++;
         		if(count == MAX_AUCTIONS_PER_DAY) {
         			available = false;
         			break;
         		}
-        		//Checks only if auction being requested is on a previously scheduled date
         		if(!isTimeAvailable(inputDate, endDate)) {
         			available = false;
         		}
@@ -292,14 +293,16 @@ public class DataControlCenter {
         }
     	return available;
     }
-    
+
+    /** Returns boolean value depending if auction time is available
+     * @param inputDate start date
+     * @param endDate end date
+     * @return boolean */
     public boolean isTimeAvailable(LocalDateTime inputDate, LocalDateTime endDate) throws IOException, ClassNotFoundException {
     	LocalTime time = inputDate.toLocalTime();
     	LocalTime endInput = endDate.toLocalTime();
     	boolean available = true;
-    	
-    	//iterate through hashSet of auctions
-        for (Auction auction : this.getAuctions()) {
+    	for (Auction auction : this.getAuctions()) {
             if (time.isBefore(auction.getEnd().toLocalTime().plusHours(STOP_TO_START_HOUR_GAP))) {
             	available = false;
             }
@@ -310,9 +313,8 @@ public class DataControlCenter {
     	return available;
     }
 	
-	 //
-    public boolean isAuctionAvailableForSubmissionRequest(LocalDateTime inputDate, ArrayList<Auction> auctions) {
 
+    public boolean isAuctionAvailableForSubmissionRequest(LocalDateTime inputDate, ArrayList<Auction> auctions) {
         int counter = 0;
         for (Auction auction : auctions) {
                if (inputDate.toLocalTime().isBefore(auction.getStart().toLocalTime()) && counter <= 2) {
@@ -323,27 +325,8 @@ public class DataControlCenter {
 
        return false;
     }
-    
 
-//    public boolean isNPContactAuctionSlotFilled() {
-//    	for(Auction a : this.masterListOfAuctions)
-//    }
-
-    
-//    /** DEBUGGIN PURPOSES (Test to see if serialization for bidder's bids is working) **/
-//    public void placeBidDebugger(Bidder currBidder, int amount) throws IOException, ClassNotFoundException {
-//        //Places a bid on OON auction (Auc.ID = 5) on the first item under currBider name and amount.
-//        Auction oonAuction = null;
-//        for (Auction a : this.deserializeAllAuctions()) {
-//            if (a.getAuctionID() == 5) {
-//                oonAuction = a;
-//            }
-//        }
-//        Item item = oonAuction.getItems().get(0);
-//        item.addBid(new Bid(currBidder.getName(), item.getName(), amount));
-//        this.updatedAuctions.add(oonAuction);
-//    }
-
+    /** Logs the bidder out and serializes the data. */
     public void logOutBidder() throws IOException, ClassNotFoundException {
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./JavaCode/Assets/auctions.bin"));
         HashSet<Auction> toSerialize = this.deserializeAllAuctions();
@@ -359,7 +342,11 @@ public class DataControlCenter {
         oos.writeObject(toSerialize);
     }
 
+    /** Places the bid
+     * @param item the item
+     * @param bid the bid */
     public void placeBid(Item item, Bid bid) {
+            //this.updatedAuctions.add(/*NEED AUCTION PARAM HERE*/);
     		item.addBid(bid);
     }
 
