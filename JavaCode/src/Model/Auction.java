@@ -10,6 +10,8 @@ import java.util.*;
  * @author Hari G Kuduva
  */
 public class Auction implements Serializable {
+	private static final int MIN_SCHEDULE_OUT_DAYS = 14;
+	
     /** Organization's name **/
     private String organization;
     /** List of items that the auction has **/
@@ -55,7 +57,7 @@ public class Auction implements Serializable {
         this.creationDate = LocalDateTime.now();
         this.auctionID = auctionID;
         //fmt = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-        onlineStart = LocalDateTime.now();
+        onlineStart = creationDate.plusDays(MIN_SCHEDULE_OUT_DAYS);
     }
 
     /** Creates an auction with 1 parameter
@@ -65,14 +67,14 @@ public class Auction implements Serializable {
         this.creationDate = LocalDateTime.now();
         this.items = new ArrayList<Item>();
         //fmt = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-        onlineStart = LocalDateTime.now();
+        onlineStart = creationDate.plusDays(MIN_SCHEDULE_OUT_DAYS);
     }
 
     /** Creates an empty auction with 0 parameters */
     public Auction() {
         //Empty Auction for BidderConsole.java
     	this.items = new ArrayList<Item>();
-    	onlineStart = LocalDateTime.now();
+    	onlineStart = creationDate.plusDays(MIN_SCHEDULE_OUT_DAYS);
     }
     
     public void setOrganization(String organization) {
@@ -138,5 +140,4 @@ public class Auction implements Serializable {
     	return sb.toString();
     }
     
-    //Move onlineStart plus 14 days from AuctionForm to here.
 }
