@@ -196,8 +196,27 @@ public class DataControlCenter {
         boolean check3 = currBidder.isBidPlaceableItemWithBids(numberOfItemsWithBidInAnAuction);
         boolean check4 = currBidder.isBidPlaceableMinimumBid(item, bid);
         
+        if (!check1) {
+        	
+        }
+        
+        if (!check2) {
+        		System.out.println("\tSorry, you have already reached the maximum number of items\n"
+        				+ "\tyou could bid on in an auction.");
+        }
+        
+        if (!check3) {
+        	
+        }
+        
+        if (!check4) {
+        		System.out.println("\tSorry, the amount you have entered is less than the\n"
+        				+ "\tbid price of this item."); 
+        }
+        
         if (check1 && check2 && check3 && check4) {
         		placeBid(auction, item, bid);
+        		System.out.println("Congradulations. You have placed a bid successfully!");
         } 
     }
 

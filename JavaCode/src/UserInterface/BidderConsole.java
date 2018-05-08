@@ -179,7 +179,7 @@ public class BidderConsole {
 	  			char itemOpt = this.input.next().charAt(0);
 	  			if (itemOptions.containsKey(itemOpt)) {
 	  				System.out.println("Name: " + itemOptions.get(itemOpt).getName() 
-	  						+ "Quantity: " + itemOptions.get(itemOpt).getQuantity() + "\n" 
+	  						+ "\tQuantity: " + itemOptions.get(itemOpt).getQuantity() + "\n" 
 	  						+ "Description: " + itemOptions.get(itemOpt).getDescription() + "\n"
 	  						+ "Starting Bid: " + itemOptions.get(itemOpt).getCurrentBid() + "\n");
 	  				System.out.println("\nPlease enter the amount you would like to bid for this item (and press ENTER): ");
