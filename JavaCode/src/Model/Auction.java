@@ -8,6 +8,7 @@ import java.util.*;
 
 /**
  * @author Hari G Kuduva
+ * @author Shannon Weston
  */
 public class Auction implements Serializable {
 	private static final int MIN_SCHEDULE_OUT_DAYS = 14;
