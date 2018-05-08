@@ -17,6 +17,8 @@ public class Item implements Serializable {
     /** Item's current list of bids **/
     private ArrayList<Bid> bids;
 
+    private static final long serialVersionUID = 1;
+
     /** Creates an Item with 5 parameters
      * @param name  Item's name
      * @param quantity Item's quantity
@@ -30,6 +32,11 @@ public class Item implements Serializable {
         this.description = description;
         this.imagePath = imagePath;
         this.bids = new ArrayList<>();
+    }
+
+    public String toString() {
+        return "Item name: " + this.name + ", Quantity: " + this.quantity + ", StartingBid: " + this.startingBid +
+                ", Description: " + this.description;
     }
 
     //Group
