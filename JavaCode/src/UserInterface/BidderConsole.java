@@ -138,10 +138,6 @@ public class BidderConsole {
             this.revert();
         } else if (choice == 'e') {
             /** Bid For An Item In An Auction **/
-            /* Need to get the auction choice from the user before hand and pass in as currAuction */
-            //this.dataControl.makeBid(currAuction, currBidder);
-            //TODO: Go to this.dataControl.makeBid(currAuction, currBidder) and implement logic?
-            //TODO: Display verification to user (Pass/ Fail)
         		StringBuilder sb = new StringBuilder();
         		HashSet<Auction> auctions = this.dataControl.getAuctionsCurrBidderCanBidOn(currBidder);
         		HashMap<Character, Auction> auctionOptions = new HashMap<>();

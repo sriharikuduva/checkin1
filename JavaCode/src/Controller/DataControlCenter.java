@@ -361,8 +361,6 @@ public class DataControlCenter {
         oos.writeObject(toSerialize);
     }
 
-
-
     /** Places the bid
      * @param item the item
      * @param bid the bid */
