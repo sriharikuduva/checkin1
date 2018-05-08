@@ -86,7 +86,7 @@ public class Auction implements Serializable {
     	this.onlineStart = date;
     }
     
-    public LocalDateTime getOnlineStart(LocalDateTime date) {
+    public LocalDateTime getOnlineStart() {
     	return onlineStart;
     }
 
