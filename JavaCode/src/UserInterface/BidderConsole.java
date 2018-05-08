@@ -36,35 +36,35 @@ public class BidderConsole {
         this.sb.append("\nWelcome " + this.currBidder.getName() +
                 "! You have been logged in as a Bidder.\n");
       
-        //Populate bidder's inventory
-        String fileName = currBidder.getName();
-        
-        this.inputScanner = new Scanner(getClass()
-        		.getResourceAsStream(fileName + ".txt")); //files are named after bidder's name
-        
-		while (this.inputScanner.hasNextLine()) {
-			String parts[] = this.inputScanner.nextLine().split(",");
-			this.cleanParts(parts); //Trim off padding
-			ItemWrapper item = new ItemWrapper(parts[0], LocalDateTime.parse(parts[1], formatter), 
-					LocalDateTime.parse(parts[2], formatter), parts[3], Integer.parseInt(parts[4].trim()), 
-					Integer.parseInt(parts[5].trim()), parts[6], parts[7]);
-			itemsWithAucName.add(item);
-			//item.toString();
-		}
-		
-		for (ItemWrapper iwan : itemsWithAucName) {
-			if (currBidder.auctions.containsKey(iwan.getOrgName())) {
-				Item itemToAdd = iwan.getItem();
-				currBidder.auctions.get(iwan.getOrgName()).items.add(itemToAdd);
-			} else {
-				Auction tempAuction = iwan.getAuction();
-				tempAuction.items.add(iwan.getItem());
-				currBidder.auctions.put(iwan.getOrgName(), tempAuction);
-			}
-		}
-		
-        	this.displayOptionsWithCheck();
-        //this.displayOptions();
+//        //Populate bidder's inventory
+//        String fileName = currBidder.getName();
+//        
+//        this.inputScanner = new Scanner(getClass()
+//        		.getResourceAsStream(fileName + ".txt")); //files are named after bidder's name
+//        
+//		while (this.inputScanner.hasNextLine()) {
+//			String parts[] = this.inputScanner.nextLine().split(",");
+//			this.cleanParts(parts); //Trim off padding
+//			ItemWrapper item = new ItemWrapper(parts[0], LocalDateTime.parse(parts[1], formatter), 
+//					LocalDateTime.parse(parts[2], formatter), parts[3], Integer.parseInt(parts[4].trim()), 
+//					Integer.parseInt(parts[5].trim()), parts[6], parts[7]);
+//			itemsWithAucName.add(item);
+//			//item.toString();
+//		}
+//		
+//		for (ItemWrapper iwan : itemsWithAucName) {
+//			if (currBidder.auctions.containsKey(iwan.getOrgName())) {
+//				Item itemToAdd = iwan.getItem();
+//				currBidder.auctions.get(iwan.getOrgName()).items.add(itemToAdd);
+//			} else {
+//				Auction tempAuction = iwan.getAuction();
+//				tempAuction.items.add(iwan.getItem());
+//				currBidder.auctions.put(iwan.getOrgName(), tempAuction);
+//			}
+//		}
+//		
+//        	this.displayOptionsWithCheck();
+        this.displayOptions();
         this.choiceLogic(this.input.next().charAt(0));
     }
     
@@ -156,8 +156,8 @@ public class BidderConsole {
     			
     			
             
-    			Auction dummyAuction = new Auction();
-            this.dataControl.getItemsCurrBidderHasBidsOnInAnAuction(currBidder, dummyAuction);
+    			//Auction dummyAuction = new Auction();
+            //this.dataControl.getItemsCurrBidderHasBidsOnInAnAuction(currBidder, dummyAuction);
     			
             this.revert();
         } else if (choice == 'c') {
