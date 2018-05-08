@@ -45,12 +45,18 @@ public class AuctionForm {
         endDate = LocalDateTime.now();
     }
 
+    /** Starts the auction application process.
+     * @throws IOException the exception risk
+     * @throws ClassNotFoundException the exception risk */
     public void startAuctionApplication() throws IOException, ClassNotFoundException {
         sb.append("\nWelcome to the Auction Creation Form! \n");
         System.out.println(sb.toString());
         setAuctionDate();
     }
-    
+
+    /** Sets the auction date.
+     * @throws IOException the exception risk
+     * @throws ClassNotFoundException the exception risk */
     public void setAuctionDate() throws IOException, ClassNotFoundException {
     	sb.setLength(0);
     	String farthestDateFormatted = farthestDate.format(fmt);
@@ -90,7 +96,8 @@ public class AuctionForm {
 
         confirmAuctionDateTime();
     }
-    
+
+    /** Gets the duration of the auction from the user. **/
     public void getDuration() {
     	sb.setLength(0);
     	sb.append("How long would you like your auction to run? \n");
@@ -101,8 +108,9 @@ public class AuctionForm {
     	
     	endDate = inputDate.plusHours(hours);
     }
-    
-    
+
+    /** Formats the given time
+     * @param parts the time data to be formatted */
     public void formatTime(String[] parts) {
     	String[] temp = parts[0].split("/");
         int[] monthDayYear = new int[3];
@@ -134,7 +142,9 @@ public class AuctionForm {
     	return hour;
     }
 
-    //Unit Test
+    /** Checks the auction to see if it is available for scheduling.
+     * @throws IOException exception risk
+     * @throws ClassNotFoundException exception risk */
     public void checkAuction() throws IOException, ClassNotFoundException {
     	boolean valid = dataControl.isRequestedAuctionDateValid(inputDate);
     	if(valid) {
@@ -147,18 +157,21 @@ public class AuctionForm {
     		setAuctionDate();
     	}
     }
-    
+
+    /** Displays confirmation to the user that their auction has been scheduled.
+     * @throws IOException exception risk
+     * @throws ClassNotFoundException exception risk */
     public void confirmAuctionDateTime() throws IOException, ClassNotFoundException {
     	String inputFormatted = inputDate.format(fmt);
     	sb.append("Your auction is scheduled for: " + inputFormatted.toString() + ". Thank you! \n");
     	createAuction();
     	sb.append("Your auction will be open for online bidding on: " + inputDate.plusDays(MIN_SCHEDULE_OUT_DAYS).format(fmt));
     	System.out.println(sb.toString());
-    	
     	npConsole.invokeMenu();
     }
-    
-    public void createAuction() throws ClassNotFoundException, IOException {
+
+    /** Creates the auction with the info gathered from the user. **/
+    public void createAuction() {
     	Auction auction = new Auction();
     	auction.setOrganization(currContact.getName());
     	auction.setAuctionId(this.dataControl.getNextAvailableAuctionId());

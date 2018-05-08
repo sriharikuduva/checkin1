@@ -1,6 +1,8 @@
 import java.io.Serializable;
 
-/** Represents a bid. */
+/** Represents a bid.
+ * @author Hari G Kuduva
+ */
 public class Bid implements Serializable {
     /** Name of the bidder. **/
     private String bidderName;

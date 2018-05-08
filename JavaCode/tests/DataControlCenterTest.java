@@ -1,5 +1,7 @@
 import org.junit.Before;
 import org.junit.Test;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -33,12 +35,17 @@ public class DataControlCenterTest {
         setNumberOfDayTwo = 14;
         setNumberOfDayThree = 10;
 
+        auctions = new ArrayList<Auction>();
+        auctionsOne = new ArrayList<Auction>();
+        auctionstwo = new ArrayList<Auction>();
+
         auction = new Auction("American Cancer Society", LocalDateTime.now().plusDays(1),
                 LocalDateTime.now().plusDays(20),  1);
         auctiontwo = new Auction("American Red Cross", LocalDateTime.now().plusDays(1),
                 LocalDateTime.now().plusDays(30),  2);
         auctionThree = new Auction("Outlook on India", LocalDateTime.now().plusDays(1),
                 LocalDateTime.now().plusDays(15),  2);
+
         auctions.add(auction); auctions.add(auctiontwo); auctions.add(auctionThree);
         auctionsOne.add(auction); auctionsOne.add(auctiontwo);
         auctionstwo.add(auction);
@@ -77,14 +84,17 @@ public class DataControlCenterTest {
     }
 
     @Test
-    public void isAuctionAvailableForSubmissionRequest_forSetOfAuctionnumbers_true() {
-        assertTrue(dataControlCenter.isAuctionAvailableForSubmissionRequest(LocalDateTime.now(), auctionstwo));
+    public void isAuctionAvailableForSubmissionRequest_forSetOfAuctionnumbers_fail() {
+        assertFalse(dataControlCenter.isAuctionAvailableForSubmissionRequest(LocalDateTime.now(), auctionstwo));
     }
 
     @Test
     public void isAuctionAvailableForSubmissionRequest_forSetOfAuctionnumbers_false() {
         assertFalse(dataControlCenter.isAuctionAvailableForSubmissionRequest(LocalDateTime.now(), auctions));
     }
+
+
     
 
 }
+

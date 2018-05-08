@@ -13,6 +13,8 @@ import javax.naming.AuthenticationNotSupportedException;
 
 import sun.security.action.GetBooleanAction;
 
+/** Console for the logged in Bidder.
+ * @author Hari Kuduva */
 public class BidderConsole {
 
     private Bidder currBidder;
@@ -29,6 +31,9 @@ public class BidderConsole {
         this.input = new Scanner(System.in);
     }
 
+    /** Invokes the main menu for the bidder.
+     * @throws ClassNotFoundException exception risk
+     * @throws IOException exception risk */
     public void invokeMenu() throws ClassNotFoundException, IOException {
         this.sb.append("\nWelcome " + this.currBidder.getName() +
                 "! You have been logged in as a Bidder.\n");
@@ -36,22 +41,8 @@ public class BidderConsole {
         this.displayOptions();
         this.choiceLogic(this.input.next().charAt(0));
     }
-    
-//    private void displayOptionsWithCheck() {
-//    		this.sb.append("\nHere are your options: \n");
-//        if (currBidder.auctions.size() > 0) { // Don't show this option if bidder has no bids.
-//    			this.sb.append("\ta) View Auctions I Have Placed Bids On\n");
-//        		this.sb.append("\tb) View Items I Have Placed Bids On (In An Auction)\n");
-//        		this.sb.append("\tc) View Items I Have Placed Bids On (In All Auctions)\n");
-//        }
-//        this.sb.append("\td) View Auctions I Can Place Bids On\n");
-//        this.sb.append("\te) Bid For An Item In An Auction\n\n");
-//        this.sb.append("\tx) Logout and Terminate\n");
-//        this.sb.append("Please enter your option letter (and press ENTER): ");
-//        System.out.print(this.sb);
-//        this.sb.setLength(0);
-//    }
-    
+
+    /** Display the bidders options. **/
     private void displayOptions() {
         this.sb.append("\nHere are your options: \n");
         this.sb.append("\ta) View Auctions I Have Placed Bids On\n");
@@ -66,6 +57,10 @@ public class BidderConsole {
 
     }
 
+    /** Choice logic to decide the behavior
+     * @param choice determines the behavior
+     * @throws ClassNotFoundException exception risk
+     * @throws IOException exception risk */
     private void choiceLogic(Character choice) throws ClassNotFoundException, IOException {
         if (choice == 'a') {
             /** View Auctions I Have Placed Bids On **/
@@ -192,10 +187,11 @@ public class BidderConsole {
 	  			}
 			}
 			sb.setLength(0);
-            
-            //Auction dummyAuction = new Auction();
-            //this.dataControl.makeBid(dummyAuction, currBidder);
         		this.revert();
+
+        } else if (choice == 'x') {
+            this.dataControl.logOutBidder();
+            this.sb.append("You have been logged out, terminating...\n");
         }
 //        else if (choice == 'x') {
 //            this.dataControl.logOutBidder();
@@ -220,6 +216,9 @@ public class BidderConsole {
         this.sb.setLength(0);
     }
 
+    /** Reverts back the the main bidder menu.
+     * @throws ClassNotFoundException exception risk
+     * @throws IOException exception risk */
     private void revert() throws ClassNotFoundException, IOException {
         this.sb.append("\n\tr) Revert to main menu" +
                 "\nPlease enter your option letter (and press ENTER): ");

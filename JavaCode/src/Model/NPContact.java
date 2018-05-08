@@ -1,6 +1,8 @@
 import java.io.Serializable;
 
-/** Represents a Non-profit organization*/
+/** Represents a Non-profit organization.
+ * @author Hari G Kuduva
+ */
 public class NPContact extends User implements Serializable {
 
     /** Organization name of non profit. **/

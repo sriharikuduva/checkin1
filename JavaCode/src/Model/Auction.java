@@ -5,6 +5,10 @@ import java.io.Serializable;
 import java.util.*;
 
 /** Meant to represent an auction with its entities */
+
+/**
+ * @author Hari G Kuduva
+ */
 public class Auction implements Serializable {
     /** Organization's name **/
     private String organization;

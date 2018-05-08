@@ -130,14 +130,6 @@ public class DataControlCenter {
 	            	}
 	        	}
         }
-
-//        for (Item item : specific.getItems()) {
-//            for (Bid bid : item.getBids()) {
-//                if (currBidder.getName().equals(bid.getBidder())) {
-//                    toSend.add(item);
-//                }
-//            }
-//        }
         return toSend;
     }
 
@@ -193,7 +185,6 @@ public class DataControlCenter {
         HashSet<Auction> toSerialize = this.deserializeAllAuctions();
         for (Auction a : this.addedAuctions) {
             toSerialize.add(a);
-            //System.out.println("serialized: " + a.toString());
         }
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./JavaCode/Assets/auctions.bin"));
         oos.writeObject(toSerialize);
@@ -294,6 +285,7 @@ public class DataControlCenter {
        return false;
     }
     
+
 //    public boolean isNPContactAuctionSlotFilled() {
 //    	for(Auction a : this.masterListOfAuctions)
 //    }
@@ -327,7 +319,7 @@ public class DataControlCenter {
         this.updatedAuctions.clear();
         oos.writeObject(toSerialize);
     }
-    
+
     public void placeBid(Auction auction, Item item, Bid bid, Bidder currBidder) {
     		// TODO: ObjectOutputStream oos = new ObjectOutputStream("./JavaCode/Assets/")
     }
