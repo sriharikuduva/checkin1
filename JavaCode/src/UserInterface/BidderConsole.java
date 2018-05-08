@@ -92,7 +92,7 @@ public class BidderConsole {
             StringBuilder sb = new StringBuilder();
 
   			char optionNumber = 'a';
-  			for (Auction auc : currBidder.auctions.values()) {
+  			for (Auction auc : auctions) {
   				sb.append("\t" + optionNumber + ") ");
   				sb.append(auc.getOrganization());
   				sb.append("\n");
@@ -100,6 +100,8 @@ public class BidderConsole {
   				optionNumber++;
   			}
   			
+  			System.out.print(sb);
+  			System.out.println("\nPlease enter your option letter (and press ENTER): ");
   			char opt = this.input.next().charAt(0);
   			
   			if (options.containsKey(opt)) {

@@ -116,7 +116,7 @@ public class DataControlCenter {
     public HashSet<Item> getItemsCurrBidderHasBidsOnInAnAuction(Bidder currBidder, Auction specific) throws IOException, ClassNotFoundException {
         HashSet<Item> toSend = new HashSet<>();
         //TODO: return a Set of Items the Bidder has bids on in the specific Auction
-        System.out.println("** NOTICE: NEEDS DEBUGGING! **");
+        //System.out.println("** NOTICE: NEEDS DEBUGGING! **");
 
         for(Auction a : this.deserializeAllAuctions()) {
         	if(a.toString().equals(specific.toString())) {
