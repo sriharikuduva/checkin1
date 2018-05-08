@@ -2,6 +2,11 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Scanner;
 
+/**
+ * 
+ * @author Shannon Weston
+ * @version 5/7/2018
+ */
 public class NPConsole {
 	//ascii value of 'a'
 	private static final int CHOICE = 97;

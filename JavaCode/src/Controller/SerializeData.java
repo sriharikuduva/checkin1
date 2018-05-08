@@ -51,7 +51,7 @@ public class SerializeData {
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(output));
         inputScanner = new Scanner(SerializeData.class
                 .getResourceAsStream("masterAuctionList.txt"));
-        HashSet<Auction> toSerialize = new HashSet<>();
+        HashSet<Auction> toSerialize = new HashSet<Auction>();
         while (inputScanner.hasNextLine()) {
             String parts[] = inputScanner.nextLine().split(",");
             cleanParts(parts);

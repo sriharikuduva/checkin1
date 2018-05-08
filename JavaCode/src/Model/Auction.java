@@ -20,6 +20,7 @@ public class Auction implements Serializable {
         this(organization, startClock, endClock, -1);
         this.items = new ArrayList<Item>();
         //fmt = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
+        onlineStart = LocalDateTime.now();
     }
 
     public Auction(String organization, LocalDateTime startClock, LocalDateTime endClock, int auctionID) {
@@ -30,6 +31,7 @@ public class Auction implements Serializable {
         this.creationDate = LocalDateTime.now();
         this.auctionID = auctionID;
         //fmt = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
+        onlineStart = LocalDateTime.now();
     }
 
     public Auction (String organization) {
@@ -37,11 +39,13 @@ public class Auction implements Serializable {
         this.creationDate = LocalDateTime.now();
         this.items = new ArrayList<Item>();
         //fmt = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
+        onlineStart = LocalDateTime.now();
     }
     
     public Auction() {
         //Empty Auction for BidderConsole.java
     	this.items = new ArrayList<Item>();
+    	onlineStart = LocalDateTime.now();
     }
     
     public void setOrganization(String organization) {

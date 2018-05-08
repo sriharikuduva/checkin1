@@ -4,6 +4,11 @@ import java.time.LocalTime;
 import java.time.LocalDateTime;
 import java.util.*;
 
+/** 
+ * 
+ * @author Shannon Weston
+ * @version 5/7/2018
+ */
 public class DataControlCenter {
 	//These values can be adjusted per company policy.
 	/**Sets the farthest date an auction can be scheduled.*/
@@ -134,11 +139,12 @@ public class DataControlCenter {
         //TODO: return auctions submitted by currContact
         System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
 
-        for(Auction auction : this.getAuctions()) {
-        	if(auction.getOrganization() == currContact.getName()) {
-        		toSend.add(auction);
+        for(Auction a : this.deserializeAllAuctions()) {
+        	if(a.getOrganization().equals(currContact.getName())) {
+        		toSend.add(a);
         	}
         }
+        
         return toSend;
     }
 
@@ -232,7 +238,12 @@ public class DataControlCenter {
         }
     	return available;
     }
+    
+//    public boolean isNPContactAuctionSlotFilled() {
+//    	for(Auction a : this.masterListOfAuctions)
+//    }
 
+    
     /** DEBUGGIN PURPOSES (Test to see if serialization for bidder's bids is working) **/
     public void placeBidDebugger(Bidder currBidder, int amount) throws IOException, ClassNotFoundException {
         //Places a bid on OON auction (Auc.ID = 5) on the first item under currBider name and amount.
@@ -261,4 +272,6 @@ public class DataControlCenter {
         this.updatedAuctions.clear();
         oos.writeObject(toSerialize);
     }
+    
+
 }
