@@ -158,6 +158,9 @@ public class DataControlCenter {
         		toSend.add(a);
         	}
         }
+        for (Auction a : this.addedAuctions) {
+            toSend.add(a);
+        }
         
         return toSend;
     }
