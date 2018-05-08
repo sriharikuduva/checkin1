@@ -37,14 +37,6 @@ public class BidderConsole {
 
     }
 
-    /*
-    [a] - View Auctions I Have Placed Bids On
-    [b] - View Items I Have Placed Bids On (In An Auction)
-    [c] - View Items I Have Placed Bids On (In All Auctions)
-    [d] - View Auctions I Can Place Bids On
-    [e] - Bid For An Item In An Auction
-     */
-    
     private void choiceLogic(Character choice) throws ClassNotFoundException, IOException {
         if (choice == 'a') {
             /** View Auctions I Have Placed Bids On **/
@@ -83,7 +75,23 @@ public class BidderConsole {
             //TODO: Display verification to user (Pass/ Fail)
             this.revert();
         } else if (choice == 'x') {
+            this.dataControl.logOutBidder();
             this.sb.append("You have been logged out, terminating...\n");
+        } else if (choice == 'y') {
+            /** FOR DEBUGGING PURPOSE, REMOVE THIS ELSEIF BRANCH WHEN SUBMITTING **/
+            this.dataControl.placeBidDebugger(currBidder, 50);
+            this.revert();
+        } else if (choice == 'z') {
+            /** FOR DEBUGGING PURPOSE, REMOVE THIS ELSEIF BRANCH WHEN SUBMITTING **/
+            for (Auction a : this.dataControl.deserializeAllAuctions()) {
+                if (a.getAuctionID() == 5) {
+                    Item i = a.getItems().get(0);
+                    for (Bid bid : i.getBids()) {
+                        System.out.println("Bidder name: " + bid.getBidder() + ", Bid amount = " + bid.getAmount() +
+                                ", Item name: " + bid.getItem());
+                    }
+                }
+            }
         }
         System.out.print(this.sb);
         this.sb.setLength(0);
