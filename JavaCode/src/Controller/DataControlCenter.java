@@ -265,6 +265,20 @@ public class DataControlCenter {
         }
     	return available;
     }
+	
+	 //
+    public boolean isAuctionAvailableForSubmissionRequest(LocalDateTime inputDate, ArrayList<Auction> auctions) {
+
+        int counter = 0;
+        for (Auction auction : auctions) {
+               if (inputDate.toLocalTime().isBefore(auction.getStart().toLocalTime()) && counter <= 2) {
+                   return true;
+               }
+               counter++;
+           }
+
+       return false;
+    }
     
 //    public boolean isNPContactAuctionSlotFilled() {
 //    	for(Auction a : this.masterListOfAuctions)
