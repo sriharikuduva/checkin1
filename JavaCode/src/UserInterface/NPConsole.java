@@ -1,7 +1,15 @@
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Scanner;
 
+/**
+ * 
+ * @author Shannon Weston
+ * @version 5/7/2018
+ */
 public class NPConsole {
+	//ascii value of 'a'
+	private static final int CHOICE = 97;
 
     private NPContact currContact;
     private DataControlCenter dataControl;
@@ -14,11 +22,9 @@ public class NPConsole {
         this.dataControl = dataControl;
         this.sb = new StringBuilder();
         this.input = new Scanner(System.in);
-
     }
 
-
-    public void invokeMenu() {
+    public void invokeMenu() throws IOException, ClassNotFoundException {
         this.sb.append("\nWelcome " + this.currContact.getName() +
                 "! You have been logged in as a Non-Profit Contact.\n");
         this.displayOptions();
@@ -35,34 +41,24 @@ public class NPConsole {
         this.sb.setLength(0);
     }
 
-
-    /* Welcome ContactName! Please make a selection:
-    [a] - View all submitted auction requests
-    [b] - Submit an auction request
-    [x] - Logout/Exit */
-
-
-    private void choiceLogic(Character choice) {
+    private void choiceLogic(Character choice) throws IOException, ClassNotFoundException {
         if (choice == 'a') {
             /** View all submitted auction requests **/
             HashSet<Auction> result = this.dataControl.getSubmittedAuctionsByNPContact(currContact);
-            //TODO: Go to this.dataControl.getSubmittedAuctionsByNPContact(currContact) and implement logic
-            //TODO: Display result to user
+            viewAuctions(result);
             this.revert();
         } else if (choice == 'b') {
-            /** Submit an auction request **/
             new AuctionForm(currContact, this, dataControl).startAuctionApplication();
-            //TODO: Go to AuctionForm.startAuctionApplication and implement logic
-            //TODO: Diplay auction creation success/failiure to user
             this.revert();
         } else if (choice == 'x') {
             this.sb.append("You have been logged out, terminating...\n");
+            this.dataControl.logOutNP();
         }
         System.out.print(this.sb);
         this.sb.setLength(0);
     }
 
-    private void revert() {
+    private void revert() throws IOException, ClassNotFoundException {
         this.sb.append("\n\tr) Revert to main menu" +
                 "\nPlease enter your option letter (and press ENTER): ");
         System.out.print(this.sb);
@@ -72,7 +68,15 @@ public class NPConsole {
             this.choiceLogic(this.input.next().charAt(0));
         }
     }
-
-
-
+    
+    private void viewAuctions(HashSet<Auction> auctions) {
+        sb.append("Here are all of your auctions: \n");
+        for(Auction auction : auctions)  {
+        	int i = CHOICE;
+        	sb.append("\t" + (char) i + ")" + auction.toString());
+        	i++;
+        }
+        sb.append("You may choose an auction to view items. \n");
+        sb.append("Please enter your option letter (and press ENTER): ");
+    }
 }

@@ -1,20 +1,25 @@
+import java.io.Serializable;
 
-import java.util.*;
-  
-public class Bid {
-    //Group
+/** Represents a bid. */
+public class Bid implements Serializable {
+    /** Name of the bidder. **/
     private String bidderName;
+    /** Name of the item. **/
     private String itemName;
+    /** Bid amount. **/
     private int amount;
 
-    //Group
+
+    /** Creates a bid with 3 parameters
+     * @param bidderName the bidder's name
+     * @param itemName the item's name
+     * @param amount bid amount */
     public Bid(String bidderName, String itemName, int amount) {
         this.bidderName = bidderName;
         this.itemName = itemName;
         this.amount = amount;
     }
 
-    //Group
     public String getBidder(){
         return this.bidderName;
     }
