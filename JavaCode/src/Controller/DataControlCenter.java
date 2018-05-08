@@ -144,6 +144,7 @@ public class DataControlCenter {
         HashSet<Auction> toSerialize = this.deserializeAllAuctions();
         for (Auction a : this.masterListOfAuctions) {
             toSerialize.add(a);
+            //System.out.println("serialized: " + a.toString());
         }
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./JavaCode/Assets/auctions.bin"));
         oos.writeObject(toSerialize);
