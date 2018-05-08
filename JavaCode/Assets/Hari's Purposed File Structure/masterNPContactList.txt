@@ -1,4 +1,0 @@
-American Cancer Society, acs@uw.edu, acs, 345 Elm Street, 2061234567
-American Red Cross, arc@uw.edu, arc, 346 Elm Street, 2061234568
-Outlook on India, oon@uw.edu, oon, 347 Elm Street, 2061234569
-Isha Foundation, isf@uw.edu, isf, 348 Elm Street, 2061234561

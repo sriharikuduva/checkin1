@@ -2,8 +2,6 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.*;
 
 public class DataControlCenter {
@@ -18,9 +16,25 @@ public class DataControlCenter {
 	private static final int STOP_TO_START_HOUR_GAP = 2;
     private HashSet<Auction> masterListOfAuctions;
     private Scanner inputScanner;
+    private int nextAvailableAuctionId;
 
     public DataControlCenter() throws IOException, ClassNotFoundException {
-        this.masterListOfAuctions = deserializeAllAuctions();
+        this.masterListOfAuctions = new HashSet<>();
+        this.nextAvailableAuctionId = findNextAvailableAuctionId();
+    }
+
+    public int findNextAvailableAuctionId() {
+        int max = Integer.MIN_VALUE;
+        for (Auction auction : this.masterListOfAuctions) {
+            max = (auction.getAuctionID() > max) ? auction.getAuctionID() : max;
+        }
+        return max + 1;
+    }
+
+    public int getNextAvailableAuctionId() {
+        this.nextAvailableAuctionId++;
+        return this.nextAvailableAuctionId - 1;
+
     }
     private HashSet<NPContact> deserializeAllNPContacts() throws IOException, ClassNotFoundException {
         return (HashSet<NPContact>) new ObjectInputStream(getClass().
@@ -126,10 +140,14 @@ public class DataControlCenter {
         return toSend;
     }
 
-    public void logOutNP() throws IOException {
-
+    public void logOutNP() throws IOException, ClassNotFoundException {
+        HashSet<Auction> toSerialize = this.deserializeAllAuctions();
+        for (Auction a : this.masterListOfAuctions) {
+            toSerialize.add(a);
+        }
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./JavaCode/Assets/auctions.bin"));
-        oos.writeObject(this.masterListOfAuctions);
+        oos.writeObject(toSerialize);
+        this.masterListOfAuctions.clear();
     }
     
     public void addAuction(Auction auction) throws ClassNotFoundException, IOException {

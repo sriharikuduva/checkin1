@@ -10,5 +10,3 @@
 5, Tesla ModelY, 1, 40000, EV, url/image28
 6, Tesla ModelX, 1, 30000, EV, url/image29
 6, Tesla ModelY, 1, 40000, EV, url/image30
-
-//Auction id, Item Name, Quantity, price, desc, imgpath

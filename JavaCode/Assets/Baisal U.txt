@@ -1,6 +1,0 @@
-American Cancer Society, 2017-03-09 00:00, 2019-04-12 00:00, Tesla ModelX, 1, 30000, EV, url/image19
-American Red Cross, 2016-05-12 00:00, 2020-02-27 00:00, Nissan GT, 1, 22000, Turbo, url/image20
-American Red Cross, 2016-05-12 00:00, 2020-02-27 00:00, Toyota Camry, 1, 11000, 2018 Trim: SE, url/image22
-Isha Foundation, 2017-03-09 00:00, 2019-04-12 00:00, Honda Civic, 1, 18000, 2018 V6 with V-Tech, url/image21
-Isha Foundation, 2017-03-09 00:00, 2019-04-12 00:00, Historic Route 66 End Sign, 1, 9999, Stolen from downtown Chicago, url/image23
-Outlook on India, 2017-03-09 00:00, 2019-04-12 00:00, Hot Pockets, 12, 55, Expired, url/image24

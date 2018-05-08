@@ -161,6 +161,7 @@ public class AuctionForm {
     public void createAuction() throws ClassNotFoundException, IOException {
     	Auction auction = new Auction();
     	auction.setOrganization(currContact.getName());
+    	auction.setAuctionId(this.dataControl.getNextAvailableAuctionId());
     	
     	LocalDateTime startOnline = LocalDateTime.now().plusDays(MIN_SCHEDULE_OUT_DAYS);
     	LocalDateTime start = inputDate;

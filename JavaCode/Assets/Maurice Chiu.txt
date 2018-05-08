@@ -1,7 +1,0 @@
-American Cancer Society, 2017-03-09 00:00, 2019-04-12 00:00, Half an Apple, 2, 2, Two halves make a whole, url/image12
-American Red Cross, 2016-05-12 00:00, 2020-02-27 00:00, Coffee Mug, 1, 12, Vintage Edition, url/image13
-Isha Foundation, 2017-07-11 00:00, 2019-6-23 00:00, Binder, 1, 25, 3-Ring 1" Binder, url/image14
-Isha Foundation, 2017-03-09 00:00, 2019-04-12 00:00, Ground Coffee, 1, 10, Dark Roast, url/image15
-Outlook on India, 2016-02-05 00:00, 2020-04-19 00:00, Wooden Table, 1, 350, Handmade, url/image16
-Outlook on India, 2016-03-05 00:00, 2020-04-19 00:00, Wooden Chairs, 4, 1200, Handmade, url/image17
-Outlook on India, 2016-03-05 00:00, 2020-04-19 00:00, Wooden Desk, 1, 400, Handmade, url/image18

@@ -83,4 +83,7 @@ public class Auction implements Serializable {
         this.onlineStart = startOnline;
     }
 
+    public void setAuctionId(int nextAvailableAuctionId) {
+        this.auctionID = nextAvailableAuctionId;
+    }
 }

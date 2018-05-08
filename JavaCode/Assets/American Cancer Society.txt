@@ -1,3 +1,0 @@
-MacBook Pro, 1, 1200, Used, url/image1, 1
-AirPort Extreme, 1, 200, Used, url/image2, 1
-Baisal's Secret, 1, 50, New, irl/img3, 2

@@ -1,7 +1,8 @@
 
+import java.io.Serializable;
 import java.util.*;
   
-public class Bid {
+public class Bid implements Serializable {
     //Group
     private String bidderName;
     private String itemName;
