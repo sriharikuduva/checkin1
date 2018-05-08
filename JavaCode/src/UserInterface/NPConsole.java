@@ -15,6 +15,7 @@ public class NPConsole {
     private DataControlCenter dataControl;
     private StringBuilder sb;
     private Scanner input;
+    private int choice_int;
 
 
     public NPConsole(NPContact currContact, DataControlCenter dataControl) {
@@ -22,6 +23,7 @@ public class NPConsole {
         this.dataControl = dataControl;
         this.sb = new StringBuilder();
         this.input = new Scanner(System.in);
+        this.choice_int = CHOICE;
     }
 
     /** Invokes the main menu for the NPContact.
@@ -68,7 +70,7 @@ public class NPConsole {
 
     /** Reverts to the main NPContact menu.
      * @throws IOException exception risk
-     * @throws ClassNotFoundException exxceptin risk */
+     * @throws ClassNotFoundException exception risk */
     private void revert() throws IOException, ClassNotFoundException {
         this.sb.append("\n\tr) Revert to main menu" +
                 "\nPlease enter your option letter (and press ENTER): ");
@@ -84,11 +86,13 @@ public class NPConsole {
      * @param auctions the auction set to display */
     private void viewAuctions(HashSet<Auction> auctions) {
         sb.append("Here are all of your auctions: \n");
+        choice_int = CHOICE;
         for(Auction auction : auctions)  {
-        	int i = CHOICE;
-        	sb.append("\t" + (char) i + ")" + auction.toString());
-        	i++;
+        	sb.append("\t" + (char) choice_int + ")" + auction.toString());
+        	choice_int++;
         }
         sb.append("You may choose an auction to view items. \n");
+        
+        //Add input choice logic
     }
 }

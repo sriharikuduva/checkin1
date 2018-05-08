@@ -175,6 +175,7 @@ public class DataControlCenter {
      * @param currBidder the bidder
      * @return set of auctions */
     public HashSet<Auction> getAuctionsCurrBidderCanBidOn(Bidder currBidder) throws ClassNotFoundException, IOException {
+    	//Need to be able to list items in auctions (not just here)
         HashSet<Auction> toSend = new HashSet<>();
         for(Auction a : this.deserializeAllAuctions()) {
         	if(a.getOnlineStart().isBefore(LocalDateTime.now())) {
@@ -375,5 +376,4 @@ public class DataControlCenter {
 		this.updatedAuctions.add(auction);
     		item.addBid(bid);
     }
-
 }
