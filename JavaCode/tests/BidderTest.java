@@ -3,14 +3,14 @@ import org.junit.Test;
 import java.time.LocalDateTime;
 import java.util.*;
 
-import static org.junit.Assert.*;
+import static junit.framework.TestCase.*;
 
 
 public class BidderTest {
-	
+
     //Group
     private Bidder bidder;
-    
+
     //Shannon Weston
     private static int STARTING_BID = 50;
     private static int EQUAL_BID = 50;
@@ -24,12 +24,12 @@ public class BidderTest {
     //Hari Kuduva
     private LocalDateTime auctionStartDate;
     private LocalDateTime auctionEndDate;
-    
-    //Maurice Chiu
-	private Bidder bidderWithLessBiddedItemsThanMaximum;
-	private Bidder bidderWithMaxNumberOfBiddedItems;
 
-	//Baisal Urustanbekov
+    //Maurice Chiu
+    private Bidder bidderWithLessBiddedItemsThanMaximum;
+    private Bidder bidderWithMaxNumberOfBiddedItems;
+
+    //Baisal Urustanbekov
     private ArrayList<Item> itemsExceeded;
     private ArrayList<Item> itemsNotExceeded;
     private Item itemOne, itemTwo, itemThree, itemFour, itemFive, itemSix, itemSeven, itemEight, itemNine, itemTen;
@@ -53,11 +53,11 @@ public class BidderTest {
 
         //Maurice Chiu
         this.bidderWithLessBiddedItemsThanMaximum =
-				new Bidder("Aaron", "aaron@uw.edu", "aaron@uw.edu", "234 1st St, Tacoma, WA", "2069876543", 20100);
-		this.bidderWithMaxNumberOfBiddedItems =
-				new Bidder("Betty", "betty@uw.edu", "betty@uw.edu", "345 2nd St, Tacoma, WA", "2064567891", 19800);
+                new Bidder("Aaron", "aaron@uw.edu", "aaron@uw.edu", "234 1st St, Tacoma, WA", "2069876543", 20100);
+        this.bidderWithMaxNumberOfBiddedItems =
+                new Bidder("Betty", "betty@uw.edu", "betty@uw.edu", "345 2nd St, Tacoma, WA", "2064567891", 19800);
 
-		//Baislabek Urustanbekov
+        //Baislabek Urustanbekov
         itemsExceeded = new ArrayList<Item>();
         itemsNotExceeded = new ArrayList<Item>();
         this.item = new Item("Sweater", 1, STARTING_BID, "Blue Polka Dot Knit Sweater", "Path/To/File.jpg");
@@ -98,7 +98,7 @@ public class BidderTest {
     @Test
     public void isBidPlaceable_DayBeforeAuctionStarts_TRUE() {
         Auction auctionOneDayStartingFromNow = new Auction("Boys and Girls Club",
-               this.auctionStartDate.plusDays(1), this.auctionEndDate.plusDays(1));
+                this.auctionStartDate.plusDays(1), this.auctionEndDate.plusDays(1));
         assertTrue(this.bidder.isBidPlaceableAuctionDate(auctionOneDayStartingFromNow));
     }
 
@@ -106,7 +106,7 @@ public class BidderTest {
     @Test
     public void isBidPlaceable_SameDayAsAuctionStartDate_FALSE() {
         Auction auctionSameDayFromNow = new Auction("American Red Cross",
-               this.auctionStartDate, this.auctionEndDate);
+                this.auctionStartDate, this.auctionEndDate);
         assertFalse(this.bidder.isBidPlaceableAuctionDate(auctionSameDayFromNow));
     }
 
@@ -114,43 +114,43 @@ public class BidderTest {
     @Test
     public void isBidPlaceable_AfterAuctionEndDate_FALSE() {
         Auction auctionEndDateOneDayBeforeNow = new Auction("American Cancer Society",
-               this.auctionStartDate.minusDays(2), this.auctionEndDate.minusDays(2));
+                this.auctionStartDate.minusDays(2), this.auctionEndDate.minusDays(2));
         assertFalse(this.bidder.isBidPlaceableAuctionDate(auctionEndDateOneDayBeforeNow));
     }
-    
+
     //Shannon Weston
     @Test
     public void isBidPlaceable_BidEqualToMinimum_True() {
         assertTrue(this.bidder.isBidPlaceableMinimumBid(item, equalBid));
     }
-    
+
     //Shannon Weston
     @Test
     public void isBidPlaceable_BidGreaterThanMinimum_True() {
         assertTrue(this.bidder.isBidPlaceableMinimumBid(item, greaterBid));
     }
-    
+
     //Shannon Weston
     @Test
     public void isBidPlaceable_BidLessThanMinimum_False() {
         assertFalse(this.bidder.isBidPlaceableMinimumBid(item, lessBid));
     }
-    
-    //Maurice Chiu
-	@Test
-	public void isBidPlaceableItemWithBids_oneLessItemWithBidThanMaximumInAnAuction_true() {
-		assertTrue(bidderWithLessBiddedItemsThanMaximum.
-				isBidPlaceableItemWithBids(Bidder.MAX_ITEMS_WITH_BID_IN_AN_AUCTION-1));
-	}
-	
-	//Maurice Chiu
-	@Test
-	public void isBidPlaceableItemWithBids_maximumNumberOfItemsWithBidInAnAuction_false() {
-		assertFalse(bidderWithMaxNumberOfBiddedItems.
-				isBidPlaceableItemWithBids(Bidder.MAX_ITEMS_WITH_BID_IN_AN_AUCTION));
-	}
 
-	//Baisal Urustanbekov
+    //Maurice Chiu
+    @Test
+    public void isBidPlaceableItemWithBids_oneLessItemWithBidThanMaximumInAnAuction_true() {
+        assertTrue(bidderWithLessBiddedItemsThanMaximum.
+                isBidPlaceableItemWithBids(Bidder.MAX_ITEMS_WITH_BID_IN_AN_AUCTION-1));
+    }
+
+    //Maurice Chiu
+    @Test
+    public void isBidPlaceableItemWithBids_maximumNumberOfItemsWithBidInAnAuction_false() {
+        assertFalse(bidderWithMaxNumberOfBiddedItems.
+                isBidPlaceableItemWithBids(Bidder.MAX_ITEMS_WITH_BID_IN_AN_AUCTION));
+    }
+
+    //Baisal Urustanbekov
     @Test
     public void isBidPlaceableInFutureAuctions_bidderNotExceededMaxItem_true() {
         Auction auction = new Auction("Boys and Girls Club",

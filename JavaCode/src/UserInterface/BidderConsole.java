@@ -84,8 +84,6 @@ public class BidderConsole {
             this.revert();
         } else if (choice == 'b') {
             /** View Items I Have Placed Bids On (In An Auction) **/
-            /* Need to get the auction choice from the user before hand and pass in as currAuction */
-        		
         		HashSet<Auction> auctions = this.dataControl.getAuctionsCurrBidderHasBids(currBidder);
         		HashMap<Character, Auction> options = new HashMap<>();
         		
@@ -101,12 +99,13 @@ public class BidderConsole {
   			}
   			
   			System.out.print(sb);
-  			System.out.println("\nPlease enter your option letter (and press ENTER): ");
+  			System.out.print("\nPlease enter your option letter (and press ENTER): ");
   			char opt = this.input.next().charAt(0);
   			
   			if (options.containsKey(opt)) {
   				HashSet<Item> items =  this.dataControl.getItemsCurrBidderHasBidsOnInAnAuction(currBidder,  options.get(opt));
   				sb = new StringBuilder();
+  				sb.append("Here are the items you have bids on in the auction: " + options.get(opt).getOrganization() + "\n");
   				for (Item itm : items) {
 	              	int i = 1;
 	              	sb.append("\t" + i + ". ");
@@ -124,7 +123,12 @@ public class BidderConsole {
             StringBuilder sb = new StringBuilder();
 	    		for (Auction auc : result) {
                     for (Item item : auc.getItems()) {
-                        sb.append(item.toString() + "\n");
+                        for (Bid bid : item.getBids()) {
+                            if (bid.getBidder().equals(currBidder.getName())) {
+                                sb.append(item.toString() + "\n");
+                            }
+                        }
+                        //sb.append(item.toString() + "\n");
                     }
 	    		}
 	    		System.out.print(sb);
