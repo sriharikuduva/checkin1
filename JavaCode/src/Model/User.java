@@ -32,7 +32,6 @@ public class User implements Serializable {
          this.username = username;
          this.address = address;
          this.phoneNumber = phoneNumber;
-         //this.auctions = 
     }
 
 }

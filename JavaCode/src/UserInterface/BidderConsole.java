@@ -37,21 +37,6 @@ public class BidderConsole {
         this.choiceLogic(this.input.next().charAt(0));
     }
     
-//    private void displayOptionsWithCheck() {
-//    		this.sb.append("\nHere are your options: \n");
-//        if (currBidder.auctions.size() > 0) { // Don't show this option if bidder has no bids.
-//    			this.sb.append("\ta) View Auctions I Have Placed Bids On\n");
-//        		this.sb.append("\tb) View Items I Have Placed Bids On (In An Auction)\n");
-//        		this.sb.append("\tc) View Items I Have Placed Bids On (In All Auctions)\n");
-//        }
-//        this.sb.append("\td) View Auctions I Can Place Bids On\n");
-//        this.sb.append("\te) Bid For An Item In An Auction\n\n");
-//        this.sb.append("\tx) Logout and Terminate\n");
-//        this.sb.append("Please enter your option letter (and press ENTER): ");
-//        System.out.print(this.sb);
-//        this.sb.setLength(0);
-//    }
-    
     private void displayOptions() {
         this.sb.append("\nHere are your options: \n");
         this.sb.append("\ta) View Auctions I Have Placed Bids On\n");
@@ -183,7 +168,7 @@ public class BidderConsole {
 				
 	  			char itemOpt = this.input.next().charAt(0);
 	  			if (itemOptions.containsKey(itemOpt)) {
-	  				this.dataControl.makeBid(auctionOptions.get(aucOpt), itemOptions.get(itemOpt), currBidder);
+	  				//this.dataControl.makeBid(auctionOptions.get(aucOpt), itemOptions.get(itemOpt), currBidder);
 	  			}
 			}
 			

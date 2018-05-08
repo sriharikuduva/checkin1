@@ -158,7 +158,7 @@ public class AuctionForm {
     	npConsole.invokeMenu();
     }
     
-    public void createAuction() throws ClassNotFoundException, IOException {
+    public void createAuction() {
     	Auction auction = new Auction();
     	auction.setOrganization(currContact.getName());
     	auction.setAuctionId(this.dataControl.getNextAvailableAuctionId());
