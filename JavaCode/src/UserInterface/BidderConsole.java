@@ -183,35 +183,39 @@ public class BidderConsole {
 				
 	  			char itemOpt = this.input.next().charAt(0);
 	  			if (itemOptions.containsKey(itemOpt)) {
-	  				this.dataControl.makeBid(auctionOptions.get(aucOpt), itemOptions.get(itemOpt), currBidder);
+	  				System.out.println("\nPlease enter the amount you would like to bid for this item (and press ENTER): ");
+	  				
+	  				int bidPrice = this.input.nextInt();
+	  				Bid bid = new Bid(currBidder.getName(), itemOptions.get(itemOpt).getName(), bidPrice);
+	  				
+	  				this.dataControl.makeBid(auctionOptions.get(aucOpt), auctionOptions.get(aucOpt).items, itemOptions.get(itemOpt), bid, currBidder);
 	  			}
 			}
-			
-			
 			sb.setLength(0);
             
             //Auction dummyAuction = new Auction();
             //this.dataControl.makeBid(dummyAuction, currBidder);
         		this.revert();
-        } else if (choice == 'x') {
-            this.dataControl.logOutBidder();
-            this.sb.append("You have been logged out, terminating...\n");
-        } else if (choice == 'y') {
-            /** FOR DEBUGGING PURPOSE, REMOVE THIS ELSEIF BRANCH WHEN SUBMITTING **/
-            this.dataControl.placeBidDebugger(currBidder, 50);
-            this.revert();
-        } else if (choice == 'z') {
-            /** FOR DEBUGGING PURPOSE, REMOVE THIS ELSEIF BRANCH WHEN SUBMITTING **/
-            for (Auction a : this.dataControl.deserializeAllAuctions()) {
-                if (a.getAuctionID() == 5) {
-                    Item i = a.getItems().get(0);
-                    for (Bid bid : i.getBids()) {
-                        System.out.println("Bidder name: " + bid.getBidder() + ", Bid amount = " + bid.getAmount() +
-                                ", Item name: " + bid.getItem());
-                    }
-                }
-            }
         }
+//        else if (choice == 'x') {
+//            this.dataControl.logOutBidder();
+//            this.sb.append("You have been logged out, terminating...\n");
+//        } else if (choice == 'y') {
+//            /** FOR DEBUGGING PURPOSE, REMOVE THIS ELSEIF BRANCH WHEN SUBMITTING **/
+//            this.dataControl.placeBidDebugger(currBidder, 50);
+//            this.revert();
+//        } else if (choice == 'z') {
+//            /** FOR DEBUGGING PURPOSE, REMOVE THIS ELSEIF BRANCH WHEN SUBMITTING **/
+//            for (Auction a : this.dataControl.deserializeAllAuctions()) {
+//                if (a.getAuctionID() == 5) {
+//                    Item i = a.getItems().get(0);
+//                    for (Bid bid : i.getBids()) {
+//                        System.out.println("Bidder name: " + bid.getBidder() + ", Bid amount = " + bid.getAmount() +
+//                                ", Item name: " + bid.getItem());
+//                    }
+//                }
+//            }
+//        }
         System.out.print(this.sb);
         this.sb.setLength(0);
     }
