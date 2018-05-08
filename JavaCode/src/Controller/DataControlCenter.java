@@ -23,7 +23,7 @@ public class DataControlCenter {
     private HashSet<Auction> updatedAuctions;
     private Scanner inputScanner;
     private int nextAvailableAuctionId;
-    private DataControlCenter dataControl = new DataControlCenter();
+    //private DataControlCenter dataControl = new DataControlCenter();
 
     public DataControlCenter() throws IOException, ClassNotFoundException {
         this.addedAuctions = new HashSet<>();
@@ -156,14 +156,14 @@ public class DataControlCenter {
         boolean check1 = currBidder.isBidPlaceableAuctionDate(auction);
         boolean check2 = currBidder.isBidPlaceableInFutureAuctions(auction, items);
         
-        	HashSet<Item> itemsOfAuction = this.dataControl.getItemsCurrBidderHasBidsOnInAnAuction(currBidder,  auction);
+        	HashSet<Item> itemsOfAuction = getItemsCurrBidderHasBidsOnInAnAuction(currBidder,  auction);
         	int numberOfItemsWithBidInAnAuction = itemsOfAuction.size();
         
         boolean check3 = currBidder.isBidPlaceableItemWithBids(numberOfItemsWithBidInAnAuction);
         boolean check4 = currBidder.isBidPlaceableMinimumBid(item, bid);
         
         if (check1 && check2 && check3 && check4) {
-        		this.dataControl.placeBid(auction, item, bid, currBidder);
+        		placeBid(item, bid);
         }
     }
 
@@ -320,8 +320,8 @@ public class DataControlCenter {
         oos.writeObject(toSerialize);
     }
 
-    public void placeBid(Auction auction, Item item, Bid bid, Bidder currBidder) {
-    		// TODO: ObjectOutputStream oos = new ObjectOutputStream("./JavaCode/Assets/")
+    public void placeBid(Item item, Bid bid) {
+    		item.addBid(bid);
     }
 
 }
