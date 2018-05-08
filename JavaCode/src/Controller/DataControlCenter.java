@@ -96,26 +96,27 @@ public class DataControlCenter {
 
     public HashSet<Auction> getAuctionsCurrBidderHasBids(Bidder currBidder) throws ClassNotFoundException, IOException {
         HashSet<Auction> toSend = new HashSet<>();
-        //TODO: return a Set of auctions that the bidder has bids in
-        System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
-//
-//        for(Auction auction : this.getAuctions()) {
-//        	for(Item item : auction.getItems()) {
-//        		for(Bid bid : item.getBids()) {
-//        			if(bid.getBidder().equals(currBidder.getName())) {
-//        				toSend.add(auction);
-//        			}
-//        		}
-//        	}
-//        }
-
+        for (Auction auction : this.deserializeAllAuctions()) {
+            for (Item item : auction.getItems()) {
+                for (Bid bid : item.getBids()) {
+                    if (bid.getBidder().equals(currBidder.getName())) {
+                        toSend.add(auction);
+                    }
+                }
+            }
+        }
         return toSend;
     }
 
-    public HashSet<Item> getItemsCurrBidderHasBidsOnInAnAuction(Bidder currBidder, Auction specifc) {
+    public HashSet<Item> getItemsCurrBidderHasBidsOnInAnAuction(Bidder currBidder, Auction specific) {
         HashSet<Item> toSend = new HashSet<>();
-        //TODO: return a Set of Items the Bidder has bids on in the specific Auction
-        System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
+        for (Item item : specific.getItems()) {
+            for (Bid bid : item.getBids()) {
+                if (currBidder.getName().equals(bid.getBidder())) {
+                    toSend.add(item);
+                }
+            }
+        }
         return toSend;
     }
 
@@ -136,15 +137,11 @@ public class DataControlCenter {
 
     public HashSet<Auction> getSubmittedAuctionsByNPContact(NPContact currContact) throws ClassNotFoundException, IOException {
         HashSet<Auction> toSend = new HashSet<>();
-        //TODO: return auctions submitted by currContact
-        System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
-
         for(Auction a : this.deserializeAllAuctions()) {
         	if(a.getOrganization().equals(currContact.getName())) {
         		toSend.add(a);
         	}
         }
-        
         return toSend;
     }
 
