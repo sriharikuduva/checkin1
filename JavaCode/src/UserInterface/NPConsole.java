@@ -2,8 +2,14 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Scanner;
 
+/**
+ * 
+ * @author Shannon Weston
+ * @version 5/7/2018
+ */
 public class NPConsole {
-	private static final int CHOICE = (int) 'a';
+	//ascii value of 'a'
+	private static final int CHOICE = 97;
 
     private NPContact currContact;
     private DataControlCenter dataControl;
@@ -79,7 +85,7 @@ public class NPConsole {
         sb.append("Here are all of your auctions: \n");
         for(Auction auction : auctions)  {
         	int i = CHOICE;
-        	sb.append("\t" + i + ")" + auction.toString());
+        	sb.append("\t" + (char) i + ")" + auction.toString());
         	i++;
         }
         sb.append("You may choose an auction to view items. \n");
