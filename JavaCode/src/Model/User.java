@@ -1,5 +1,8 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 
 public class User implements Serializable {
 	protected String name;
@@ -8,7 +11,8 @@ public class User implements Serializable {
     protected String address;
     protected String phoneNumber;
     /** Contains all the auction that the bidder has placed bids in. */
-	protected ArrayList<Auction> auctions;
+	protected HashMap<String, Auction> auctions = new HashMap<String, Auction>();
+	
 
   //constructor - Group
     public User(final String email, final String username,
@@ -18,6 +22,7 @@ public class User implements Serializable {
          this.username = username;
          this.address = address;
          this.phoneNumber = phoneNumber;
+         //this.auctions = 
     }
 
 }

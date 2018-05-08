@@ -2,8 +2,16 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Map;
 import java.util.Scanner;
+
+import javax.naming.AuthenticationNotSupportedException;
+
+import sun.security.action.GetBooleanAction;
 
 public class BidderConsole {
 
@@ -14,6 +22,7 @@ public class BidderConsole {
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     /** This is for scanning in bidder's inventory */
     private Scanner inputScanner;
+    private ArrayList<ItemWrapper> itemsWithAucName = new ArrayList<>();
 
     public BidderConsole(Bidder currBidder, DataControlCenter dataControl) {
         this.currBidder = currBidder;
@@ -31,36 +40,29 @@ public class BidderConsole {
         String fileName = currBidder.getName();
         
         this.inputScanner = new Scanner(getClass()
-        		.getResourceAsStream(fileName + ".txt"));
+        		.getResourceAsStream(fileName + ".txt")); //files are named after bidder's name
         
-        String parts[] = this.inputScanner.nextLine().split(",");
-		this.cleanParts(parts);
+		while (this.inputScanner.hasNextLine()) {
+			String parts[] = this.inputScanner.nextLine().split(",");
+			this.cleanParts(parts); //Trim off padding
+			ItemWrapper item = new ItemWrapper(parts[0], LocalDateTime.parse(parts[1], formatter), 
+					LocalDateTime.parse(parts[2], formatter), parts[3], Integer.parseInt(parts[4].trim()), 
+					Integer.parseInt(parts[5].trim()), parts[6], parts[7]);
+			itemsWithAucName.add(item);
+			//item.toString();
+		}
 		
-        Auction auctionToAdd = new Auction(parts[0], LocalDateTime.parse(parts[1], formatter), LocalDateTime.parse(parts[2], formatter));
-		Item itemToAdd = new Item(parts[3], Integer.parseInt(parts[4].trim()), Integer.parseInt(parts[5].trim()), parts[6], parts[7]);
-		auctionToAdd.items.add(itemToAdd);
-		String orgName = auctionToAdd.getOrganization();
-						
-        	while (this.inputScanner.hasNextLine()) {
-        		parts = this.inputScanner.nextLine().split(",");
-        		this.cleanParts(parts);
-        		
-        		if (orgName == parts[0]) {
-        			itemToAdd = new Item(parts[3], Integer.parseInt(parts[4].trim()), Integer.parseInt(parts[5].trim()), parts[6], parts[7]);
-        			auctionToAdd.items.add(itemToAdd);
-        		} else {
-        			auctionToAdd = new Auction(parts[0], LocalDateTime.parse(parts[1], formatter), LocalDateTime.parse(parts[2], formatter));
-        			itemToAdd = new Item(parts[3], Integer.parseInt(parts[4].trim()), Integer.parseInt(parts[5].trim()), parts[6], parts[7]);
-        			auctionToAdd.items.add(itemToAdd);
-        			orgName = auctionToAdd.getOrganization();	
-        		}
-//        		System.out.println(orgName);
-//        		for (Item itm : auctionToAdd.items) {
-//        			System.out.println(itm.getName());
-//        		}
-        		currBidder.auctions.add(auctionToAdd);
-        	}
-        
+		for (ItemWrapper iwan : itemsWithAucName) {
+			if (currBidder.auctions.containsKey(iwan.getOrgName())) {
+				Item itemToAdd = iwan.getItem();
+				currBidder.auctions.get(iwan.getOrgName()).items.add(itemToAdd);
+			} else {
+				Auction tempAuction = iwan.getAuction();
+				tempAuction.items.add(iwan.getItem());
+				currBidder.auctions.put(iwan.getOrgName(), tempAuction);
+			}
+		}
+		
         	this.displayOptionsWithCheck();
         //this.displayOptions();
         this.choiceLogic(this.input.next().charAt(0));
@@ -90,7 +92,8 @@ public class BidderConsole {
         System.out.print(this.sb);
         this.sb.setLength(0);
     }
-    private void displayOptions() {
+    
+private void displayOptions() {
         this.sb.append("\nHere are your options: \n");
         this.sb.append("\ta) View Auctions I Have Placed Bids On\n");
         this.sb.append("\tb) View Items I Have Placed Bids On (In An Auction)\n");
@@ -121,8 +124,8 @@ public class BidderConsole {
             StringBuilder sb = new StringBuilder();
             //char option = 'a';
         		int i = 1;
-            for (Auction auc : currBidder.auctions) {
-            		sb.append("\t" + i + ". ");
+            for (Auction auc : currBidder.auctions.values()) {
+        			sb.append("\t" + i + ". ");
             		sb.append(auc.getOrganization());
             		sb.append("\n");
             		//option++;
@@ -130,6 +133,7 @@ public class BidderConsole {
             }
             System.out.print(sb);
             
+        		//System.out.print(currBidder.auctions.keySet()); //.entrySet()
             this.revert();
         } else if (choice == 'b') {
             /** View Items I Have Placed Bids On (In An Auction) **/
@@ -140,7 +144,7 @@ public class BidderConsole {
             //TODO: Display result to user (Items in that specific auction)
             StringBuilder sb = new StringBuilder();
     			char option = 'a';
-    			for (Auction auc : currBidder.auctions) {
+    			for (Auction auc : currBidder.auctions.values()) {
     				sb.append("\t" + option + ") ");
     				sb.append(auc.getOrganization());
     				sb.append("\n");
@@ -155,7 +159,7 @@ public class BidderConsole {
             //TODO: Display result to user (Not the auctions, but items in each auction)
             StringBuilder sb = new StringBuilder();
 	    		int num = 1;
-	    		for (Auction auc : currBidder.auctions) {
+	    		for (Auction auc : currBidder.auctions.values()) {
 	    			for (Item itm : auc.items) {
 		    			sb.append("\t" + num + ". ");
 		      		sb.append(itm.getName());
