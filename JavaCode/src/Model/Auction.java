@@ -137,4 +137,6 @@ public class Auction implements Serializable {
     	sb.append("\n\n");
     	return sb.toString();
     }
+    
+    //Move onlineStart plus 14 days from AuctionForm to here.
 }
