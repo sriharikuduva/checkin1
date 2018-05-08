@@ -23,6 +23,7 @@ public class DataControlCenter {
     private HashSet<Auction> updatedAuctions;
     private Scanner inputScanner;
     private int nextAvailableAuctionId;
+    //private DataControlCenter dataControl = new DataControlCenter();
 
     public DataControlCenter() throws IOException, ClassNotFoundException {
         this.addedAuctions = new HashSet<>();
@@ -185,9 +186,19 @@ public class DataControlCenter {
         return toSend;
     }
 
-    public void makeBid (Auction auction, Bidder currBidder) {
-        System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
-        //TODO: make bid if placeable
+    public void makeBid (Auction auction, ArrayList<Item> items, Item item, Bid bid, Bidder currBidder) throws ClassNotFoundException, IOException {
+        boolean check1 = currBidder.isBidPlaceableAuctionDate(auction);
+        boolean check2 = currBidder.isBidPlaceableInFutureAuctions(auction, items);
+        
+        	HashSet<Item> itemsOfAuction = getItemsCurrBidderHasBidsOnInAnAuction(currBidder,  auction);
+        	int numberOfItemsWithBidInAnAuction = itemsOfAuction.size();
+        
+        boolean check3 = currBidder.isBidPlaceableItemWithBids(numberOfItemsWithBidInAnAuction);
+        boolean check4 = currBidder.isBidPlaceableMinimumBid(item, bid);
+        
+        if (check1 && check2 && check3 && check4) {
+        		placeBid(item, bid);
+        }
     }
 
     /** Gets a set of auctions that were submitted as requests by NPContact
@@ -313,19 +324,25 @@ public class DataControlCenter {
        return false;
     }
     
-    /** DEBUGGIN PURPOSES (Test to see if serialization for bidder's bids is working) **/
-    public void placeBidDebugger(Bidder currBidder, int amount) throws IOException, ClassNotFoundException {
-        //Places a bid on OON auction (Auc.ID = 5) on the first item under currBider name and amount.
-        Auction oonAuction = null;
-        for (Auction a : this.deserializeAllAuctions()) {
-            if (a.getAuctionID() == 5) {
-                oonAuction = a;
-            }
-        }
-        Item item = oonAuction.getItems().get(0);
-        item.addBid(new Bid(currBidder.getName(), item.getName(), amount));
-        this.updatedAuctions.add(oonAuction);
-    }
+
+//    public boolean isNPContactAuctionSlotFilled() {
+//    	for(Auction a : this.masterListOfAuctions)
+//    }
+
+    
+//    /** DEBUGGIN PURPOSES (Test to see if serialization for bidder's bids is working) **/
+//    public void placeBidDebugger(Bidder currBidder, int amount) throws IOException, ClassNotFoundException {
+//        //Places a bid on OON auction (Auc.ID = 5) on the first item under currBider name and amount.
+//        Auction oonAuction = null;
+//        for (Auction a : this.deserializeAllAuctions()) {
+//            if (a.getAuctionID() == 5) {
+//                oonAuction = a;
+//            }
+//        }
+//        Item item = oonAuction.getItems().get(0);
+//        item.addBid(new Bid(currBidder.getName(), item.getName(), amount));
+//        this.updatedAuctions.add(oonAuction);
+//    }
 
     public void logOutBidder() throws IOException, ClassNotFoundException {
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./JavaCode/Assets/auctions.bin"));
@@ -341,4 +358,9 @@ public class DataControlCenter {
         this.updatedAuctions.clear();
         oos.writeObject(toSerialize);
     }
+
+    public void placeBid(Item item, Bid bid) {
+    		item.addBid(bid);
+    }
+
 }
