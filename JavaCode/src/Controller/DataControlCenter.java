@@ -197,7 +197,7 @@ public class DataControlCenter {
         boolean check4 = currBidder.isBidPlaceableMinimumBid(item, bid);
         
         if (check1 && check2 && check3 && check4) {
-        		placeBid(item, bid);
+        		placeBid(item, bid, auction);
         }
     }
 
@@ -344,9 +344,11 @@ public class DataControlCenter {
 
     /** Places the bid
      * @param item the item
-     * @param bid the bid */
-    public void placeBid(Item item, Bid bid) {
-            //this.updatedAuctions.add(/*NEED AUCTION PARAM HERE*/);
+     * @param bid the bid
+     * @param auction the auction*/
+    public void placeBid(Item item, Bid bid, Auction auction) {
+        System.out.print("Your bid has been placed!");
+            this.updatedAuctions.add(auction);
     		item.addBid(bid);
     }
 
