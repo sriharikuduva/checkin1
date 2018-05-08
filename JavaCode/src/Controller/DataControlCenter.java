@@ -197,19 +197,18 @@ public class DataControlCenter {
         boolean check4 = currBidder.isBidPlaceableMinimumBid(item, bid);
         
         if (!check1) {
-            System.out.println("check 1 failed");
-
-
+        		System.out.println("\tSorry, it has passed the auction end time, \n"
+    				+ "\tyou may no longer bid on this item.");
         }
         
         if (!check2) {
         		System.out.println("\tSorry, you have already reached the maximum number of items\n"
-        				+ "\tyou could bid on in an auction.");
+    				+ "\tyou could bid on in all future auctions.");
         }
         
         if (!check3) {
-            System.out.println("check 3 failed");
-        	
+        		System.out.println("\tSorry, you have already reached the maximum number of items\n"
+    				+ "\tyou could bid on in an auction.");
         }
         
         if (!check4) {
@@ -363,8 +362,6 @@ public class DataControlCenter {
         this.updatedAuctions.clear();
         oos.writeObject(toSerialize);
     }
-
-
 
     /** Places the bid
      * @param item the item
