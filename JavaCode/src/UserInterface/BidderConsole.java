@@ -161,9 +161,9 @@ public class BidderConsole {
 			if (auctionOptions.containsKey(aucOpt)) {
 				sb = new StringBuilder();
 				
+				optionNumber = 'a';
 				for (Item itm : auctionOptions.get(aucOpt).items) {
-					optionNumber = 'a';
-	              	sb.append("\t" + optionNumber + ". ");
+	              	sb.append("\t" + optionNumber + ") ");
 	  	        		sb.append(itm.getName());
 	  	        		sb.append("\n");
 	  	        		itemOptions.put(optionNumber, itm);
@@ -174,6 +174,10 @@ public class BidderConsole {
 				
 	  			char itemOpt = this.input.next().charAt(0);
 	  			if (itemOptions.containsKey(itemOpt)) {
+	  				System.out.println("Name: " + itemOptions.get(itemOpt).getName() 
+	  						+ "Quantity: " + itemOptions.get(itemOpt).getQuantity() + "\n" 
+	  						+ "Description: " + itemOptions.get(itemOpt).getDescription() + "\n"
+	  						+ "Starting Bid: " + itemOptions.get(itemOpt).getCurrentBid() + "\n");
 	  				System.out.println("\nPlease enter the amount you would like to bid for this item (and press ENTER): ");
 	  				
 	  				int bidPrice = this.input.nextInt();

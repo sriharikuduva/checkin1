@@ -197,7 +197,7 @@ public class DataControlCenter {
         boolean check4 = currBidder.isBidPlaceableMinimumBid(item, bid);
         
         if (check1 && check2 && check3 && check4) {
-        		placeBid(item, bid, auction);
+        		placeBid(auction, item, bid);
         }
     }
 
@@ -207,9 +207,9 @@ public class DataControlCenter {
     public HashSet<Auction> getSubmittedAuctionsByNPContact(NPContact currContact) throws ClassNotFoundException, IOException {
         HashSet<Auction> toSend = new HashSet<>();
         for(Auction a : this.deserializeAllAuctions()) {
-        	if(a.getOrganization().equals(currContact.getName())) {
-        		toSend.add(a);
-        	}
+	        	if(a.getOrganization().equals(currContact.getName())) {
+	        		toSend.add(a);
+	        	}
         }
         for (Auction a : this.addedAuctions) {
             toSend.add(a);
@@ -344,11 +344,9 @@ public class DataControlCenter {
 
     /** Places the bid
      * @param item the item
-     * @param bid the bid
-     * @param auction the auction*/
-    public void placeBid(Item item, Bid bid, Auction auction) {
-        System.out.print("Your bid has been placed!");
-            this.updatedAuctions.add(auction);
+     * @param bid the bid */
+    public void placeBid(Auction auction, Item item, Bid bid) {
+		this.updatedAuctions.add(auction);
     		item.addBid(bid);
     }
 
