@@ -197,7 +197,9 @@ public class DataControlCenter {
         boolean check4 = currBidder.isBidPlaceableMinimumBid(item, bid);
         
         if (!check1) {
-        	
+            System.out.println("check 1 failed");
+
+
         }
         
         if (!check2) {
@@ -206,6 +208,7 @@ public class DataControlCenter {
         }
         
         if (!check3) {
+            System.out.println("check 3 failed");
         	
         }
         
