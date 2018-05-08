@@ -24,6 +24,9 @@ public class NPConsole {
         this.input = new Scanner(System.in);
     }
 
+    /** Invokes the main menu for the NPContact.
+     * @throws IOException exception risk
+     * @throws ClassNotFoundException exception risk */
     public void invokeMenu() throws IOException, ClassNotFoundException {
         this.sb.append("\nWelcome " + this.currContact.getName() +
                 "! You have been logged in as a Non-Profit Contact.\n");
@@ -31,6 +34,7 @@ public class NPConsole {
         this.choiceLogic(this.input.next().charAt(0));
     }
 
+    /** Display options for NPContact. **/
     private void displayOptions() {
         this.sb.append("\nHere are your options: \n");
         this.sb.append("\ta) View all submitted auction requests\n");
@@ -41,6 +45,10 @@ public class NPConsole {
         this.sb.setLength(0);
     }
 
+    /** Choice logic to determine behavior.
+     * @param choice determines behavior
+     * @throws IOException exception risk
+     * @throws ClassNotFoundException exception risk */
     private void choiceLogic(Character choice) throws IOException, ClassNotFoundException {
         if (choice == 'a') {
             /** View all submitted auction requests **/
@@ -58,6 +66,9 @@ public class NPConsole {
         this.sb.setLength(0);
     }
 
+    /** Reverts to the main NPContact menu.
+     * @throws IOException exception risk
+     * @throws ClassNotFoundException exxceptin risk */
     private void revert() throws IOException, ClassNotFoundException {
         this.sb.append("\n\tr) Revert to main menu" +
                 "\nPlease enter your option letter (and press ENTER): ");
@@ -68,7 +79,9 @@ public class NPConsole {
             this.choiceLogic(this.input.next().charAt(0));
         }
     }
-    
+
+    /**Displays the the NPContact their auction set.
+     * @param auctions the auction set to display */
     private void viewAuctions(HashSet<Auction> auctions) {
         sb.append("Here are all of your auctions: \n");
         for(Auction auction : auctions)  {

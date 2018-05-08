@@ -13,6 +13,8 @@ import javax.naming.AuthenticationNotSupportedException;
 
 import sun.security.action.GetBooleanAction;
 
+/** Console for the logged in Bidder.
+ * @author Hari Kuduva */
 public class BidderConsole {
 
     private Bidder currBidder;
@@ -29,6 +31,9 @@ public class BidderConsole {
         this.input = new Scanner(System.in);
     }
 
+    /** Invokes the main menu for the bidder.
+     * @throws ClassNotFoundException exception risk
+     * @throws IOException exception risk */
     public void invokeMenu() throws ClassNotFoundException, IOException {
         this.sb.append("\nWelcome " + this.currBidder.getName() +
                 "! You have been logged in as a Bidder.\n");
@@ -36,7 +41,8 @@ public class BidderConsole {
         this.displayOptions();
         this.choiceLogic(this.input.next().charAt(0));
     }
-    
+
+    /** Display the bidders options. **/
     private void displayOptions() {
         this.sb.append("\nHere are your options: \n");
         this.sb.append("\ta) View Auctions I Have Placed Bids On\n");
@@ -51,6 +57,10 @@ public class BidderConsole {
 
     }
 
+    /** Choice logic to decide the behavior
+     * @param choice determines the behavior
+     * @throws ClassNotFoundException exception risk
+     * @throws IOException exception risk */
     private void choiceLogic(Character choice) throws ClassNotFoundException, IOException {
         if (choice == 'a') {
             /** View Auctions I Have Placed Bids On **/
@@ -171,36 +181,19 @@ public class BidderConsole {
 	  				//this.dataControl.makeBid(auctionOptions.get(aucOpt), itemOptions.get(itemOpt), currBidder);
 	  			}
 			}
-			
-			
 			sb.setLength(0);
-            
-            //Auction dummyAuction = new Auction();
-            //this.dataControl.makeBid(dummyAuction, currBidder);
         		this.revert();
         } else if (choice == 'x') {
             this.dataControl.logOutBidder();
             this.sb.append("You have been logged out, terminating...\n");
-        } else if (choice == 'y') {
-            /** FOR DEBUGGING PURPOSE, REMOVE THIS ELSEIF BRANCH WHEN SUBMITTING **/
-            this.dataControl.placeBidDebugger(currBidder, 50);
-            this.revert();
-        } else if (choice == 'z') {
-            /** FOR DEBUGGING PURPOSE, REMOVE THIS ELSEIF BRANCH WHEN SUBMITTING **/
-            for (Auction a : this.dataControl.deserializeAllAuctions()) {
-                if (a.getAuctionID() == 5) {
-                    Item i = a.getItems().get(0);
-                    for (Bid bid : i.getBids()) {
-                        System.out.println("Bidder name: " + bid.getBidder() + ", Bid amount = " + bid.getAmount() +
-                                ", Item name: " + bid.getItem());
-                    }
-                }
-            }
         }
         System.out.print(this.sb);
         this.sb.setLength(0);
     }
 
+    /** Reverts back the the main bidder menu.
+     * @throws ClassNotFoundException exception risk
+     * @throws IOException exception risk */
     private void revert() throws ClassNotFoundException, IOException {
         this.sb.append("\n\tr) Revert to main menu" +
                 "\nPlease enter your option letter (and press ENTER): ");

@@ -1,7 +1,9 @@
 import java.io.Serializable;
 import java.util.*;
 
-/** Represents an item in an auction. **/
+/** Represents an item in an auction.
+ * @author Hari G Kuduva
+ */
 public class Item implements Serializable {
     //Group
     /** Item's name **/

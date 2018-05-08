@@ -2,7 +2,9 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
 
-/** Represents a bidder. **/
+/** Represents a bidder.
+ * @author Hari G Kuduva
+ */
 public class Bidder extends User implements Serializable {
     /** List of bids the bidder has. **/
     private ArrayList<Bid> bids;

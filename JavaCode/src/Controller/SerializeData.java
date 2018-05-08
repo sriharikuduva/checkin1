@@ -4,11 +4,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Scanner;
 
+/** Responsible for serializing data and outputing bin files.
+ * @author Hari Kuduva */
 public class SerializeData {
-
+    /** Scanner to scan input. **/
     private static Scanner inputScanner;
+    /** Formatter needed to format dates. **/
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-
+    /** Private constructor to prevent instantiation. **/
     private SerializeData() { }
 
     public static void main(String... args) throws IOException {
@@ -18,7 +21,10 @@ public class SerializeData {
         serializeNPContact("./JavaCode/Assets/npcontact.bin");
         serializeAuctions("./JavaCode/Assets/auctions.bin");
     }
-    
+
+    /** Serializes the bidders into bidders.bin.
+     * @param output the output destination
+     * @throws IOException exception risk */
     private static void serializeBidders(String output) throws IOException {
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(output));
         inputScanner = new Scanner(SerializeData.class
@@ -33,6 +39,9 @@ public class SerializeData {
         oos.writeObject(toSerialize);
     }
 
+    /** Serializes the NPContacts into npcontact.bin.
+     * @param output the output destination
+     * @throws IOException exception risk */
     private static void serializeNPContact(String output) throws IOException {
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(output));
         inputScanner = new Scanner(SerializeData.class
@@ -47,6 +56,9 @@ public class SerializeData {
         oos.writeObject(toSerialize);
     }
 
+    /** Serializes the Auctions into auctions.bin.
+     * @param output the output destination
+     * @throws IOException exception risk */
     private static void serializeAuctions(String output) throws IOException {
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(output));
         inputScanner = new Scanner(SerializeData.class
@@ -65,6 +77,8 @@ public class SerializeData {
         oos.writeObject(toSerialize);
     }
 
+    /** Adds the items for the specific auctions.
+     * @param auction the specific auction */
     private static void addItemsForAuction(Auction auction) {
         Scanner scanItem = new Scanner(SerializeData.class
                 .getResourceAsStream("masterItemList.txt"));
@@ -89,6 +103,8 @@ public class SerializeData {
         }
     }
 
+    /** Method helps clean up scanned data.
+     * @param parts the data array */
     private static void cleanParts(String parts[]) {
         for (int i = 0; i < parts.length; i++) {
             parts[i] = parts[i].trim();

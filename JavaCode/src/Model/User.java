@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-/** Represents a Auction Central User. */
+/** Represents a Auction Central User.
+ * @author Hari G Kuduva */
 public class User implements Serializable {
     /** User's name **/
 	protected String name;

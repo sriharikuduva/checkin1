@@ -1,8 +1,12 @@
 import java.io.IOException;
 import java.util.Scanner;
 
+/** UI Kickstart of the program.
+ * BIN FILES MUST EXIST BEFORE EXECUTION!
+ * @author Hari Kuduva
+ */
 public class UI_Starter {
-
+    /** Main Data Control. **/
     private static DataControlCenter dataControl;
     private static StringBuilder stringBuilder;
     private static Scanner input;
@@ -18,12 +22,16 @@ public class UI_Starter {
         stringBuilder.setLength(0);
     }
 
+    /** Initialize variables here. **/
     private static void initVariables() throws IOException, ClassNotFoundException {
         dataControl = new DataControlCenter();
         stringBuilder = new StringBuilder();
         input = new Scanner(System.in);
     }
 
+    /** Invokes the login screen for the user.
+     * @throws IOException exception risk
+     * @throws ClassNotFoundException exception risk */
     private static void invokeLoginScreen() throws IOException, ClassNotFoundException {
         stringBuilder.append("Welcome User!\n");
         stringBuilder.append("Here are your options: \n");
@@ -40,6 +48,11 @@ public class UI_Starter {
         verifyAndLaunchSpecificUser(isNonProfit, username);
     }
 
+    /** Verification of the user login cred and lauches a specifc console.
+     * @param isNonProfit true if user is NPContact
+     * @param username username of user
+     * @throws IOException exception risk
+     * @throws ClassNotFoundException exception risk */
     private static void verifyAndLaunchSpecificUser(boolean isNonProfit, String username) throws IOException, ClassNotFoundException {
         if (isNonProfit && dataControl.isNonProfitValid(username)) {
             new NPConsole(dataControl.getNPContactByUsername(username), dataControl).invokeMenu();
