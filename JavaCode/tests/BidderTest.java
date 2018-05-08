@@ -96,7 +96,7 @@ public class BidderTest {
 
     //Hari Kuduva
     @Test
-    public void isBidPlaceable_DayBeforeAuctionStarts_PASS() {
+    public void isBidPlaceable_DayBeforeAuctionStarts_TRUE() {
         Auction auctionOneDayStartingFromNow = new Auction("Boys and Girls Club",
                this.auctionStartDate.plusDays(1), this.auctionEndDate.plusDays(1));
         assertTrue(this.bidder.isBidPlaceableAuctionDate(auctionOneDayStartingFromNow));
@@ -104,7 +104,7 @@ public class BidderTest {
 
     //Hari Kuduva
     @Test
-    public void isBidPlaceable_SameDayAsAuctionStartDate_FAIL() {
+    public void isBidPlaceable_SameDayAsAuctionStartDate_FALSE() {
         Auction auctionSameDayFromNow = new Auction("American Red Cross",
                this.auctionStartDate, this.auctionEndDate);
         assertFalse(this.bidder.isBidPlaceableAuctionDate(auctionSameDayFromNow));
@@ -112,7 +112,7 @@ public class BidderTest {
 
     //Hari Kuduva
     @Test
-    public void isBidPlaceable_AfterAuctionEndDate_FAIL() {
+    public void isBidPlaceable_AfterAuctionEndDate_FALSE() {
         Auction auctionEndDateOneDayBeforeNow = new Auction("American Cancer Society",
                this.auctionStartDate.minusDays(2), this.auctionEndDate.minusDays(2));
         assertFalse(this.bidder.isBidPlaceableAuctionDate(auctionEndDateOneDayBeforeNow));
