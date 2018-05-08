@@ -41,25 +41,13 @@ public class NPConsole {
         this.sb.setLength(0);
     }
 
-    /* Welcome ContactName! Please make a selection:
-    [a] - View all submitted auction requests
-    [b] - Submit an auction request
-    [x] - Logout/Exit */
-
-
     private void choiceLogic(Character choice) throws IOException, ClassNotFoundException {
         if (choice == 'a') {
             /** View all submitted auction requests **/
             HashSet<Auction> result = this.dataControl.getSubmittedAuctionsByNPContact(currContact);
-            //TODO: Read existing auctions from file
-            //TODO: Go to this.dataControl.getSubmittedAuctionsByNPContact(currContact) and implement logic
-            //TODO: Display result to user - Done
-            
             viewAuctions(result);
             this.revert();
         } else if (choice == 'b') {
-            /** Submit an auction request **/
-        	//TODO: Save new auction to file
             new AuctionForm(currContact, this, dataControl).startAuctionApplication();
             this.revert();
         } else if (choice == 'x') {

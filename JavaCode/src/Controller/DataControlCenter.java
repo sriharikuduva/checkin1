@@ -96,33 +96,68 @@ public class DataControlCenter {
 
     public HashSet<Auction> getAuctionsCurrBidderHasBids(Bidder currBidder) throws ClassNotFoundException, IOException {
         HashSet<Auction> toSend = new HashSet<>();
+
         //TODO: return a Set of auctions that the bidder has bids in
         //System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
 
-        for(Auction auction : this.getAuctions()) {
-	        	for(Item item : auction.getItems()) {
-	        		for(Bid bid : item.getBids()) {
-	        			if(bid.getBidder().equals(currBidder.getName())) {
-	        				toSend.add(auction);
-	        			}
-	        		}
-	        	}
+        for (Auction auction : this.deserializeAllAuctions()) {
+            for (Item item : auction.getItems()) {
+                for (Bid bid : item.getBids()) {
+                    if (bid.getBidder().equals(currBidder.getName())) {
+                        toSend.add(auction);
+                    }
+                }
+            }
         }
 
         return toSend;
     }
 
-    public HashSet<Item> getItemsCurrBidderHasBidsOnInAnAuction(Bidder currBidder, Auction specifc) {
+    public HashSet<Item> getItemsCurrBidderHasBidsOnInAnAuction(Bidder currBidder, Auction specific) throws IOException, ClassNotFoundException {
         HashSet<Item> toSend = new HashSet<>();
         //TODO: return a Set of Items the Bidder has bids on in the specific Auction
-        System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
+        //System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
+        System.out.println("** NOTICE: NEEDS DEBUGGING! **");
+
+        for(Auction a : this.deserializeAllAuctions()) {
+        	if(a.toString().equals(specific.toString())) {
+            	for(Item i : a.getItems()) {
+            		for(Bid b : i.getBids()) {
+            			if(b.getBidder().equals(currBidder.getName())) {
+            				toSend.add(i);
+            			}
+            		}
+            	}
+        	}
+        }
+
+        for (Item item : specific.getItems()) {
+            for (Bid bid : item.getBids()) {
+                if (currBidder.getName().equals(bid.getBidder())) {
+                    toSend.add(item);
+                }
+            }
+        }
         return toSend;
     }
 
-    public HashSet<Auction> getAuctionsCurrBidderCanBidOn(Bidder currBidder) {
+    public HashSet<Auction> getAuctionsCurrBidderCanBidOn(Bidder currBidder) throws ClassNotFoundException, IOException {
         HashSet<Auction> toSend = new HashSet<>();
         //TODO: return a Set of Auctions currBidder can place bids on
-        System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
+        //System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
+        System.out.println("** NOTICE: NEEDS DEBUGGING! **");
+
+
+        //check verifies that online auction is open and auction has not ended yet
+        //No check has been made about midnight before auction (auction needs to lock)
+        for(Auction a : this.deserializeAllAuctions()) {
+        	if(a.getOnlineStart().isBefore(LocalDateTime.now())) {
+        		if(a.getEnd().isAfter(LocalDateTime.now())) {
+                	toSend.add(a);
+        		}
+        	}
+        }
+
         return toSend;
     }
 
@@ -136,9 +171,6 @@ public class DataControlCenter {
 
     public HashSet<Auction> getSubmittedAuctionsByNPContact(NPContact currContact) throws ClassNotFoundException, IOException {
         HashSet<Auction> toSend = new HashSet<>();
-        //TODO: return auctions submitted by currContact
-        System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
-
         for(Auction a : this.deserializeAllAuctions()) {
         	if(a.getOrganization().equals(currContact.getName())) {
         		toSend.add(a);
