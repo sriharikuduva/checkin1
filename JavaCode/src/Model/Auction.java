@@ -7,7 +7,7 @@ public class Auction implements Serializable {
     /** Organization's name **/
     private String organization;
     /** List of items that the auction has **/
-    private ArrayList<Item> items;
+    protected ArrayList<Item> items;
     /** Start time of the auction **/
     private LocalDateTime start;
     /** End time of the auction **/
