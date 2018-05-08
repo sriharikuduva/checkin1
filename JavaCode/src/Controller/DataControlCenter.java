@@ -119,24 +119,24 @@ public class DataControlCenter {
         //System.out.println("** NOTICE: NEEDS DEBUGGING! **");
 
         for(Auction a : this.deserializeAllAuctions()) {
-        	if(a.toString().equals(specific.toString())) {
-            	for(Item i : a.getItems()) {
-            		for(Bid b : i.getBids()) {
-            			if(b.getBidder().equals(currBidder.getName())) {
-            				toSend.add(i);
-            			}
-            		}
-            	}
-        	}
+	        	if(a.toString().equals(specific.toString())) {
+	            	for(Item i : a.getItems()) {
+	            		for(Bid b : i.getBids()) {
+	            			if(b.getBidder().equals(currBidder.getName())) {
+	            				toSend.add(i);
+	            			}
+	            		}
+	            	}
+	        	}
         }
 
-        for (Item item : specific.getItems()) {
-            for (Bid bid : item.getBids()) {
-                if (currBidder.getName().equals(bid.getBidder())) {
-                    toSend.add(item);
-                }
-            }
-        }
+//        for (Item item : specific.getItems()) {
+//            for (Bid bid : item.getBids()) {
+//                if (currBidder.getName().equals(bid.getBidder())) {
+//                    toSend.add(item);
+//                }
+//            }
+//        }
         return toSend;
     }
 

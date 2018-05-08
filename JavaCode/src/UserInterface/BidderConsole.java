@@ -141,11 +141,54 @@ public class BidderConsole {
             /** Bid For An Item In An Auction **/
             /* Need to get the auction choice from the user before hand and pass in as currAuction */
             //this.dataControl.makeBid(currAuction, currBidder);
-            Auction dummyAuction = new Auction();
-            this.dataControl.makeBid(dummyAuction, currBidder);
             //TODO: Go to this.dataControl.makeBid(currAuction, currBidder) and implement logic?
             //TODO: Display verification to user (Pass/ Fail)
-            this.revert();
+        		StringBuilder sb = new StringBuilder();
+        		HashSet<Auction> auctions = this.dataControl.getAuctionsCurrBidderCanBidOn(currBidder);
+        		HashMap<Character, Auction> auctionOptions = new HashMap<>();
+       		System.out.print("You can place bids on these auction(s):\n");
+            
+			char optionNumber = 'a';
+			for (Auction auc : auctions) {
+				sb.append("\t" + optionNumber + ") ");
+				sb.append(auc.getOrganization());
+				sb.append("\n");
+				auctionOptions.put(optionNumber, auc);
+				optionNumber++;
+			}
+			
+			System.out.print(sb);
+			System.out.println("\nPlease enter your option letter (and press ENTER): ");
+			char aucOpt = this.input.next().charAt(0);
+			
+			HashMap<Character, Item> itemOptions = new HashMap<>();
+			
+			if (auctionOptions.containsKey(aucOpt)) {
+				sb = new StringBuilder();
+				
+				for (Item itm : auctionOptions.get(aucOpt).items) {
+					optionNumber = 'a';
+	              	sb.append("\t" + optionNumber + ". ");
+	  	        		sb.append(itm.getName());
+	  	        		sb.append("\n");
+	  	        		itemOptions.put(optionNumber, itm);
+	  	        		optionNumber++;
+				}
+				System.out.print(sb);
+				System.out.println("\nPlease enter your option letter to place a bid (and press ENTER): ");
+				
+	  			char itemOpt = this.input.next().charAt(0);
+	  			if (itemOptions.containsKey(itemOpt)) {
+	  				this.dataControl.makeBid(auctionOptions.get(aucOpt), itemOptions.get(itemOpt), currBidder);
+	  			}
+			}
+			
+			
+			sb.setLength(0);
+            
+            //Auction dummyAuction = new Auction();
+            //this.dataControl.makeBid(dummyAuction, currBidder);
+        		this.revert();
         } else if (choice == 'x') {
             this.dataControl.logOutBidder();
             this.sb.append("You have been logged out, terminating...\n");
