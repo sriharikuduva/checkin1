@@ -18,7 +18,7 @@ public class SerializeData {
         serializeNPContact("./JavaCode/Assets/npcontact.bin");
         serializeAuctions("./JavaCode/Assets/auctions.bin");
     }
-
+    
     private static void serializeBidders(String output) throws IOException {
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(output));
         inputScanner = new Scanner(SerializeData.class
