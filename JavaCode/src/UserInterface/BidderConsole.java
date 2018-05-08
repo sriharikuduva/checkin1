@@ -110,22 +110,32 @@ public class BidderConsole {
     private void choiceLogic(Character choice) throws ClassNotFoundException, IOException {
         if (choice == 'a') {
             /** View Auctions I Have Placed Bids On **/
-            //HashSet<Auction> result = this.dataControl.getAuctionsCurrBidderHasBids(currBidder);
+            HashSet<Auction> result = this.dataControl.getAuctionsCurrBidderHasBids(currBidder);
             //TODO: Go to this.dataControl.getAuctionsCurrBidderHasBids(currBidder) and implement logic
             //TODO: Display result to user
+            
             StringBuilder sb = new StringBuilder();
-            //char option = 'a';
-        		int i = 1;
-            for (Auction auc : currBidder.auctions.values()) {
-        			sb.append("\t" + i + ". ");
-            		sb.append(auc.getOrganization());
-            		sb.append("\n");
-            		//option++;
-            		i++;
+            for (Auction auc : result) {
+            	int i = 1;
+            	sb.append("\t" + i + ". ");
+	        		sb.append(auc.getOrganization());
+	        		sb.append("\n");
+	        		i++;
             }
+            
             System.out.print(sb);
             
-        		//System.out.print(currBidder.auctions.keySet()); //.entrySet()
+//            StringBuilder sb = new StringBuilder();
+//            
+//        		int i = 1;
+//            for (Auction auc : currBidder.auctions.values()) {
+//        			sb.append("\t" + i + ". ");
+//            		sb.append(auc.getOrganization());
+//            		sb.append("\n");
+//            		i++;
+//            }
+//            System.out.print(sb);
+            
             this.revert();
         } else if (choice == 'b') {
             /** View Items I Have Placed Bids On (In An Auction) **/

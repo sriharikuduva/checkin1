@@ -97,17 +97,17 @@ public class DataControlCenter {
     public HashSet<Auction> getAuctionsCurrBidderHasBids(Bidder currBidder) throws ClassNotFoundException, IOException {
         HashSet<Auction> toSend = new HashSet<>();
         //TODO: return a Set of auctions that the bidder has bids in
-        System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
-//
-//        for(Auction auction : this.getAuctions()) {
-//        	for(Item item : auction.getItems()) {
-//        		for(Bid bid : item.getBids()) {
-//        			if(bid.getBidder().equals(currBidder.getName())) {
-//        				toSend.add(auction);
-//        			}
-//        		}
-//        	}
-//        }
+        //System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
+
+        for(Auction auction : this.getAuctions()) {
+	        	for(Item item : auction.getItems()) {
+	        		for(Bid bid : item.getBids()) {
+	        			if(bid.getBidder().equals(currBidder.getName())) {
+	        				toSend.add(auction);
+	        			}
+	        		}
+	        	}
+        }
 
         return toSend;
     }
