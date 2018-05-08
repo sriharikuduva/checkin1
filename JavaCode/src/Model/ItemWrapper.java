@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.function.Predicate;
 
 /**
+ * This class serves as a container to store enough information
+ * to create an Auction object and an Item object.
  * @author MauriceChiu
  * @version May 7, 2018
  */
@@ -19,7 +21,8 @@ public class ItemWrapper {
     private ArrayList<Bid> bids;
 
     //Group
-    public ItemWrapper(String organization, LocalDateTime startClock, LocalDateTime endClock, String name, int quantity, int startingBid, String description, String imagePath) {
+    public ItemWrapper(String organization, LocalDateTime startClock, LocalDateTime endClock, 
+    		String name, int quantity, int startingBid, String description, String imagePath) {
     		this.organization = organization;
         this.start = startClock;
         this.end = endClock;
