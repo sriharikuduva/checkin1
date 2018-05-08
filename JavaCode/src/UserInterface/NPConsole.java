@@ -77,6 +77,6 @@ public class NPConsole {
         	i++;
         }
         sb.append("You may choose an auction to view items. \n");
-        sb.append("Please enter your option letter (and press ENTER): ");
+        //sb.append("Please enter your option letter (and press ENTER): ");
     }
 }
