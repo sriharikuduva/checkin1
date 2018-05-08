@@ -14,18 +14,20 @@ public class DataControlCenter {
 	private static final int MAX_AUCTIONS_PER_DAY = 2;
 	/**Time distance (minimum) between end of one auction and start of next.*/
 	private static final int STOP_TO_START_HOUR_GAP = 2;
-    private HashSet<Auction> masterListOfAuctions;
+    private HashSet<Auction> addedAuctions;
+    private HashSet<Auction> updatedAuctions;
     private Scanner inputScanner;
     private int nextAvailableAuctionId;
 
     public DataControlCenter() throws IOException, ClassNotFoundException {
-        this.masterListOfAuctions = new HashSet<>();
+        this.addedAuctions = new HashSet<>();
+        this.updatedAuctions = new HashSet<>();
         this.nextAvailableAuctionId = findNextAvailableAuctionId();
     }
 
     public int findNextAvailableAuctionId() {
         int max = Integer.MIN_VALUE;
-        for (Auction auction : this.masterListOfAuctions) {
+        for (Auction auction : this.addedAuctions) {
             max = (auction.getAuctionID() > max) ? auction.getAuctionID() : max;
         }
         return max + 1;
@@ -142,64 +144,22 @@ public class DataControlCenter {
 
     public void logOutNP() throws IOException, ClassNotFoundException {
         HashSet<Auction> toSerialize = this.deserializeAllAuctions();
-        for (Auction a : this.masterListOfAuctions) {
+        for (Auction a : this.addedAuctions) {
             toSerialize.add(a);
             //System.out.println("serialized: " + a.toString());
         }
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./JavaCode/Assets/auctions.bin"));
         oos.writeObject(toSerialize);
-        this.masterListOfAuctions.clear();
+        this.addedAuctions.clear();
     }
     
-    public void addAuction(Auction auction) throws ClassNotFoundException, IOException {
-		HashSet<Auction> updateAuctions = new HashSet<Auction>();
-
-		/* hari's code: */
-        HashSet<Auction> allAuctionsTillNow = this.deserializeAllAuctions();
-        this.masterListOfAuctions.add(auction);
-        //WHEN NPCONTACT LOGS OUT THEN WE WRITE TO FILE...
-
-//Shannon's Code:
-/*
-    	try {
-    		//System.out.println("Creating updateAuctions");
-    		updateAuctions = this.getAuctions();
-
-//        	if(updateAuctions.size() > 0) {
-//        		for(Auction outAuction : updateAuctions) {
-//            		System.out.println("Existing Auctions: " + outAuction.getStart().toString());
-//        		}
-//        	}
-    	} catch (Exception e) {
-    		System.out.println("Can't print existing auctions.");
-    	}
-
-    	try {
-    		updateAuctions.add(auction);
-
-    		//System.out.println("update: " + updateAuctions.size());
-
-        	FileOutputStream f = new FileOutputStream(new File("auctions.bin"));
-        	ObjectOutputStream o = new ObjectOutputStream(f);
-
-        	Iterator<Auction> iter = updateAuctions.iterator();
-
-        	while(iter.hasNext()) {
-            	//System.out.println("Wrote Auction to File. \n");
-        		o.writeObject(iter.next());
-        	}
-
-        	o.close();
-        	f.close();
-    	} catch (Exception e){
-    		System.out.println("Could Not Save Auction.");
-    		e.printStackTrace();
-    	}*/
+    public void addAuction(Auction auction) {
+        this.addedAuctions.add(auction);
     }
     
     public HashSet<Auction> getAuctions() throws ClassNotFoundException, IOException {
     	HashSet<Auction> allAuctions = new HashSet<Auction>();
-    	for(Auction auction : this.masterListOfAuctions) {
+    	for(Auction auction : this.addedAuctions) {
     		allAuctions.add(auction);
     	}
 
@@ -266,11 +226,39 @@ public class DataControlCenter {
             if (time.isBefore(auction.getEnd().toLocalTime().plusHours(STOP_TO_START_HOUR_GAP))) {
             	available = false;
             }
-
             if(endInput.isAfter(auction.getStart().toLocalTime().minusHours(STOP_TO_START_HOUR_GAP))) {
             	available = false;
             }
         }
     	return available;
+    }
+
+    /** DEBUGGIN PURPOSES (Test to see if serialization for bidder's bids is working) **/
+    public void placeBidDebugger(Bidder currBidder, int amount) throws IOException, ClassNotFoundException {
+        //Places a bid on OON auction (Auc.ID = 5) on the first item under currBider name and amount.
+        Auction oonAuction = null;
+        for (Auction a : this.deserializeAllAuctions()) {
+            if (a.getAuctionID() == 5) {
+                oonAuction = a;
+            }
+        }
+        Item item = oonAuction.getItems().get(0);
+        item.addBid(new Bid(currBidder.getName(), item.getName(), amount));
+        this.updatedAuctions.add(oonAuction);
+    }
+
+    public void logOutBidder() throws IOException, ClassNotFoundException {
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./JavaCode/Assets/auctions.bin"));
+        HashSet<Auction> toSerialize = this.deserializeAllAuctions();
+        for(Auction needToReplaceInSerializingSet : this.updatedAuctions) {
+            for (Auction a : toSerialize) {
+                if (needToReplaceInSerializingSet.getAuctionID() == a.getAuctionID()) {
+                    toSerialize.remove(a);
+                    toSerialize.add(needToReplaceInSerializingSet);
+                }
+            }
+        }
+        this.updatedAuctions.clear();
+        oos.writeObject(toSerialize);
     }
 }
