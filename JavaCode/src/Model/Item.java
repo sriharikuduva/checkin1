@@ -51,6 +51,14 @@ public class Item implements Serializable {
         return this.name;
     }
     
+    public int getQuantity() {
+    		return this.quantity;
+    }
+    
+    public String getDescription() {
+    		return this.description;
+    }
+    
     public ArrayList<Bid> getBids() {
     	return this.bids;
     }
