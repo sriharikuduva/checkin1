@@ -35,12 +35,6 @@ public class NPConsole {
         this.sb.setLength(0);
     }
 
-    /* Welcome ContactName! Please make a selection:
-    [a] - View all submitted auction requests
-    [b] - Submit an auction request
-    [x] - Logout/Exit */
-
-
     private void choiceLogic(Character choice) throws IOException, ClassNotFoundException {
         if (choice == 'a') {
             /** View all submitted auction requests **/
