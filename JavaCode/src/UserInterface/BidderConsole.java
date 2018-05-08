@@ -93,7 +93,7 @@ public class BidderConsole {
         this.sb.setLength(0);
     }
     
-private void displayOptions() {
+    private void displayOptions() {
         this.sb.append("\nHere are your options: \n");
         this.sb.append("\ta) View Auctions I Have Placed Bids On\n");
         this.sb.append("\tb) View Items I Have Placed Bids On (In An Auction)\n");
@@ -129,21 +129,26 @@ private void displayOptions() {
             this.revert();
         } else if (choice == 'b') {
             /** View Items I Have Placed Bids On (In An Auction) **/
-            /* Need to get the auction choice from the user before hand and pass in as currAuction */
-            //Auction dummyAuction = new Auction();
-            //this.dataControl.getItemsCurrBidderHasBidsOnInAnAuction(currBidder, dummyAuction);
+            /* Need to get the auction choice from the user before hand and pass in as currAuction */    
             //TODO: Go to this.getItemsCurrBidderHasBidsOnInAnAuction(currBidder, currAuction) and implement logic
             //TODO: Display result to user (Items in that specific auction)
+        		HashMap<Character, Auction> options = new HashMap<>();
             StringBuilder sb = new StringBuilder();
-    			char option = 'a';
+    			char optionNumber = 'a';
     			for (Auction auc : currBidder.auctions.values()) {
-    				sb.append("\t" + option + ") ");
+    				sb.append("\t" + optionNumber + ") ");
     				sb.append(auc.getOrganization());
     				sb.append("\n");
-    				option++;
+    				options.put(optionNumber, auc);
+    				optionNumber++;
     			}
     			System.out.print(sb);
+    			
+    			
             
+    			Auction dummyAuction = new Auction();
+            this.dataControl.getItemsCurrBidderHasBidsOnInAnAuction(currBidder, dummyAuction);
+    			
             this.revert();
         } else if (choice == 'c') {
             /** View Items I Have Placed Bids On (In All Auctions) **/
