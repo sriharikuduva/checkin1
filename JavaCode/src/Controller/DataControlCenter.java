@@ -109,12 +109,12 @@ public class DataControlCenter {
                 }
             }
         }
-
         return toSend;
     }
 
     public HashSet<Item> getItemsCurrBidderHasBidsOnInAnAuction(Bidder currBidder, Auction specific) throws IOException, ClassNotFoundException {
         HashSet<Item> toSend = new HashSet<>();
+
         //TODO: return a Set of Items the Bidder has bids on in the specific Auction
         //System.out.println("** NOTICE: NEEDS DEBUGGING! **");
 
@@ -173,6 +173,9 @@ public class DataControlCenter {
         	if(a.getOrganization().equals(currContact.getName())) {
         		toSend.add(a);
         	}
+        }
+        for (Auction a : this.addedAuctions) {
+            toSend.add(a);
         }
         
         return toSend;
