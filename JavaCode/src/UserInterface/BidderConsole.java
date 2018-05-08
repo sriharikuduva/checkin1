@@ -29,16 +29,19 @@ public class BidderConsole {
         this.dataControl = dataControl;
         this.sb = new StringBuilder();
         this.input = new Scanner(System.in);
+        
     }
 
     public void invokeMenu() throws ClassNotFoundException, IOException {
         this.sb.append("\nWelcome " + this.currBidder.getName() +
                 "! You have been logged in as a Bidder.\n");
-
+      
         //Populate bidder's inventory
         String fileName = currBidder.getName();
+        
         this.inputScanner = new Scanner(getClass()
         		.getResourceAsStream(fileName + ".txt")); //files are named after bidder's name
+        
 		while (this.inputScanner.hasNextLine()) {
 			String parts[] = this.inputScanner.nextLine().split(",");
 			this.cleanParts(parts); //Trim off padding
@@ -48,6 +51,7 @@ public class BidderConsole {
 			itemsWithAucName.add(item);
 			//item.toString();
 		}
+		
 		for (ItemWrapper iwan : itemsWithAucName) {
 			if (currBidder.auctions.containsKey(iwan.getOrgName())) {
 				Item itemToAdd = iwan.getItem();
