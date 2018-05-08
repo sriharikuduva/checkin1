@@ -1,4 +1,8 @@
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 
 /** Represents a Auction Central User. */
 public class User implements Serializable {
@@ -12,6 +16,9 @@ public class User implements Serializable {
     protected String address;
     /** User's phone number. **/
     protected String phoneNumber;
+    /** Contains all the auction that the bidder has placed bids in. */
+	protected HashMap<String, Auction> auctions = new HashMap<String, Auction>();
+	
 
 
     /** Creates a user with 4 parameters.
@@ -25,6 +32,7 @@ public class User implements Serializable {
          this.username = username;
          this.address = address;
          this.phoneNumber = phoneNumber;
+         //this.auctions = 
     }
 
 }

@@ -1,4 +1,6 @@
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.io.Serializable;
 import java.util.*;
 
@@ -7,7 +9,7 @@ public class Auction implements Serializable {
     /** Organization's name **/
     private String organization;
     /** List of items that the auction has **/
-    private ArrayList<Item> items;
+    protected ArrayList<Item> items;
     /** Start time of the auction **/
     private LocalDateTime start;
     /** End time of the auction **/
@@ -16,6 +18,7 @@ public class Auction implements Serializable {
     private LocalDateTime onlineStart;
     /** Auction Identification number **/
     private int auctionID;
+    //private DateTimeFormatter fmt;
 
     //Shannon Weston
     /** Creation date for the auction **/
@@ -28,6 +31,9 @@ public class Auction implements Serializable {
      */
     public Auction (String organization, LocalDateTime startClock, LocalDateTime endClock) {
         this(organization, startClock, endClock, -1);
+        this.items = new ArrayList<Item>();
+        //fmt = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
+        onlineStart = LocalDateTime.now();
     }
 
     /**
@@ -44,6 +50,8 @@ public class Auction implements Serializable {
         this.items = new ArrayList<Item>();
         this.creationDate = LocalDateTime.now();
         this.auctionID = auctionID;
+        //fmt = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
+        onlineStart = LocalDateTime.now();
     }
 
     /** Creates an auction with 1 parameter
@@ -51,11 +59,16 @@ public class Auction implements Serializable {
     public Auction (String organization) {
         this.organization = organization;
         this.creationDate = LocalDateTime.now();
+        this.items = new ArrayList<Item>();
+        //fmt = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
+        onlineStart = LocalDateTime.now();
     }
 
     /** Creates an empty auction with 0 parameters */
     public Auction() {
         //Empty Auction for BidderConsole.java
+    	this.items = new ArrayList<Item>();
+    	onlineStart = LocalDateTime.now();
     }
     
     public void setOrganization(String organization) {
@@ -108,5 +121,16 @@ public class Auction implements Serializable {
 
     public void setAuctionId(int nextAvailableAuctionId) {
         this.auctionID = nextAvailableAuctionId;
+    }
+    
+    @Override
+    public String toString() {
+    	StringBuilder sb = new StringBuilder();
+    	sb.append("Auction has " + this.items.size() + " items.");
+    	sb.append(" Start Time : " + this.start.toString());
+    	sb.append(" End Time : " + this.end.toString());
+    	sb.append(" Online Launch: " + this.onlineStart.toString());
+    	sb.append("\n");
+    	return sb.toString();
     }
 }
