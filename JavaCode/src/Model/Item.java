@@ -1,16 +1,28 @@
 import java.io.Serializable;
 import java.util.*;
 
+/** Represents an item in an auction. **/
 public class Item implements Serializable {
     //Group
+    /** Item's name **/
     private String name;
+    /** Item's quantity **/
     private int quantity;
+    /** Item's description **/
     private String  description;
+    /** Item's starting bid **/
     private int startingBid;
+    /** Item's imagePath **/
     private String imagePath;
+    /** Item's current list of bids **/
     private ArrayList<Bid> bids;
 
-    //Group
+    /** Creates an Item with 5 parameters
+     * @param name  Item's name
+     * @param quantity Item's quantity
+     * @param startingBid Item's starting bid
+     * @param description Item's description
+     * @param imagePath Item's image path */
     public Item(String name, int quantity, int startingBid, String description, String imagePath) {
         this.name = name;
         this.quantity = quantity;
