@@ -188,30 +188,10 @@ public class BidderConsole {
 			}
 			sb.setLength(0);
         		this.revert();
-
         } else if (choice == 'x') {
             this.dataControl.logOutBidder();
             this.sb.append("You have been logged out, terminating...\n");
         }
-//        else if (choice == 'x') {
-//            this.dataControl.logOutBidder();
-//            this.sb.append("You have been logged out, terminating...\n");
-//        } else if (choice == 'y') {
-//            /** FOR DEBUGGING PURPOSE, REMOVE THIS ELSEIF BRANCH WHEN SUBMITTING **/
-//            this.dataControl.placeBidDebugger(currBidder, 50);
-//            this.revert();
-//        } else if (choice == 'z') {
-//            /** FOR DEBUGGING PURPOSE, REMOVE THIS ELSEIF BRANCH WHEN SUBMITTING **/
-//            for (Auction a : this.dataControl.deserializeAllAuctions()) {
-//                if (a.getAuctionID() == 5) {
-//                    Item i = a.getItems().get(0);
-//                    for (Bid bid : i.getBids()) {
-//                        System.out.println("Bidder name: " + bid.getBidder() + ", Bid amount = " + bid.getAmount() +
-//                                ", Item name: " + bid.getItem());
-//                    }
-//                }
-//            }
-//        }
         System.out.print(this.sb);
         this.sb.setLength(0);
     }
