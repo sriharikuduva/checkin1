@@ -70,13 +70,6 @@ public class BidderConsole {
         if (choice == 'a') {
             /** View Auctions I Have Placed Bids On **/
             HashSet<Auction> result = this.dataControl.getAuctionsCurrBidderHasBids(currBidder);
-
-            //for (Auction auction : result) {
-                //sb.append(auction.toString());
-
-            //TODO: Go to this.dataControl.getAuctionsCurrBidderHasBids(currBidder) and implement logic
-            //TODO: Display result to user
-            
             StringBuilder sb = new StringBuilder();
             for (Auction auc : result) {
             	int i = 1;
@@ -84,11 +77,8 @@ public class BidderConsole {
 	        		sb.append(auc.getOrganization());
 	        		sb.append("\n");
 	        		i++;
-
             }
-            
             System.out.print(sb);
-
             sb.setLength(0);
             this.revert();
         } else if (choice == 'b') {
@@ -139,18 +129,12 @@ public class BidderConsole {
             this.revert();
         } else if (choice == 'c') {
             /** View Items I Have Placed Bids On (In All Auctions) **/
-            //HashSet<Auction> result = this.dataControl.getAuctionsCurrBidderHasBids(currBidder);
-           // HashSet<Auction>
-            //TODO: Display result to user (Not the auctions, but items in each auction)
+            HashSet<Auction> result = this.dataControl.getAuctionsCurrBidderHasBids(currBidder);
             StringBuilder sb = new StringBuilder();
-	    		int num = 1;
-	    		for (Auction auc : currBidder.auctions.values()) {
-	    			for (Item itm : auc.items) {
-		    			sb.append("\t" + num + ". ");
-		      		sb.append(itm.getName());
-		      		sb.append("\n");
-		      		num++;
-	    			}
+	    		for (Auction auc : result) {
+                    for (Item item : auc.getItems()) {
+                        sb.append(item.toString() + "\n");
+                    }
 	    		}
 	    		System.out.print(sb);
             this.revert();
