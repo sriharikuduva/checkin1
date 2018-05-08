@@ -67,9 +67,10 @@ public class BidderConsole {
             HashSet<Auction> result = this.dataControl.getAuctionsCurrBidderHasBids(currBidder);
 
             StringBuilder sb = new StringBuilder();
+            int i = 1;
             for (Auction auc : result) {
-            	int i = 1;
-            	sb.append("\t" + i + ". ");
+            	
+            		sb.append("\t" + i + ". ");
 	        		sb.append(auc.getOrganization());
 	        		sb.append("\n");
 	        		i++;
@@ -94,6 +95,7 @@ public class BidderConsole {
   			}
   			
   			System.out.print(sb);
+  			
   			System.out.print("\nPlease enter your option letter (and press ENTER): ");
   			char opt = this.input.next().charAt(0);
   			
@@ -101,8 +103,9 @@ public class BidderConsole {
   				HashSet<Item> items =  this.dataControl.getItemsCurrBidderHasBidsOnInAnAuction(currBidder,  options.get(opt));
   				sb = new StringBuilder();
   				sb.append("Here are the items you have bids on in the auction: " + options.get(opt).getOrganization() + "\n");
+  				int i = 1;
   				for (Item itm : items) {
-	              	int i = 1;
+	              	
 	              	sb.append("\t" + i + ". ");
 	  	        		sb.append(itm.getName());
 	  	        		sb.append("\n");
@@ -116,11 +119,16 @@ public class BidderConsole {
             /** View Items I Have Placed Bids On (In All Auctions) **/
             HashSet<Auction> result = this.dataControl.getAuctionsCurrBidderHasBids(currBidder);
             StringBuilder sb = new StringBuilder();
-	    		for (Auction auc : result) {
-                    for (Item item : auc.getItems()) {
-                        for (Bid bid : item.getBids()) {
+            int i = 1;
+            for (Auction auc : result) {
+	    			    
+	    			for (Item item : auc.getItems()) {
+                        
+                    		for (Bid bid : item.getBids()) {
                             if (bid.getBidder().equals(currBidder.getName())) {
-                                sb.append(item.toString() + "\n");
+                                sb.append("\t" + i + ". ");
+                            		sb.append(item.toString() + "\n");
+                            		i++;
                             }
                         }
                         //sb.append(item.toString() + "\n");
@@ -132,8 +140,11 @@ public class BidderConsole {
             /** View Auctions I Can Place Bids On **/
             HashSet<Auction> result = this.dataControl.getAuctionsCurrBidderCanBidOn(currBidder);
             this.sb.append("You can place bids on these auction(s):\n");
+            int i = 1;
             for (Auction auction : result) {
-                this.sb.append(auction.toString());
+                this.sb.append("    " + i + ". ");
+            		this.sb.append(auction.toString());
+            		i++;
             }
             this.revert();
         } else if (choice == 'e') {

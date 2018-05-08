@@ -130,11 +130,11 @@ public class Auction implements Serializable {
     @Override
     public String toString() {
     	StringBuilder sb = new StringBuilder();
-    	sb.append("Auction has " + this.items.size() + " items.");
-    	sb.append(" Start Time : " + this.start.toString());
-    	sb.append(" End Time : " + this.end.toString());
-    	sb.append(" Online Launch: " + this.onlineStart.toString());
-    	sb.append("\n");
+    	sb.append("Auction by " + this.organization + " has " + this.items.size() + " items.\n");
+    	sb.append("\tStart Time : " + this.start.toString());
+    	sb.append("\n\tEnd Time : " + this.end.toString());
+    	sb.append("\n\tOnline Launch: " + this.onlineStart.toString());
+    	sb.append("\n\n");
     	return sb.toString();
     }
 }
