@@ -35,7 +35,7 @@ public class BidderConsole {
     public void invokeMenu() throws ClassNotFoundException, IOException {
         this.sb.append("\nWelcome " + this.currBidder.getName() +
                 "! You have been logged in as a Bidder.\n");
-      
+     
         //Populate bidder's inventory
         String fileName = currBidder.getName();
         
