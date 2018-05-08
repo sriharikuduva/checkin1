@@ -100,7 +100,7 @@ public class DataControlCenter {
             for (Item item : auction.getItems()) {
                 for (Bid bid : item.getBids()) {
                     if (bid.getBidder().equals(currBidder.getName())) {
-                        toSend.add(auction);
+                            toSend.add(auction);
                     }
                 }
             }
@@ -111,7 +111,6 @@ public class DataControlCenter {
     public HashSet<Item> getItemsCurrBidderHasBidsOnInAnAuction(Bidder currBidder, Auction specific) throws IOException, ClassNotFoundException {
         HashSet<Item> toSend = new HashSet<>();
         //TODO: return a Set of Items the Bidder has bids on in the specific Auction
-        //System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
         System.out.println("** NOTICE: NEEDS DEBUGGING! **");
 
         for(Auction a : this.deserializeAllAuctions()) {
@@ -139,8 +138,7 @@ public class DataControlCenter {
     public HashSet<Auction> getAuctionsCurrBidderCanBidOn(Bidder currBidder) throws ClassNotFoundException, IOException {
         HashSet<Auction> toSend = new HashSet<>();
         //TODO: return a Set of Auctions currBidder can place bids on
-        //System.out.println("** NOTICE: NEEDS IMPLEMENTATION! **");
-        System.out.println("** NOTICE: NEEDS DEBUGGING! **");
+        //System.out.println("** NOTICE: NEEDS DEBUGGING! **");
 
 
         //check verifies that online auction is open and auction has not ended yet

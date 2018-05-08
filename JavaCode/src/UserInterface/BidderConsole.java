@@ -21,61 +21,21 @@ public class BidderConsole {
     private Scanner input;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     /** This is for scanning in bidder's inventory */
-    private Scanner inputScanner;
-    private ArrayList<ItemWrapper> itemsWithAucName = new ArrayList<>();
 
     public BidderConsole(Bidder currBidder, DataControlCenter dataControl) {
         this.currBidder = currBidder;
         this.dataControl = dataControl;
         this.sb = new StringBuilder();
         this.input = new Scanner(System.in);
-        
     }
 
     public void invokeMenu() throws ClassNotFoundException, IOException {
         this.sb.append("\nWelcome " + this.currBidder.getName() +
                 "! You have been logged in as a Bidder.\n");
-      
-        //Populate bidder's inventory
-        String fileName = currBidder.getName();
-        
-        this.inputScanner = new Scanner(getClass()
-        		.getResourceAsStream(fileName + ".txt")); //files are named after bidder's name
-        
-		while (this.inputScanner.hasNextLine()) {
-			String parts[] = this.inputScanner.nextLine().split(",");
-			this.cleanParts(parts); //Trim off padding
-			ItemWrapper item = new ItemWrapper(parts[0], LocalDateTime.parse(parts[1], formatter), 
-					LocalDateTime.parse(parts[2], formatter), parts[3], Integer.parseInt(parts[4].trim()), 
-					Integer.parseInt(parts[5].trim()), parts[6], parts[7]);
-			itemsWithAucName.add(item);
-			//item.toString();
-		}
 		
-		for (ItemWrapper iwan : itemsWithAucName) {
-			if (currBidder.auctions.containsKey(iwan.getOrgName())) {
-				Item itemToAdd = iwan.getItem();
-				currBidder.auctions.get(iwan.getOrgName()).items.add(itemToAdd);
-			} else {
-				Auction tempAuction = iwan.getAuction();
-				tempAuction.items.add(iwan.getItem());
-				currBidder.auctions.put(iwan.getOrgName(), tempAuction);
-			}
-		}
-		
-        	this.displayOptionsWithCheck();
-        //this.displayOptions();
+        //this.displayOptionsWithCheck();
+        this.displayOptions();
         this.choiceLogic(this.input.next().charAt(0));
-    }
-    
-    /**
-     * Helper method for getting rid the paddings.
-     * @param parts
-     */
-    private void cleanParts(String parts[]) {
-        for (int i = 0; i < parts.length; i++) {
-            parts[i] = parts[i].trim();
-        }
     }
     
     private void displayOptionsWithCheck() {
@@ -110,31 +70,20 @@ private void displayOptions() {
     private void choiceLogic(Character choice) throws ClassNotFoundException, IOException {
         if (choice == 'a') {
             /** View Auctions I Have Placed Bids On **/
-            //HashSet<Auction> result = this.dataControl.getAuctionsCurrBidderHasBids(currBidder);
-            //TODO: Go to this.dataControl.getAuctionsCurrBidderHasBids(currBidder) and implement logic
-            //TODO: Display result to user
-            StringBuilder sb = new StringBuilder();
-            //char option = 'a';
-        		int i = 1;
-            for (Auction auc : currBidder.auctions.values()) {
-        			sb.append("\t" + i + ". ");
-            		sb.append(auc.getOrganization());
-            		sb.append("\n");
-            		//option++;
-            		i++;
+            HashSet<Auction> result = this.dataControl.getAuctionsCurrBidderHasBids(currBidder);
+            for (Auction auction : result) {
+                sb.append(auction.toString());
             }
             System.out.print(sb);
-            
-        		//System.out.print(currBidder.auctions.keySet()); //.entrySet()
+            sb.setLength(0);
             this.revert();
         } else if (choice == 'b') {
             /** View Items I Have Placed Bids On (In An Auction) **/
             /* Need to get the auction choice from the user before hand and pass in as currAuction */
+
             //Auction dummyAuction = new Auction();
             //this.dataControl.getItemsCurrBidderHasBidsOnInAnAuction(currBidder, dummyAuction);
-            //TODO: Go to this.getItemsCurrBidderHasBidsOnInAnAuction(currBidder, currAuction) and implement logic
-            //TODO: Display result to user (Items in that specific auction)
-            StringBuilder sb = new StringBuilder();
+            /*StringBuilder sb = new StringBuilder();
     			char option = 'a';
     			for (Auction auc : currBidder.auctions.values()) {
     				sb.append("\t" + option + ") ");
@@ -142,12 +91,13 @@ private void displayOptions() {
     				sb.append("\n");
     				option++;
     			}
-    			System.out.print(sb);
+    			System.out.print(sb);*/
             
             this.revert();
         } else if (choice == 'c') {
             /** View Items I Have Placed Bids On (In All Auctions) **/
             //HashSet<Auction> result = this.dataControl.getAuctionsCurrBidderHasBids(currBidder);
+           // HashSet<Auction>
             //TODO: Display result to user (Not the auctions, but items in each auction)
             StringBuilder sb = new StringBuilder();
 	    		int num = 1;
@@ -164,8 +114,10 @@ private void displayOptions() {
         } else if (choice == 'd') {
             /** View Auctions I Can Place Bids On **/
             HashSet<Auction> result = this.dataControl.getAuctionsCurrBidderCanBidOn(currBidder);
-            //TODO: Go to this.dataControl.getAuctionsCurrBidderCanBidOn(currBidder) and implement logic
-            //TODO: Display result to user
+            this.sb.append("You can place bids on these auction(s):\n");
+            for (Auction auction : result) {
+                this.sb.append(auction.toString());
+            }
             this.revert();
         } else if (choice == 'e') {
             /** Bid For An Item In An Auction **/
