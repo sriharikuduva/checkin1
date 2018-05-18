@@ -85,7 +85,8 @@ public class DataControlCenter {
      * @throws IOException exception risk
      * @throws ClassNotFoundException exception risk */
     public boolean isBidderValid(String username) throws IOException, ClassNotFoundException {
-        for (Bidder bidder : this.deserializeAllBidders()) {
+        System.out.println("Checking Bidder");
+    	for (Bidder bidder : this.deserializeAllBidders()) {
             if (bidder.getUsername().equals(username)) {
                 return true;
             }
@@ -179,6 +180,7 @@ public class DataControlCenter {
         HashSet<Auction> toSend = new HashSet<>();
         for(Auction a : this.deserializeAllAuctions()) {
         	if(a.getOnlineStart().isBefore(LocalDateTime.now())) {
+            //if(a.getOnlineStart().isAfter(LocalDateTime.now())) {
         		if(a.getEnd().isAfter(LocalDateTime.now())) {
                 	toSend.add(a);
         		}
@@ -246,6 +248,7 @@ public class DataControlCenter {
         for (Auction a : this.addedAuctions) {
             toSerialize.add(a);
         }
+        
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./JavaCode/Assets/auctions.bin"));
         oos.writeObject(toSerialize);
         this.addedAuctions.clear();
