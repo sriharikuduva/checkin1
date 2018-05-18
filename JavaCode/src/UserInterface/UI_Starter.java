@@ -1,5 +1,4 @@
 import java.io.IOException;
-import java.util.Scanner;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -11,8 +10,6 @@ import javax.swing.JOptionPane;
 public class UI_Starter {
     /** Main Data Control. **/
     private static DataControlCenter dataControl;
-    private static StringBuilder stringBuilder;
-    private static Scanner input;
 
     /** Private constructor to prevent instantiation.*/
     private UI_Starter() { }
@@ -53,7 +50,7 @@ public class UI_Starter {
     			new NPConsole(dataControl.getNPContactByUsername(username), dataControl).invokeMenu();
     		}
     	case "Auction Central Employee":
-    		//dataControl.isAuctionCentralValid(username);
+    		//dataControl.isAuctionCentralEmployeeValid(username);
     	}
     }
 

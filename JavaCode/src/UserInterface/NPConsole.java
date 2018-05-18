@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
 
@@ -16,7 +17,6 @@ public class NPConsole {
     private StringBuilder sb;
     private Scanner input;
     private int choice_int;
-
 
     public NPConsole(NPContact currContact, DataControlCenter dataControl) {
         this.currContact = currContact;
@@ -56,7 +56,7 @@ public class NPConsole {
             /** View all submitted auction requests **/
             HashSet<Auction> result = this.dataControl.getSubmittedAuctionsByNPContact(currContact);
             viewAuctions(result);
-            this.revert();
+            //this.revert();
         } else if (choice == 'b') {
             new AuctionForm(currContact, this, dataControl).startAuctionApplication();
             this.revert();
@@ -83,16 +83,27 @@ public class NPConsole {
     }
 
     /**Displays the the NPContact their auction set.
-     * @param auctions the auction set to display */
-    private void viewAuctions(HashSet<Auction> auctions) {
+     * @param auctions the auction set to display 
+     * @throws IOException 
+     * @throws ClassNotFoundException */
+    private void viewAuctions(HashSet<Auction> auctions) throws ClassNotFoundException, IOException {
         sb.append("Here are all of your auctions: \n");
         choice_int = CHOICE;
         for(Auction auction : auctions)  {
         	sb.append("\t" + (char) choice_int + ")" + auction.toString());
         	choice_int++;
         }
-        sb.append("You may choose an auction to view items. \n");
-        
-        //Add input choice logic
+        sb.append("You may choose an auction to view items.");
+        this.revert();
+    }
+    
+    //Calling this method and passing in an auction will add the items attached to this auction to the string builder.
+    private void showItemsFromAuction(Auction auction) throws ClassNotFoundException, IOException {
+    	for(Auction a : dataControl.getAuctions()) {
+    		for(Item i : a.getItems()) {
+    			this.sb.append(i.toString());
+    		}
+    	}
+    	System.out.print(this.sb.toString());
     }
 }

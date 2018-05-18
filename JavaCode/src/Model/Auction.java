@@ -37,10 +37,10 @@ public class Auction implements Serializable {
      * @param endClock the end time
      */
     public Auction (String organization, LocalDateTime startClock, LocalDateTime endClock) {
-        this(organization, startClock, endClock, -1);
+        //this(organization, startClock, endClock, -1);
         this.items = new ArrayList<Item>();
-        //fmt = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-        onlineStart = LocalDateTime.now();
+        //fmt = DateTimeFormatter.ofLocalizedDate(Form atStyle.SHORT);
+        this.onlineStart = startClock.minusDays(MIN_SCHEDULE_OUT_DAYS);
     }
 
     /**
@@ -58,7 +58,7 @@ public class Auction implements Serializable {
         this.creationDate = LocalDateTime.now();
         this.auctionID = auctionID;
         //fmt = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-        onlineStart = creationDate.plusDays(MIN_SCHEDULE_OUT_DAYS);
+        onlineStart = this.start.minusDays(MIN_SCHEDULE_OUT_DAYS);
     }
 
     /** Creates an auction with 1 parameter
@@ -68,14 +68,15 @@ public class Auction implements Serializable {
         this.creationDate = LocalDateTime.now();
         this.items = new ArrayList<Item>();
         //fmt = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
-        onlineStart = creationDate.plusDays(MIN_SCHEDULE_OUT_DAYS);
+        onlineStart = this.start.minusDays(MIN_SCHEDULE_OUT_DAYS);
     }
 
     /** Creates an empty auction with 0 parameters */
     public Auction() {
         //Empty Auction for BidderConsole.java
     	this.items = new ArrayList<Item>();
-    	onlineStart = creationDate.plusDays(MIN_SCHEDULE_OUT_DAYS);
+    	this.creationDate = LocalDateTime.now();
+    	//onlineStart = start.minusDays(MIN_SCHEDULE_OUT_DAYS);
     }
     
     public void setOrganization(String organization) {
@@ -102,7 +103,7 @@ public class Auction implements Serializable {
     	return this.end;
     }
     
-    public void setOnlneStart(LocalDateTime date) {
+    public void setOnlineStart(LocalDateTime date) {
     	this.onlineStart = date;
     }
     
@@ -120,10 +121,6 @@ public class Auction implements Serializable {
 
     public int getAuctionID() {
         return this.auctionID;
-    }
-
-    public void setOnlineStart(LocalDateTime startOnline) {
-        this.onlineStart = startOnline;
     }
 
     public void setAuctionId(int nextAvailableAuctionId) {

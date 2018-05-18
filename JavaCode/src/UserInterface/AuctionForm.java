@@ -172,13 +172,20 @@ public class AuctionForm {
 
     /** Creates the auction with the info gathered from the user. **/
     public void createAuction() {
-    	Auction auction = new Auction();
-    	auction.setOrganization(currContact.getName());
-    	auction.setAuctionId(this.dataControl.getNextAvailableAuctionId());
     	
+
     	LocalDateTime startOnline = LocalDateTime.now().plusDays(MIN_SCHEDULE_OUT_DAYS);
     	LocalDateTime start = inputDate;
     	LocalDateTime end = endDate;
+    	
+    	Auction auction = new Auction();
+    	
+    	auction.setStart(start);
+    	auction.setEnd(end);
+    	auction.setOnlineStart(startOnline);
+    	
+    	auction.setOrganization(currContact.getName());
+    	auction.setAuctionId(this.dataControl.getNextAvailableAuctionId());
     	
     	auction.setStart(start);
     	auction.setOnlineStart(startOnline);

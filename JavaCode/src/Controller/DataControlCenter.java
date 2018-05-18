@@ -108,6 +108,17 @@ public class DataControlCenter {
         }
         return false;
     }
+    
+    
+//    public boolean isAuctionCentralEmployeeValid(String username) throws IOException, ClassNotFoundException {
+//        for (AuctionCentralEmployee employee : this.deserializeAllAuctionCentralEmployees()) {
+//            if (employee.getUsername().equals(username)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+    
 
     /** Gets a specific bidder by his/her username
      * @param username the username
