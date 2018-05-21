@@ -9,6 +9,10 @@
       <sourceFolder url="file://$MODULE_DIR$/src/Model" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/UserInterface" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/UserInterface/AuctionCentralEmployeeGUI" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/UserInterface/BidderGUI" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/UserInterface/LoginGUI" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/UserInterface/NPContactGUI" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

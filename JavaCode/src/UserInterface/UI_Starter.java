@@ -18,11 +18,6 @@ public class UI_Starter {
     public static void main(String... args) throws IOException, ClassNotFoundException {
         dataControl = new DataControlCenter();	
         login();
-        
-//        initVariables();
-//        invokeLoginScreen();
-//        
-//        input.close();
     }
     
     private static void login() throws ClassNotFoundException, IOException{
@@ -50,7 +45,10 @@ public class UI_Starter {
     			new NPConsole(dataControl.getNPContactByUsername(username), dataControl).invokeMenu();
     		}
     	case "Auction Central Employee":
-    		//dataControl.isAuctionCentralEmployeeValid(username);
+    		if (dataControl.isAdminValid(username)) {
+    			new AuctionCentralEmployeeFrame(dataControl.getAdminByUsername(username), dataControl);
+    			//System.out.println("It worked!");
+			}
     	}
     }
 

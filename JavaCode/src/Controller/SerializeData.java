@@ -20,6 +20,26 @@ public class SerializeData {
         serializeBidders("./JavaCode/Assets/bidders.bin");
         serializeNPContact("./JavaCode/Assets/npcontact.bin");
         serializeAuctions("./JavaCode/Assets/auctions.bin");
+        serializeAdmins("./JavaCode/Assets/admins.bin");
+    }
+
+    /** Serializes the admins into admins.bin.
+     * @param output the output destination
+     * @throws IOException exception risk */
+    private static void serializeAdmins(String output) throws IOException {
+        ObjectOutputStream oos = new ObjectOutputStream((new FileOutputStream(output)));
+        inputScanner = new Scanner(SerializeData.class
+                .getResourceAsStream("masterAdminUserList.txt"));
+        HashSet<AuctionCentralEmployee> toSerialize = new HashSet<>();
+        while (inputScanner.hasNextLine()) {
+            String parts[] = inputScanner.nextLine().split(",");
+            cleanParts(parts);
+            AuctionCentralEmployee test = new AuctionCentralEmployee(parts[2], parts[1], parts[3],
+                    parts[4], parts[0]);
+            toSerialize.add(test);
+        }
+        oos.writeObject(toSerialize);
+
     }
 
     /** Serializes the bidders into bidders.bin.

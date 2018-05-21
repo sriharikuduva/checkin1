@@ -85,7 +85,7 @@ public class DataControlCenter {
      * @throws IOException exception risk
      * @throws ClassNotFoundException exception risk */
     public boolean isBidderValid(String username) throws IOException, ClassNotFoundException {
-        System.out.println("Checking Bidder");
+        //System.out.println("Checking Bidder");
     	for (Bidder bidder : this.deserializeAllBidders()) {
             if (bidder.getUsername().equals(username)) {
                 return true;
@@ -389,5 +389,29 @@ public class DataControlCenter {
     public void placeBid(Auction auction, Item item, Bid bid) {
 		this.updatedAuctions.add(auction);
     		item.addBid(bid);
+    }
+
+    public boolean isAdminValid(String username) throws IOException, ClassNotFoundException{
+        for (AuctionCentralEmployee admin : this.deserializeAllAdmins()) {
+            if (admin.getUsername().equals(username)) {
+                System.out.println(admin.getName());
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private HashSet<AuctionCentralEmployee> deserializeAllAdmins() throws IOException, ClassNotFoundException {
+        return (HashSet<AuctionCentralEmployee>) new ObjectInputStream(getClass().
+                getResourceAsStream("admins.bin")).readObject();
+    }
+
+    public AuctionCentralEmployee getAdminByUsername(String username) throws IOException, ClassNotFoundException {
+        for (AuctionCentralEmployee admin : this.deserializeAllAdmins()) {
+            if (admin.getUsername().equals(username)) {
+                return admin;
+            }
+        }
+        return null;
     }
 }
