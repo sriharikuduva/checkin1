@@ -26,7 +26,6 @@ public class ChangeMaxAuctionScreen extends Observable {
     private void setElements () throws IOException, ClassNotFoundException {
         JButton backBtn = new JButton("Back");
         JButton confirm = new JButton("Confirm");
-
         JPanel logic = this.getLogicContents();
         JPanel instructions = this.getInstructions();
         this.maxAuctionScreen.add(instructions, BorderLayout.NORTH);
@@ -36,7 +35,6 @@ public class ChangeMaxAuctionScreen extends Observable {
         buttonContainer.add(confirm);
         buttonContainer.add(backBtn);
         this.maxAuctionScreen.add(buttonContainer, BorderLayout.SOUTH);
-
         this.setButtonBehavior(confirm, backBtn);
     }
 

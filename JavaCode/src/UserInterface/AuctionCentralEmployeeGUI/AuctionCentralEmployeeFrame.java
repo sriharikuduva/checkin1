@@ -11,6 +11,7 @@ public class AuctionCentralEmployeeFrame implements Observer {
     private JFrame frame;
     private MainScreen_Admin main;
     private ChangeMaxAuctionScreen changeMaxAuctionScreen;
+    private AuctionsInChronoOrderScreen chronoScreen;
 
     public AuctionCentralEmployeeFrame(AuctionCentralEmployee currAdmin, DataControlCenter dataControl) throws IOException, ClassNotFoundException {
         this.currAdmin = currAdmin;
@@ -23,6 +24,8 @@ public class AuctionCentralEmployeeFrame implements Observer {
         this.main.addObserver(this);
         this.changeMaxAuctionScreen = new ChangeMaxAuctionScreen(this.dataControl);
         this.changeMaxAuctionScreen.addObserver(this);
+        this.chronoScreen = new AuctionsInChronoOrderScreen(dataControl);
+        this.chronoScreen.addObserver(this);
 
         this.frame.setSize(400,500);
         this.frame.add(main.getMainScreen(), BorderLayout.CENTER);
@@ -44,6 +47,10 @@ public class AuctionCentralEmployeeFrame implements Observer {
             System.out.println("Second button");
         } else if (result == 3) {
             System.out.println("Third button");
+            this.frame.getContentPane().removeAll();
+            this.frame.add(this.chronoScreen.getChronoOrderScreen(), BorderLayout.CENTER);
+            this.frame.repaint();
+            this.frame.revalidate();
         } else if (result == 4) {
             System.out.println("Fourth button");
         } else if (result == 5) {

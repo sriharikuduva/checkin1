@@ -1,3 +1,5 @@
+import sun.jvm.hotspot.oops.Array;
+
 import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -30,6 +32,16 @@ public class DataControlCenter {
         this.updatedAuctions = new HashSet<>();
         this.maxAuctionAllowed = this.deserializeMaxUpcomingAucAllowed();
         this.nextAvailableAuctionId = findNextAvailableAuctionId();
+    }
+
+    public HashSet<Auction> getPastAuctions() throws IOException, ClassNotFoundException {
+        HashSet<Auction> toSend = new HashSet<>();
+        for (Auction auction : this.deserializeAllAuctions()) {
+            if (auction.getEnd().isBefore(LocalDateTime.now())) {
+                toSend.add(auction);
+            }
+        }
+        return toSend;
     }
 
     private int deserializeMaxUpcomingAucAllowed() throws IOException, ClassNotFoundException {
@@ -256,7 +268,6 @@ public class DataControlCenter {
         for (Auction a : this.addedAuctions) {
             toSend.add(a);
         }
-        
         return toSend;
     }
 
@@ -425,5 +436,40 @@ public class DataControlCenter {
             }
         }
         return null;
+    }
+
+    public HashSet<Auction> getActiveAuctions() throws IOException, ClassNotFoundException {
+        HashSet<Auction> toSend = new HashSet<>();
+        for (Auction auction : this.deserializeAllAuctions()) {
+            if (auction.getEnd().isAfter(LocalDateTime.now()) &&
+                    auction.getStart().isBefore(LocalDateTime.now())) {
+                toSend.add(auction);
+            }
+        }
+        return toSend;
+    }
+
+    public HashSet<Auction> getFutureAuctions() throws IOException, ClassNotFoundException {
+        HashSet<Auction> toSend = new HashSet<>();
+        for (Auction auction : this.deserializeAllAuctions()) {
+            if (auction.getStart().isAfter(LocalDateTime.now())) {
+                toSend.add(auction);
+            }
+        }
+        return toSend;
+    }
+
+    public ArrayList<Auction> sortAuctionSet(HashSet<Auction> toSort) {
+        ArrayList<Auction> toSend = new ArrayList<>();
+        for (Auction auc : toSort) { toSend.add(auc); }
+        int n = toSend.size();
+        for (int i = 0; i < n-1; i++)
+            for (int j = 0; j < n-i-1; j++)
+                if (toSend.get(j).getEnd().isAfter(toSend.get(j+1).getEnd())) {
+                    Auction temp = toSend.get(j);
+                    toSend.set(j, toSend.get(j+1));
+                    toSend.set(j+1, temp);
+                }
+        return toSend;
     }
 }
