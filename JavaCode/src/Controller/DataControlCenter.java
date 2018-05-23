@@ -4,8 +4,7 @@ import java.time.LocalTime;
 import java.time.LocalDateTime;
 import java.util.*;
 
-/** 
- * 
+/**
  * @author Shannon Weston
  * @version 5/7/2018
  */
@@ -23,12 +22,34 @@ public class DataControlCenter {
     private HashSet<Auction> updatedAuctions;
     private Scanner inputScanner;
     private int nextAvailableAuctionId;
+    private int maxAuctionAllowed;
     //private DataControlCenter dataControl = new DataControlCenter();
 
     public DataControlCenter() throws IOException, ClassNotFoundException {
         this.addedAuctions = new HashSet<>();
         this.updatedAuctions = new HashSet<>();
+        this.maxAuctionAllowed = this.deserializeMaxUpcomingAucAllowed();
         this.nextAvailableAuctionId = findNextAvailableAuctionId();
+    }
+
+    private int deserializeMaxUpcomingAucAllowed() throws IOException, ClassNotFoundException {
+        return (int) new ObjectInputStream(getClass().getResourceAsStream("system.bin")).readObject();
+    }
+
+    public int getMaxAuctionAllowed () {
+        return this.maxAuctionAllowed;
+    }
+
+    public void setMaxAuctionAllowed (int max) {
+        this.maxAuctionAllowed = max;
+    }
+
+    public int getActiveAuctionNumber () throws IOException, ClassNotFoundException {
+        int toSend = 0;
+        for (Auction auction : this.deserializeAllAuctions()) {
+            toSend+= (auction.getEnd().isAfter(LocalDateTime.now())) ? 1 : 0;
+        }
+        return toSend;
     }
 
     /** Finds the next available auction id when creating auctions.
@@ -85,7 +106,6 @@ public class DataControlCenter {
      * @throws IOException exception risk
      * @throws ClassNotFoundException exception risk */
     public boolean isBidderValid(String username) throws IOException, ClassNotFoundException {
-        //System.out.println("Checking Bidder");
     	for (Bidder bidder : this.deserializeAllBidders()) {
             if (bidder.getUsername().equals(username)) {
                 return true;
@@ -108,17 +128,6 @@ public class DataControlCenter {
         }
         return false;
     }
-    
-    
-//    public boolean isAuctionCentralEmployeeValid(String username) throws IOException, ClassNotFoundException {
-//        for (AuctionCentralEmployee employee : this.deserializeAllAuctionCentralEmployees()) {
-//            if (employee.getUsername().equals(username)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-    
 
     /** Gets a specific bidder by his/her username
      * @param username the username
@@ -187,11 +196,9 @@ public class DataControlCenter {
      * @param currBidder the bidder
      * @return set of auctions */
     public HashSet<Auction> getAuctionsCurrBidderCanBidOn(Bidder currBidder) throws ClassNotFoundException, IOException {
-    	//Need to be able to list items in auctions (not just here)
         HashSet<Auction> toSend = new HashSet<>();
         for(Auction a : this.deserializeAllAuctions()) {
         	if(a.getOnlineStart().isBefore(LocalDateTime.now())) {
-            //if(a.getOnlineStart().isAfter(LocalDateTime.now())) {
         		if(a.getEnd().isAfter(LocalDateTime.now())) {
                 	toSend.add(a);
         		}
@@ -381,6 +388,11 @@ public class DataControlCenter {
         }
         this.updatedAuctions.clear();
         oos.writeObject(toSerialize);
+    }
+
+    public void logOutAdmin() throws IOException {
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./JavaCode/Assets/system.bin"));
+        oos.writeObject(this.maxAuctionAllowed);
     }
 
     /** Places the bid

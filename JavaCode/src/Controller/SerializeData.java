@@ -21,6 +21,15 @@ public class SerializeData {
         serializeNPContact("./JavaCode/Assets/npcontact.bin");
         serializeAuctions("./JavaCode/Assets/auctions.bin");
         serializeAdmins("./JavaCode/Assets/admins.bin");
+        serializeSystemDependencies("./JavaCode/Assets/system.bin");
+    }
+
+    private static void serializeSystemDependencies(String output) throws IOException {
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(output));
+        inputScanner = new Scanner(SerializeData.class
+            .getResourceAsStream("masterSystemDetails.txt"));
+        Integer maxUpcomingAuctionsAllowed = inputScanner.nextInt();
+        oos.writeObject(maxUpcomingAuctionsAllowed);
     }
 
     /** Serializes the admins into admins.bin.
