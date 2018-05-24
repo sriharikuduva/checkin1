@@ -18,7 +18,9 @@ public class AuctionsInChronoOrderScreen extends Observable {
         this.setElements();
     }
 
-    public JPanel getChronoOrderScreen() {
+    public JPanel getChronoOrderScreen() throws IOException, ClassNotFoundException {
+        this.chronoOrderScreen.removeAll();
+        this.setElements();
         return this.chronoOrderScreen;
     }
 
@@ -47,18 +49,19 @@ public class AuctionsInChronoOrderScreen extends Observable {
     }
 
     private JTable getAuctionTable(HashSet<Auction> auctions) {
-        String[] columns = new String[] {"Auction Name", "Number Items", "Start Date", "End Date"};
+        String[] columns = new String[] {"Auction Name", "Auction ID", "Number Items", "Start Date", "End Date"};
         final Class[] columnClass = new Class[] {
-                String.class, String.class, String.class, String.class
+                String.class, String.class, String.class, String.class, String.class
         };
-        Object[][] auctionTiming = new Object[auctions.size()][4];
+        Object[][] auctionTiming = new Object[auctions.size()][5];
         int counter = 0;
         ArrayList<Auction> auctionList = this.dataControl.sortAuctionSet(auctions);
         for (Auction auction : auctionList) {
             auctionTiming[counter][0] = auction.getOrganization();
-            auctionTiming[counter][1] = auction.getItems().size();
-            auctionTiming[counter][2] = auction.getStart().toString();
-            auctionTiming[counter][3] = auction.getEnd().toString();
+            auctionTiming[counter][1] = auction.getAuctionID() + "";
+            auctionTiming[counter][2] = auction.getItems().size();
+            auctionTiming[counter][3] = auction.getStart().toString();
+            auctionTiming[counter][4] = auction.getEnd().toString();
             counter++;
         }
         DefaultTableModel model = new DefaultTableModel(auctionTiming, columns) {
@@ -72,16 +75,5 @@ public class AuctionsInChronoOrderScreen extends Observable {
             }
         };
         return new JTable(model);
-    }
-
-    private Auction[] arrayifyAuctions() throws IOException, ClassNotFoundException {
-        HashSet<Auction> auctions = this.dataControl.deserializeAllAuctions();
-        Auction [] toSend = new Auction[auctions.size()];
-        int counter = 0;
-        for (Auction auction : auctions) {
-            toSend[counter] = auction;
-            counter++;
-        }
-        return toSend;
     }
 }

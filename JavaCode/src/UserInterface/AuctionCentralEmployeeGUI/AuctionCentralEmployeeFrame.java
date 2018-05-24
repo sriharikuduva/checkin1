@@ -12,6 +12,8 @@ public class AuctionCentralEmployeeFrame implements Observer {
     private MainScreen_Admin main;
     private ChangeMaxAuctionScreen changeMaxAuctionScreen;
     private AuctionsInChronoOrderScreen chronoScreen;
+    private CancelAuctionScreen cancelAuctionScreen;
+
 
     public AuctionCentralEmployeeFrame(AuctionCentralEmployee currAdmin, DataControlCenter dataControl) throws IOException, ClassNotFoundException {
         this.currAdmin = currAdmin;
@@ -20,12 +22,18 @@ public class AuctionCentralEmployeeFrame implements Observer {
         this.frame.setLayout(new BorderLayout());
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.frame.setTitle("Auction Central Employee - " + currAdmin.getName());
+
         this.main = new MainScreen_Admin(currAdmin, dataControl);
         this.main.addObserver(this);
+
         this.changeMaxAuctionScreen = new ChangeMaxAuctionScreen(this.dataControl);
         this.changeMaxAuctionScreen.addObserver(this);
+
         this.chronoScreen = new AuctionsInChronoOrderScreen(dataControl);
         this.chronoScreen.addObserver(this);
+
+        this.cancelAuctionScreen = new CancelAuctionScreen(dataControl);
+        this.cancelAuctionScreen.addObserver(this);
 
         this.frame.setSize(400,500);
         this.frame.add(main.getMainScreen(), BorderLayout.CENTER);
@@ -48,11 +56,19 @@ public class AuctionCentralEmployeeFrame implements Observer {
         } else if (result == 3) {
             System.out.println("Third button");
             this.frame.getContentPane().removeAll();
-            this.frame.add(this.chronoScreen.getChronoOrderScreen(), BorderLayout.CENTER);
+            try {
+                this.frame.add(this.chronoScreen.getChronoOrderScreen(), BorderLayout.CENTER);
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
             this.frame.repaint();
             this.frame.revalidate();
         } else if (result == 4) {
             System.out.println("Fourth button");
+            this.frame.getContentPane().removeAll();
+            this.frame.add(this.cancelAuctionScreen.getCancelAuctionScreen(), BorderLayout.CENTER);
+            this.frame.repaint();
+            this.frame.revalidate();
         } else if (result == 5) {
             System.out.println("Back button");
             this.frame.getContentPane().removeAll();

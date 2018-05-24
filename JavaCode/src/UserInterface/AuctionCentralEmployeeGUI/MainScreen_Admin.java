@@ -83,7 +83,7 @@ public class MainScreen_Admin extends Observable {
         logout.addActionListener((ActionEvent e) -> {
             try {
                 this.dataControl.logOutAdmin();
-            } catch (IOException e1) { e1.printStackTrace(); }
+            } catch (IOException | ClassNotFoundException e1) { e1.printStackTrace(); }
             System.exit(0);
         });
     }
