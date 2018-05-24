@@ -15,7 +15,8 @@ public class UI_Starter {
     private UI_Starter() { }
 
     public static void main(String... args) throws IOException, ClassNotFoundException {
-        dataControl = new DataControlCenter();	
+        dataControl = new DataControlCenter();
+        //SerializeData.main();
         login();
     }
     

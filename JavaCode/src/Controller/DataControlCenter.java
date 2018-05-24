@@ -539,4 +539,24 @@ public class DataControlCenter {
                 }
         return toSend;
     }
+
+    public HashSet<Auction> getAuctionsWithBounds(LocalDateTime startTime, LocalDateTime endTime)
+            throws IOException, ClassNotFoundException {
+        HashSet<Auction> toSend = new HashSet<>();
+        for (Auction auction : this.deserializeAllAuctions()) {
+            boolean isStartInclusiveOrBeyond = auction.getStart().equals(startTime)
+                                                || auction.getStart().isAfter(startTime);
+            boolean isEndInclusiveOrBefore = auction.getEnd().equals(endTime)
+                                                || auction.getEnd().isBefore(endTime);
+            if (isStartInclusiveOrBeyond && isEndInclusiveOrBefore) {
+                toSend.add(auction);
+            }
+        }
+        for (Auction auction : this.cancelledAuctions) {
+            if (toSend.contains(auction)) {
+                toSend.remove(auction);
+            }
+        }
+        return toSend;
+    }
 }
