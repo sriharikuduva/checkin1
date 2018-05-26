@@ -39,6 +39,7 @@ public class AuctionCentralEmployeeFrame implements Observer {
         this.timeFrameScreen = new AuctionsInTimeFrameScreen(dataControl);
         this.timeFrameScreen.addObserver(this);
 
+
         this.frame.setSize(400,500);
         this.frame.add(main.getMainScreen(), BorderLayout.CENTER);
         this.frame.setLocationRelativeTo(null);
