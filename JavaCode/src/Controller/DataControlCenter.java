@@ -27,6 +27,11 @@ public class DataControlCenter {
     private int nextAvailableAuctionId;
     private int maxAuctionAllowed;
 
+    private static final String MAURICE_SPECIAL_STRING = ".";
+    // Maurice's special string should be "." for maurice, "" for others
+
+
+
     public DataControlCenter() throws IOException, ClassNotFoundException {
         this.addedAuctions = new HashSet<>();
         this.updatedAuctions = new HashSet<>();
@@ -331,7 +336,7 @@ public class DataControlCenter {
             toSerialize.add(a);
         }
         
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("../JavaCode/Assets/auctions.bin"));
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(MAURICE_SPECIAL_STRING + "./JavaCode/Assets/auctions.bin"));
         oos.writeObject(toSerialize);
         this.addedAuctions.clear();
     }
@@ -435,7 +440,8 @@ public class DataControlCenter {
 
     /** Logs the bidder out and serializes the data. */
     public void logOutBidder() throws IOException, ClassNotFoundException {
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("../JavaCode/Assets/auctions.bin"));
+        // "../JavaCode/Assets/auctions.bin"
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(MAURICE_SPECIAL_STRING + "./JavaCode/Assets/auctions.bin"));
 
         HashSet<Auction> toSerialize = new HashSet<>();
         for (Auction replace : this.updatedAuctions) {
@@ -455,9 +461,9 @@ public class DataControlCenter {
     }
 
     public void logOutAdmin() throws IOException, ClassNotFoundException {
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./JavaCode/Assets/system.bin"));
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(MAURICE_SPECIAL_STRING + "./JavaCode/Assets/system.bin"));
         oos.writeObject(this.maxAuctionAllowed);
-        oos = new ObjectOutputStream(new FileOutputStream("./JavaCode/Assets/auctions.bin"));
+        oos = new ObjectOutputStream(new FileOutputStream(MAURICE_SPECIAL_STRING + "./JavaCode/Assets/auctions.bin"));
         HashSet<Auction> toSerialize = this.deserializeAllAuctions();
         HashSet<Auction> modifiedSerialize = new HashSet<>();
         for (Auction auction : toSerialize) {

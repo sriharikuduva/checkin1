@@ -14,14 +14,18 @@ public class SerializeData {
     /** Private constructor to prevent instantiation. **/
     private SerializeData() { }
 
+    private static final String MAURICE_CONSTANT = "./JavaCode/Assets/";
+    // When Maurice runs constant should be "./"
+    // When Other people run constant should be "./JavaCode/Assets/"
+
     public static void main(String... args) throws IOException, ClassNotFoundException {
         /* NOTICE::: ONLY RUN THIS WHEN BIDDERS.BIN AND NPCONTACT.BIN ARE NOT IN ASSETS FOLDER
             OR IF THEIR ORIGINAL TXT FILES HAVE BEEN UPDATED (THEN DELETE THE OLD .BIN FILES AND RUN THIS) */
-        serializeBidders("./bidders.bin");
-        serializeNPContact("./npcontact.bin");
-        serializeAuctions("./auctions.bin");
-        serializeAdmins("./admins.bin");
-        serializeSystemDependencies("./system.bin");
+        serializeBidders(MAURICE_CONSTANT + "bidders.bin");
+        serializeNPContact(MAURICE_CONSTANT + "npcontact.bin");
+        serializeAuctions(MAURICE_CONSTANT + "auctions.bin");
+        serializeAdmins(MAURICE_CONSTANT + "admins.bin");
+        serializeSystemDependencies(MAURICE_CONSTANT + "system.bin");
     }
 
     private static void serializeSystemDependencies(String output) throws IOException {
