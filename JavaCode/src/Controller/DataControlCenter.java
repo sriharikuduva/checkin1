@@ -254,10 +254,10 @@ public class DataControlCenter {
     public HashSet<Auction> getAuctionsCurrBidderCanBidOn(Bidder currBidder) throws ClassNotFoundException, IOException {
         HashSet<Auction> toSend = new HashSet<>();
         for(Auction a : this.deserializeAllAuctions()) {
-        	if(a.getOnlineStart().isBefore(LocalDateTime.now())) {
-        		if(a.getEnd().isAfter(LocalDateTime.now())) {
+        	if(a.getStart().isAfter(LocalDateTime.now())) {
+        		//if(a.getEnd().isAfter(LocalDateTime.now())) {
                 	toSend.add(a);
-        		}
+        		//}
         	}
         }
         return toSend;
