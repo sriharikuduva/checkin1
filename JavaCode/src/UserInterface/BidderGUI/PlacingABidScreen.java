@@ -1,7 +1,4 @@
-import com.sun.codemodel.internal.JOp;
-
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -52,18 +49,10 @@ public class PlacingABidScreen extends Observable {
             auctionButton.addActionListener((ActionEvent e1) -> {
                 JFrame itemsFrame = new JFrame("Please select an item to bid on");
                 itemsFrame.setLayout(new BorderLayout());
-                //itemsFrame.add(new JLabel("\tPlease select an item to bid on: "), BorderLayout.NORTH);
                 JPanel container = new JPanel(new GridLayout(auc.getItems().size(), 1));
                 for (Item itm : auc.getItems()) {
                     JButton itemButton = new JButton(itm.getName() + "\t\t(Price: $" + itm.getCurrentBid() + ", Bulk Qty: " + itm.getQuantity() + ")");
                     itemButton.addActionListener((ActionEvent e2) -> {
-//                        String price = EnhancedOptionPane.showInputDialog("Item Name: " + itm.getName() + "\n"
-//                                + "Current Bid Price: $" + itm.getCurrentBid()  + "\n"
-//                                + "Bulk Quantity: " + itm.getQuantity()  + "\n"
-//                                + "Description: " + itm.getDescription() + "\n\n"
-//                                + "Please Enter Your Bid Price: ",
-//                                new Object[] {"Place Bid", "Cancel"});
-
                         String price = JOptionPane.showInputDialog(itemsFrame,
                                 "Item Name: " + itm.getName() + "\n"
                                 + "Current Bid Price: $" + itm.getCurrentBid()  + "\n"
@@ -136,40 +125,6 @@ public class PlacingABidScreen extends Observable {
             notifyObservers(MainScreen_Bidder.BACK);
         });
     }
-
-//    /**
-//     *
-//     * @param auc
-//     * @return
-//     */
-//    private JTable getItemTable(Auction auc) {
-//        String[] columns = new String[] {"Item Name", "Bulk Quantity", "Bid Price", "Description", "Image"};
-//        final Class[] columnClass = new Class[] {String.class, String.class, String.class, String.class, String.class};
-//        Object[][] itemList = new Object[auc.getItems().size()][NUM_OF_PIECES_OF_INFO];
-//        int counter = 0;
-//        for (Item item : auc.getItems()) {
-//            itemList[counter][NUM_OF_PIECES_OF_INFO-5] = item.getName();
-//            itemList[counter][NUM_OF_PIECES_OF_INFO-4] = item.getQuantity();
-//            itemList[counter][NUM_OF_PIECES_OF_INFO-3] = item.getCurrentBid();
-//            itemList[counter][NUM_OF_PIECES_OF_INFO-2] = item.getDescription();
-//            itemList[counter][NUM_OF_PIECES_OF_INFO-1] = item.getImagePath();
-//            counter++;
-//        }
-//
-//        DefaultTableModel model = new DefaultTableModel(itemList, columns) {
-//            @Override
-//            public boolean isCellEditable(int row, int column) {
-//                return false;
-//            }
-//
-//            @Override
-//            public Class<?> getColumnClass(int columnIndex) {
-//                return columnClass[columnIndex];
-//            }
-//        };
-//
-//        return new JTable(model);
-//    }
 
     /**
      *
