@@ -11,7 +11,6 @@ import java.util.*;
  * @version 5/7/2018
  */
 public class DataControlCenter {
-	//These values can be adjusted per company policy.
 	/**Sets the farthest date an auction can be scheduled.*/
 	private static final int MAX_SCHEDULE_OUT_DAYS = 60;
 	/**Sets the soonest date an auction can be scheduled.*/
@@ -23,11 +22,10 @@ public class DataControlCenter {
     private HashSet<Auction> addedAuctions;
     private HashSet<Auction> updatedAuctions;
     private HashSet<Auction> cancelledAuctions;
-    private Scanner inputScanner;
     private int nextAvailableAuctionId;
     private int maxAuctionAllowed;
 
-    private static final String MAURICE_SPECIAL_STRING = ".";
+    private static final String MAURICE_SPECIAL_STRING = "";
     // Maurice's special string should be "." for maurice, "" for others
 
 

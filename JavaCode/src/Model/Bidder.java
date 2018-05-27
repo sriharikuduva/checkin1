@@ -1,6 +1,7 @@
 import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -94,11 +95,6 @@ public class Bidder extends User implements Serializable {
      * @return if the bid is placeable or not */
     //Maurice Chiu
     public boolean isBidPlaceableItemWithBids(int numberOfItemsWithBidInAnAuction) {
-		/*if (numberOfItemsWithBidInAnAuction < MAX_ITEMS_WITH_BID_IN_AN_AUCTION) {
-			return true;
-		} else {
-			return false;
-		}*/ // BOOLEAN ZEN!!!
 		return numberOfItemsWithBidInAnAuction < MAX_ITEMS_WITH_BID_IN_AN_AUCTION;
 	}
 
