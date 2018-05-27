@@ -219,6 +219,20 @@ public class DataControlCenter {
         return toSend;
     }
 
+    /**
+     * Gets all the auctions. Including past, current, and future auctions.
+     * @return set of autions
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
+    public HashSet<Auction> getAllAuctions() throws ClassNotFoundException, IOException {
+        HashSet<Auction> toSend = new HashSet<>();
+        for(Auction a : this.deserializeAllAuctions()) {
+            toSend.add(a);
+        }
+        return toSend;
+    }
+
     public void makeBid (Auction auction, ArrayList<Item> items, Item item, Bid bid, Bidder currBidder) throws ClassNotFoundException, IOException {
         boolean check1 = currBidder.isBidPlaceableAuctionDate(auction);
         boolean check2 = currBidder.isBidPlaceableInFutureAuctions(auction, items);
@@ -278,7 +292,7 @@ public class DataControlCenter {
             toSerialize.add(a);
         }
         
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./JavaCode/Assets/auctions.bin"));
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("../JavaCode/Assets/auctions.bin"));
         oos.writeObject(toSerialize);
         this.addedAuctions.clear();
     }
@@ -382,7 +396,7 @@ public class DataControlCenter {
 
     /** Logs the bidder out and serializes the data. */
     public void logOutBidder() throws IOException, ClassNotFoundException {
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./JavaCode/Assets/auctions.bin"));
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("../JavaCode/Assets/auctions.bin"));
 
         HashSet<Auction> toSerialize = new HashSet<>();
         for (Auction replace : this.updatedAuctions) {
@@ -402,7 +416,7 @@ public class DataControlCenter {
     }
 
     public void logOutAdmin() throws IOException {
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./JavaCode/Assets/system.bin"));
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("../JavaCode/Assets/system.bin"));
         oos.writeObject(this.maxAuctionAllowed);
     }
 
@@ -417,7 +431,7 @@ public class DataControlCenter {
     public boolean isAdminValid(String username) throws IOException, ClassNotFoundException{
         for (AuctionCentralEmployee admin : this.deserializeAllAdmins()) {
             if (admin.getUsername().equals(username)) {
-                System.out.println(admin.getName());
+                //System.out.println(admin.getName());
                 return true;
             }
         }
@@ -466,6 +480,20 @@ public class DataControlCenter {
         for (int i = 0; i < n-1; i++)
             for (int j = 0; j < n-i-1; j++)
                 if (toSend.get(j).getEnd().isAfter(toSend.get(j+1).getEnd())) {
+                    Auction temp = toSend.get(j);
+                    toSend.set(j, toSend.get(j+1));
+                    toSend.set(j+1, temp);
+                }
+        return toSend;
+    }
+
+    public ArrayList<Auction> sortAuctionSetByStartDate (HashSet<Auction> toSort) {
+        ArrayList<Auction> toSend = new ArrayList<>();
+        for (Auction auc : toSort) { toSend.add(auc); }
+        int n = toSend.size();
+        for (int i = 0; i < n-1; i++)
+            for (int j = 0; j < n-i-1; j++)
+                if (toSend.get(j).getStart().isBefore(toSend.get(j+1).getStart())) {
                     Auction temp = toSend.get(j);
                     toSend.set(j, toSend.get(j+1));
                     toSend.set(j+1, temp);

@@ -1,5 +1,7 @@
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -37,7 +39,7 @@ public class BidderTest {
 
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException, ClassNotFoundException {
         //Group
         this.bidder = new Bidder("John Smith", "john@uw.edu", "john@uw.edu",
                 "123 Elm Street, Tacoma, WA", "2061234567", 10000);

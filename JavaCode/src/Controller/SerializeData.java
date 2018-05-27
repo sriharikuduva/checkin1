@@ -14,14 +14,14 @@ public class SerializeData {
     /** Private constructor to prevent instantiation. **/
     private SerializeData() { }
 
-    public static void main(String... args) throws IOException {
+    public static void main(String... args) throws IOException, ClassNotFoundException {
         /* NOTICE::: ONLY RUN THIS WHEN BIDDERS.BIN AND NPCONTACT.BIN ARE NOT IN ASSETS FOLDER
             OR IF THEIR ORIGINAL TXT FILES HAVE BEEN UPDATED (THEN DELETE THE OLD .BIN FILES AND RUN THIS) */
-        serializeBidders("./JavaCode/Assets/bidders.bin");
-        serializeNPContact("./JavaCode/Assets/npcontact.bin");
-        serializeAuctions("./JavaCode/Assets/auctions.bin");
-        serializeAdmins("./JavaCode/Assets/admins.bin");
-        serializeSystemDependencies("./JavaCode/Assets/system.bin");
+        serializeBidders("./bidders.bin");
+        serializeNPContact("./npcontact.bin");
+        serializeAuctions("./auctions.bin");
+        serializeAdmins("./admins.bin");
+        serializeSystemDependencies("./system.bin");
     }
 
     private static void serializeSystemDependencies(String output) throws IOException {
@@ -54,7 +54,7 @@ public class SerializeData {
     /** Serializes the bidders into bidders.bin.
      * @param output the output destination
      * @throws IOException exception risk */
-    private static void serializeBidders(String output) throws IOException {
+    private static void serializeBidders(String output) throws IOException, ClassNotFoundException {
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(output));
         inputScanner = new Scanner(SerializeData.class
                 .getResourceAsStream("masterBidderList.txt"));

@@ -20,10 +20,13 @@ public class AuctionCentralEmployeeFrame implements Observer {
         this.frame.setLayout(new BorderLayout());
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.frame.setTitle("Auction Central Employee - " + currAdmin.getName());
+
         this.main = new MainScreen_Admin(currAdmin, dataControl);
         this.main.addObserver(this);
+
         this.changeMaxAuctionScreen = new ChangeMaxAuctionScreen(this.dataControl);
         this.changeMaxAuctionScreen.addObserver(this);
+
         this.chronoScreen = new AuctionsInChronoOrderScreen(dataControl);
         this.chronoScreen.addObserver(this);
 

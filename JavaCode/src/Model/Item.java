@@ -62,6 +62,8 @@ public class Item implements Serializable {
     public ArrayList<Bid> getBids() {
     	return this.bids;
     }
+
+    public String getImagePath() {return this.imagePath; }
     
     //Shannon Weston
     public int getCurrentBid() {

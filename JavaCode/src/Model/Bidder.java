@@ -1,3 +1,5 @@
+import javax.xml.crypto.Data;
+import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -12,8 +14,12 @@ public class Bidder extends User implements Serializable {
     private String name;
     /** Bidder's bank balance. **/
     private int balance;
+    /** Number of items the bidder has bids on. */
+    //private int currentItemCount;
     /** Max number of bids a bidder can have in an auction. **/
-    public static final int MAX_ITEMS_WITH_BID_IN_AN_AUCTION = 4;
+    public static final int MAX_ITEMS_WITH_BID_IN_AN_AUCTION = 8;
+    /** Max number of bids a bidder can have in all auctions. **/
+    public static final int MAX_ITEMS_WITH_BID_IN_ALL_AUCTIONS = 12;
 
     /** Creates a bidder with 6 parameters.
      * @param name bidder's name
@@ -23,16 +29,46 @@ public class Bidder extends User implements Serializable {
      * @param phoneNumber bidder's phoneNum
      * @param balance bidder's bank account */
     public Bidder(final String name,final String email, final String username,
-            final String address, final String phoneNumber, final int balance) {
-    		super(email, username, address, phoneNumber);
-    		this.name = name;
-    		this.balance = balance;
+        final String address, final String phoneNumber, final int balance) throws IOException, ClassNotFoundException {
+    	super(email, username, address, phoneNumber);
+    	this.name = name;
+    	this.balance = balance;
         this.bids = new ArrayList<Bid>();
     }
 
     //Shannon Weston
     public String getName() {
         return this.name;
+    }
+
+    public boolean bidPriceCheck(final Item item, final Bid bid) {
+        return (item.getCurrentBid() <= bid.getAmount());
+    }
+
+    public boolean auctionDateCheck(final Auction auction) {
+        return (LocalDateTime.now().compareTo(auction.getStart()) < 0);
+    }
+
+    public boolean itemNumberPerAuctionCheck() {
+        return true;
+    }
+
+    public boolean itemNumberAllAuctionsCheck() {
+        return (this.bids.size() < MAX_ITEMS_WITH_BID_IN_ALL_AUCTIONS);
+    }
+
+    public boolean[] isBidPlacable(final Auction auction, final Item item, final Bid bid) {
+        final boolean[] errors = new boolean[] {true, true, true};
+        if (!bidPriceCheck(item, bid)) {
+            errors[0] = false;
+        } else if (!auctionDateCheck(auction)) {
+            errors[1] = false;
+        //} else if (!itemNumberPerAuctionCheck()) {
+        //    errors[2] = false;
+        } else if (!itemNumberAllAuctionsCheck()) {
+            errors[2] = false;
+        }
+        return errors;
     }
 
     /** Checks if the bid is placeable on the auction date.

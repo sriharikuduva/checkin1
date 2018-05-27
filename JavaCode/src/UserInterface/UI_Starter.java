@@ -37,7 +37,7 @@ public class UI_Starter {
     	switch (usertype) {
     	case "Bidder":
     		if(dataControl.isBidderValid(username)) {
-    			new BidderConsole(dataControl.getBidderByUsername(username), dataControl).invokeMenu();
+    			new BidderFrame(dataControl.getBidderByUsername(username), dataControl);
     		}
     	case "Non-Profit Contact":
     		if(dataControl.isNonProfitValid(username)) {
