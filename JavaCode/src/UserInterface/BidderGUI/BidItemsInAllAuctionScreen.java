@@ -59,14 +59,18 @@ public class BidItemsInAllAuctionScreen extends Observable {
      * @throws ClassNotFoundException
      */
     private JTable getItemTable() throws IOException, ClassNotFoundException {
-        List<Item> itemsList = new ArrayList<>();
-        //int itemCount = 0;
+        List<Bid> itemsList = new ArrayList<>();
+        int itemCount = 0;
         //for (Auction auc : dataControl.getAuctionsCurrBidderHasBids(currBidder)) {
         //    for (Item itm : auc.getItems()) {
         //        itemsList.add(itm);
         //        itemCount++;
         //    }
         //}
+        for (Bid bid : currBidder.getBids()) {
+            itemsList.add(bid);
+            itemCount++;
+        }
 
         //String[] columns = new String[] {"Item Name", "Bulk Quantity", "Bid Price", "Description", "Image"};
         String[] columns = new String[] {"Item Name", "Your Bid Price"};
@@ -75,7 +79,7 @@ public class BidItemsInAllAuctionScreen extends Observable {
         final Class[] columnClass = new Class[] {String.class, String.class};
 
         //Object[][] itemList = new Object[itemCount][NUM_OF_PIECES_OF_INFO];
-        Object[][] itemList = new Object[currBidder.getBids().size()][NUM_OF_PIECES_OF_INFO];
+        Object[][] itemList = new Object[itemCount][NUM_OF_PIECES_OF_INFO];
 
         int counter = 0;
         //for (Item item : itemsList) {
