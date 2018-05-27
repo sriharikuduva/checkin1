@@ -12,6 +12,9 @@ public class AuctionCentralEmployeeFrame implements Observer {
     private MainScreen_Admin main;
     private ChangeMaxAuctionScreen changeMaxAuctionScreen;
     private AuctionsInChronoOrderScreen chronoScreen;
+    private CancelAuctionScreen cancelAuctionScreen;
+    private AuctionsInTimeFrameScreen timeFrameScreen;
+
 
     public AuctionCentralEmployeeFrame(AuctionCentralEmployee currAdmin, DataControlCenter dataControl) throws IOException, ClassNotFoundException {
         this.currAdmin = currAdmin;
@@ -29,6 +32,13 @@ public class AuctionCentralEmployeeFrame implements Observer {
 
         this.chronoScreen = new AuctionsInChronoOrderScreen(dataControl);
         this.chronoScreen.addObserver(this);
+
+        this.cancelAuctionScreen = new CancelAuctionScreen(dataControl);
+        this.cancelAuctionScreen.addObserver(this);
+
+        this.timeFrameScreen = new AuctionsInTimeFrameScreen(dataControl);
+        this.timeFrameScreen.addObserver(this);
+
 
         this.frame.setSize(400,500);
         this.frame.add(main.getMainScreen(), BorderLayout.CENTER);
@@ -48,22 +58,32 @@ public class AuctionCentralEmployeeFrame implements Observer {
             this.frame.revalidate();
         } else if (result == 2) {
             System.out.println("Second button");
+            this.frame.getContentPane().removeAll();
+            this.frame.add(this.timeFrameScreen.getAuctionsInTimeFramePanel(), BorderLayout.CENTER);
+            this.frame.repaint();
+            this.frame.revalidate();
         } else if (result == 3) {
             System.out.println("Third button");
             this.frame.getContentPane().removeAll();
-            this.frame.add(this.chronoScreen.getChronoOrderScreen(), BorderLayout.CENTER);
+            try {
+                this.frame.add(this.chronoScreen.getChronoOrderScreen(), BorderLayout.CENTER);
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
             this.frame.repaint();
             this.frame.revalidate();
         } else if (result == 4) {
             System.out.println("Fourth button");
+            this.frame.getContentPane().removeAll();
+            this.frame.add(this.cancelAuctionScreen.getCancelAuctionScreen(), BorderLayout.CENTER);
+            this.frame.repaint();
+            this.frame.revalidate();
         } else if (result == 5) {
             System.out.println("Back button");
             this.frame.getContentPane().removeAll();
             this.frame.add(this.main.getMainScreen(), BorderLayout.CENTER);
             this.frame.repaint();
             this.frame.revalidate();
-        } else {
-            System.out.println("Fail");
         }
     }
 }

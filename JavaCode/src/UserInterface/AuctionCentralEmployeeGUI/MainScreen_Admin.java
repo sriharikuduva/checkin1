@@ -19,23 +19,6 @@ public class MainScreen_Admin extends Observable {
 
         JPanel options = this.getOptions();
         this.main.add(options, BorderLayout.CENTER);
-
-        JPanel details = this.getDetails();
-        this.main.add(details, BorderLayout.SOUTH);
-    }
-
-    private JPanel getDetails() {
-        JPanel toSend = new JPanel(new GridLayout(3, 1));
-        JLabel text = new JLabel("\tDetails:");
-        String indent = "\t\t\t\t\t\t";
-        JLabel maxComingAuctions = new JLabel(indent + "Max upcoming auctions allowed: ");
-        JLabel upcomingAuctionsCount = new JLabel(indent + "Number of upcoming auctions: \n");
-
-        toSend.add(text);
-        toSend.add(maxComingAuctions);
-        toSend.add(upcomingAuctionsCount);
-
-        return toSend;
     }
 
     private JPanel getOptions() {
@@ -83,7 +66,7 @@ public class MainScreen_Admin extends Observable {
         logout.addActionListener((ActionEvent e) -> {
             try {
                 this.dataControl.logOutAdmin();
-            } catch (IOException e1) { e1.printStackTrace(); }
+            } catch (IOException | ClassNotFoundException e1) { e1.printStackTrace(); }
             System.exit(0);
         });
     }

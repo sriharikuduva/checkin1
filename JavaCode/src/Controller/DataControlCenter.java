@@ -22,14 +22,15 @@ public class DataControlCenter {
 	private static final int STOP_TO_START_HOUR_GAP = 2;
     private HashSet<Auction> addedAuctions;
     private HashSet<Auction> updatedAuctions;
+    private HashSet<Auction> cancelledAuctions;
     private Scanner inputScanner;
     private int nextAvailableAuctionId;
     private int maxAuctionAllowed;
-    //private DataControlCenter dataControl = new DataControlCenter();
 
     public DataControlCenter() throws IOException, ClassNotFoundException {
         this.addedAuctions = new HashSet<>();
         this.updatedAuctions = new HashSet<>();
+        this.cancelledAuctions = new HashSet<>();
         this.maxAuctionAllowed = this.deserializeMaxUpcomingAucAllowed();
         this.nextAvailableAuctionId = findNextAvailableAuctionId();
     }
@@ -41,7 +42,27 @@ public class DataControlCenter {
                 toSend.add(auction);
             }
         }
+        for (Auction auction : this.cancelledAuctions) {
+            if (toSend.contains(auction)) {
+                toSend.remove(auction);
+            }
+        }
         return toSend;
+    }
+
+    public Auction getAuctionById(Integer auctionId) throws IOException, ClassNotFoundException {
+        for (Auction auction : this.deserializeAllAuctions()) {
+            if (auction.getAuctionID() == auctionId) {
+                return auction;
+            }
+        }
+        return null;
+    }
+
+    public void cancelAuction(Auction auction) {
+        auction.setIsCanceled(true);
+        this.cancelledAuctions.add(auction);
+
     }
 
     private int deserializeMaxUpcomingAucAllowed() throws IOException, ClassNotFoundException {
@@ -62,6 +83,24 @@ public class DataControlCenter {
             toSend+= (auction.getEnd().isAfter(LocalDateTime.now())) ? 1 : 0;
         }
         return toSend;
+    }
+
+    public HashSet<Auction> getCancelAbleAuctions() throws IOException, ClassNotFoundException {
+        HashSet<Auction> toSend = this.getActiveAuctions();
+        for (Auction auction : this.getFutureAuctions()) {
+            toSend.add(auction);
+        }
+        for (Auction auction : this.getPastAuctions()) {
+            toSend.add(auction);
+        }
+
+        HashSet<Auction> modifiedToSend = new HashSet<>();
+        for (Auction auction : toSend) {
+            if (!this.cancelledAuctions.contains(auction)) {
+                modifiedToSend.add(auction);
+            }
+        }
+        return modifiedToSend;
     }
 
     /** Finds the next available auction id when creating auctions.
@@ -415,9 +454,19 @@ public class DataControlCenter {
         oos.writeObject(toSerialize);
     }
 
-    public void logOutAdmin() throws IOException {
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("../JavaCode/Assets/system.bin"));
+    public void logOutAdmin() throws IOException, ClassNotFoundException {
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./JavaCode/Assets/system.bin"));
         oos.writeObject(this.maxAuctionAllowed);
+        oos = new ObjectOutputStream(new FileOutputStream("./JavaCode/Assets/auctions.bin"));
+        HashSet<Auction> toSerialize = this.deserializeAllAuctions();
+        HashSet<Auction> modifiedSerialize = new HashSet<>();
+        for (Auction auction : toSerialize) {
+            if (!this.cancelledAuctions.contains(auction)) {
+                modifiedSerialize.add(auction);
+            }
+        }
+        oos.writeObject(modifiedSerialize);
+        this.cancelledAuctions.clear();
     }
 
     /** Places the bid
@@ -457,20 +506,38 @@ public class DataControlCenter {
         for (Auction auction : this.deserializeAllAuctions()) {
             if (auction.getEnd().isAfter(LocalDateTime.now()) &&
                     auction.getStart().isBefore(LocalDateTime.now())) {
+                if (this.cancelledAuctions.contains(auction)) {
+                    auction.setIsCanceled(true);
+                }
                 toSend.add(auction);
             }
         }
-        return toSend;
+        HashSet<Auction> newSend = new HashSet<>();
+        for (Auction auction : toSend) {
+            if (!auction.isCanceled()) {
+                newSend.add(auction);
+            }
+        }
+        return newSend;
     }
 
     public HashSet<Auction> getFutureAuctions() throws IOException, ClassNotFoundException {
         HashSet<Auction> toSend = new HashSet<>();
         for (Auction auction : this.deserializeAllAuctions()) {
             if (auction.getStart().isAfter(LocalDateTime.now())) {
+                if (this.cancelledAuctions.contains(auction)) {
+                    auction.setIsCanceled(true);
+                }
                 toSend.add(auction);
             }
         }
-        return toSend;
+        HashSet<Auction> newSend = new HashSet<>();
+        for (Auction auction : toSend) {
+            if (!auction.isCanceled()) {
+                newSend.add(auction);
+            }
+        }
+        return newSend;
     }
 
     public ArrayList<Auction> sortAuctionSet(HashSet<Auction> toSort) {
@@ -487,17 +554,40 @@ public class DataControlCenter {
         return toSend;
     }
 
+
     public ArrayList<Auction> sortAuctionSetByStartDate (HashSet<Auction> toSort) {
         ArrayList<Auction> toSend = new ArrayList<>();
-        for (Auction auc : toSort) { toSend.add(auc); }
+        for (Auction auc : toSort) {
+            toSend.add(auc);
+        }
         int n = toSend.size();
-        for (int i = 0; i < n-1; i++)
-            for (int j = 0; j < n-i-1; j++)
-                if (toSend.get(j).getStart().isBefore(toSend.get(j+1).getStart())) {
+        for (int i = 0; i < n - 1; i++)
+            for (int j = 0; j < n - i - 1; j++)
+                if (toSend.get(j).getStart().isBefore(toSend.get(j + 1).getStart())) {
                     Auction temp = toSend.get(j);
-                    toSend.set(j, toSend.get(j+1));
-                    toSend.set(j+1, temp);
+                    toSend.set(j, toSend.get(j + 1));
+                    toSend.set(j + 1, temp);
                 }
+        return toSend;
+    }
+
+    public HashSet<Auction> getAuctionsWithBounds(LocalDateTime startTime, LocalDateTime endTime)
+            throws IOException, ClassNotFoundException {
+        HashSet<Auction> toSend = new HashSet<>();
+        for (Auction auction : this.deserializeAllAuctions()) {
+            boolean isStartInclusiveOrBeyond = auction.getStart().equals(startTime)
+                                                || auction.getStart().isAfter(startTime);
+            boolean isEndInclusiveOrBefore = auction.getEnd().equals(endTime)
+                                                || auction.getEnd().isBefore(endTime);
+            if (isStartInclusiveOrBeyond && isEndInclusiveOrBefore) {
+                toSend.add(auction);
+            }
+        }
+        for (Auction auction : this.cancelledAuctions) {
+            if (toSend.contains(auction)) {
+                toSend.remove(auction);
+            }
+        }
         return toSend;
     }
 }

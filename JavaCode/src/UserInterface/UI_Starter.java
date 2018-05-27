@@ -15,7 +15,8 @@ public class UI_Starter {
     private UI_Starter() { }
 
     public static void main(String... args) throws IOException, ClassNotFoundException {
-        dataControl = new DataControlCenter();	
+        dataControl = new DataControlCenter();
+        //SerializeData.main();
         login();
     }
     
@@ -41,7 +42,8 @@ public class UI_Starter {
     		}
     	case "Non-Profit Contact":
     		if(dataControl.isNonProfitValid(username)) {
-    			new NPConsole(dataControl.getNPContactByUsername(username), dataControl).invokeMenu();
+    			//new NPConsole(dataControl.getNPContactByUsername(username), dataControl).invokeMenu();
+				new NPContactFrame(dataControl.getNPContactByUsername(username), dataControl);
     		}
     	case "Auction Central Employee":
     		if (dataControl.isAdminValid(username)) {

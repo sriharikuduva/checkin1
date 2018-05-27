@@ -1,5 +1,6 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -7,46 +8,67 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Observable;
 
-public class AuctionsInChronoOrderScreen extends Observable {
+public class ViewAllSubmittedAuction_Screen extends Observable {
 
-    private JPanel chronoOrderScreen;
+    private JPanel viewAllAuctions;
     private DataControlCenter dataControl;
+    private NPContact currContact;
+    private HashSet<JButton> button;
 
-    public AuctionsInChronoOrderScreen (DataControlCenter dcc) throws IOException, ClassNotFoundException {
-        this.chronoOrderScreen = new JPanel(new BorderLayout());
+    public ViewAllSubmittedAuction_Screen (DataControlCenter dcc, NPContact currContact) throws IOException, ClassNotFoundException {
+        this.viewAllAuctions = new JPanel(new BorderLayout());
         this.dataControl = dcc;
+        this.currContact = currContact;
         this.setElements();
     }
 
-    public JPanel getChronoOrderScreen() throws IOException, ClassNotFoundException {
-        this.chronoOrderScreen.removeAll();
+   // public void ViewAllSubmittedAuction_Screen(NPContact currContact) {
+     //   this.currContact = currContact;
+   // }
+
+    public JPanel getViewAllAuctionsScreen() throws IOException, ClassNotFoundException {
+        this.viewAllAuctions.removeAll();
         this.setElements();
-        return this.chronoOrderScreen;
+        return this.viewAllAuctions;
     }
 
     private void setElements() throws IOException, ClassNotFoundException {
-        JPanel container = new JPanel(new GridLayout(7, 1));
-        container.add(new JLabel("\tSorted Chronologically by End Date"));
-        container.add(new JLabel("\tPast auction(s): "));
-        container.add(new JScrollPane(
-                this.getAuctionTable(this.dataControl.getPastAuctions())));
+        JPanel container = new JPanel(new GridLayout(7, 1, 20, 20));
 
-        container.add(new JLabel("\tLive auction(s): "));
-        container.add(new JScrollPane(
-                this.getAuctionTable(this.dataControl.getActiveAuctions())));
+        container.add(new JLabel("\t Here are all of your submitted auction requests "));
 
-        container.add(new JLabel("\tFuture auction(s): "));
-        container.add(new JScrollPane(
-                this.getAuctionTable(this.dataControl.getFutureAuctions())));
+        container.add(new JScrollPane(this.getAuctionTable(this.dataControl.getSubmittedAuctionsByNPContact(currContact))));
 
-        this.chronoOrderScreen.add(container, BorderLayout.CENTER);
+//        JTable chart = new JTable();
+//        chart = this.getAuctionTable(this.dataControl.getSubmittedAuctionsByNPContact(currContact));
+//        container.add(chart);
+
+
+        /// Trying with buttons extra code
+
+//        button = new HashSet<JButton>();
+//        HashSet<Auction> list = new HashSet<Auction>();
+//        list = this.dataControl.getSubmittedAuctionsByNPContact(currContact);
+//
+//        for(int i = 0; i < list.size(); i++ ) {
+//            button.add(new JButton(list.toString()).)
+//        }
+
+
+
+
+        //////
+
+
+        this.viewAllAuctions.add(container, BorderLayout.CENTER);
         JButton back = new JButton("Back");
-        this.chronoOrderScreen.add(back, BorderLayout.SOUTH);
+        this.viewAllAuctions.add(back, BorderLayout.SOUTH);
         back.addActionListener((ActionEvent e) -> {
             setChanged();
             notifyObservers(5);
         });
     }
+
 
     private JTable getAuctionTable(HashSet<Auction> auctions) {
         String[] columns = new String[] {"Auction Name", "Auction ID", "Number Items", "Start Date", "End Date"};
@@ -76,4 +98,6 @@ public class AuctionsInChronoOrderScreen extends Observable {
         };
         return new JTable(model);
     }
+
+
 }

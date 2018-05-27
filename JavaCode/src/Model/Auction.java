@@ -25,7 +25,8 @@ public class Auction implements Serializable {
     private LocalDateTime onlineStart;
     /** Auction Identification number **/
     private int auctionID;
-    //private DateTimeFormatter fmt;
+
+    private boolean isCanceled;
 
     //Shannon Weston
     /** Creation date for the auction **/
@@ -37,10 +38,17 @@ public class Auction implements Serializable {
      * @param endClock the end time
      */
     public Auction (String organization, LocalDateTime startClock, LocalDateTime endClock) {
-        //this(organization, startClock, endClock, -1);
         this.items = new ArrayList<Item>();
-        //fmt = DateTimeFormatter.ofLocalizedDate(Form atStyle.SHORT);
         this.onlineStart = startClock.minusDays(MIN_SCHEDULE_OUT_DAYS);
+        this.isCanceled = false;
+    }
+
+    public void setIsCanceled(boolean isCanceled) {
+        this.isCanceled = isCanceled;
+    }
+
+    public boolean isCanceled() {
+        return isCanceled;
     }
 
     /**
@@ -59,6 +67,7 @@ public class Auction implements Serializable {
         this.auctionID = auctionID;
         //fmt = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
         onlineStart = this.start.minusDays(MIN_SCHEDULE_OUT_DAYS);
+        this.isCanceled = false;
     }
 
     /** Creates an auction with 1 parameter
@@ -76,9 +85,20 @@ public class Auction implements Serializable {
         //Empty Auction for BidderConsole.java
     	this.items = new ArrayList<Item>();
     	this.creationDate = LocalDateTime.now();
+    	this.isCanceled = false;
     	//onlineStart = start.minusDays(MIN_SCHEDULE_OUT_DAYS);
     }
-    
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.auctionID == ((Auction) obj).auctionID;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.auctionID;
+    }
+
     public void setOrganization(String organization) {
     	this.organization = organization;
     }
