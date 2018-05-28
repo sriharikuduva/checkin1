@@ -15,6 +15,13 @@ public class NPContactFrame implements Observer{
     private ViewSubmittedAuction_Screen viewSubmittedAuctionScreen;
 
 
+    /**
+     *
+     * @param currContact
+     * @param dataControl
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public NPContactFrame(NPContact currContact, DataControlCenter dataControl) throws IOException, ClassNotFoundException {
 
         this.dataControl = dataControl;

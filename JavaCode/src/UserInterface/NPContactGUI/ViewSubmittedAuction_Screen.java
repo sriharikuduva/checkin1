@@ -15,6 +15,13 @@ public class ViewSubmittedAuction_Screen extends Observable {
 
     public static final int NUM_OF_PIECES_OF_INFO = 5;
 
+    /**
+     *
+     * @param dcc
+     * @param currContact
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public ViewSubmittedAuction_Screen (DataControlCenter dcc, NPContact currContact) throws IOException, ClassNotFoundException {
         this.viewAllAuctions = new JPanel(new BorderLayout());
         this.dataControl = dcc;
@@ -29,25 +36,28 @@ public class ViewSubmittedAuction_Screen extends Observable {
         return this.viewAllAuctions;
     }
 
+    /**
+     *
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     private void setElements() throws IOException, ClassNotFoundException {
-  //      JPanel auctionFrame = new JPanel(new GridLayout(dataControl.getAuctionsCurrBidderCanBidOn(currBidder).size(), 1));
-        JPanel auctionFrame = new JPanel(new GridLayout(dataControl.getSubmittedAuctionsByNPContact(currContact).size(), 1));
 
-        this.viewAllAuctions.add(new JLabel("\t Here are all of your submitted auction requests, please pick one to view the items: "), BorderLayout.NORTH);
+        JPanel auctionFrame = new JPanel(new GridLayout(dataControl.getSubmittedAuctionsByNPContact(currContact).size(), 1));
+        this.viewAllAuctions.add(new JLabel("\t Here are all of your submitted auction requests," +
+                " please pick one to view the items: "), BorderLayout.NORTH);
         for (Auction auc : dataControl.getSubmittedAuctionsByNPContact(currContact)){
             DateTimeFormatter dtformatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM);
             JButton but = new JButton(auc.getOrganization() + "\t\tAuction ID: [ " + auc.getAuctionID() + " ] "
                     + "\t\tAuction Date: [  " + auc.getStart().format(dtformatter) + "  ] ");
+
             but.addActionListener((ActionEvent e) -> {
                 JFrame itemsFrame = new JFrame();
                 itemsFrame.setLayout(new BorderLayout());
-
                 JPanel container = new JPanel();
-                //container.add();
                 container.add(new JScrollPane(this.getItemTable(auc)));
-                //getItemTable(auc);
-
-                itemsFrame.add(new JLabel("\tItems listed by " + auc.getOrganization() + "\t\t(Auction Date: " + auc.getStart().format(dtformatter) + "): "), BorderLayout.NORTH);
+                itemsFrame.add(new JLabel("\tItems listed by " + auc.getOrganization() + "\t\t(Auction Date: " +
+                        auc.getStart().format(dtformatter) + "): "), BorderLayout.NORTH);
                 itemsFrame.add(container, BorderLayout.CENTER);
                 itemsFrame.pack();
                 itemsFrame.setLocationRelativeTo(null);
@@ -57,7 +67,6 @@ public class ViewSubmittedAuction_Screen extends Observable {
         }
 
         this.viewAllAuctions.add(auctionFrame, BorderLayout.CENTER);
-
         JButton back = new JButton("Back");
         this.viewAllAuctions.add(back, BorderLayout.SOUTH);
         back.addActionListener((ActionEvent e) -> {
@@ -69,7 +78,7 @@ public class ViewSubmittedAuction_Screen extends Observable {
 
     /**
      *
-     * @param auc
+     * @param auc recieves the auction to create a table with name, quantity, price and description
      * @return
      */
     private JTable getItemTable(Auction auc) {
