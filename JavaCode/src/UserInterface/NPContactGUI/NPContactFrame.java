@@ -14,6 +14,8 @@ public class NPContactFrame implements Observer{
     private SubmitAuctionRequest_Screen submitAuctionRequestScreen;
     private ViewAllSubmittedAuction_Screen viewAllSubmittedAuctionScreen;
 
+    private ViewSubmittedAuction_Screen viewSubmittedAuctionScreen;
+
 
     public NPContactFrame(NPContact currContact, DataControlCenter dataControl) throws IOException, ClassNotFoundException {
 
@@ -35,6 +37,9 @@ public class NPContactFrame implements Observer{
         this.viewAllSubmittedAuctionScreen = new ViewAllSubmittedAuction_Screen(dataControl, currContact);
         this.viewAllSubmittedAuctionScreen.addObserver(this);
 
+        this.viewSubmittedAuctionScreen = new ViewSubmittedAuction_Screen(dataControl, currContact);
+        this.viewSubmittedAuctionScreen.addObserver(this);
+
         this.frame.setSize(600,500);
         this.frame.add(main.getMainScreen(), BorderLayout.CENTER);
         this.frame.setLocationRelativeTo(null);
@@ -50,7 +55,9 @@ public class NPContactFrame implements Observer{
         if (result == 1) {
             this.frame.getContentPane().removeAll();
             try {
-                this.frame.add(this.viewAllSubmittedAuctionScreen.getViewAllAuctionsScreen(), BorderLayout.CENTER);
+              //  this.frame.add(this.viewAllSubmittedAuctionScreen.getViewAllAuctionsScreen(), BorderLayout.CENTER);
+                this.frame.add(this.viewSubmittedAuctionScreen.getViewAllAuctionsScreen(), BorderLayout.CENTER);
+
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
