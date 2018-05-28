@@ -12,8 +12,6 @@ public class NPContactFrame implements Observer{
     private NPContact currContact;
     private NPContact_MainScreen main;
     private SubmitAuctionRequest_Screen submitAuctionRequestScreen;
-    private ViewAllSubmittedAuction_Screen viewAllSubmittedAuctionScreen;
-
     private ViewSubmittedAuction_Screen viewSubmittedAuctionScreen;
 
 
@@ -34,9 +32,6 @@ public class NPContactFrame implements Observer{
         this.submitAuctionRequestScreen = new SubmitAuctionRequest_Screen(dataControl, currContact);
         this.submitAuctionRequestScreen.addObserver(this);
 
-        this.viewAllSubmittedAuctionScreen = new ViewAllSubmittedAuction_Screen(dataControl, currContact);
-        this.viewAllSubmittedAuctionScreen.addObserver(this);
-
         this.viewSubmittedAuctionScreen = new ViewSubmittedAuction_Screen(dataControl, currContact);
         this.viewSubmittedAuctionScreen.addObserver(this);
 
@@ -55,7 +50,6 @@ public class NPContactFrame implements Observer{
         if (result == 1) {
             this.frame.getContentPane().removeAll();
             try {
-              //  this.frame.add(this.viewAllSubmittedAuctionScreen.getViewAllAuctionsScreen(), BorderLayout.CENTER);
                 this.frame.add(this.viewSubmittedAuctionScreen.getViewAllAuctionsScreen(), BorderLayout.CENTER);
 
             } catch (IOException e) {
