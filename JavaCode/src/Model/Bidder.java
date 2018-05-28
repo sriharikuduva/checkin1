@@ -48,9 +48,9 @@ public class Bidder extends User implements Serializable {
         return (LocalDateTime.now().compareTo(auction.getStart()) < 0);
     }
 
-    public boolean itemNumberPerAuctionCheck() {
-        return true;
-    }
+//    public boolean itemNumberPerAuctionCheck() {
+//        return true;
+//    }
 
     public boolean itemNumberAllAuctionsCheck() {
         return (this.bids.size() < MAX_ITEMS_WITH_BID_IN_ALL_AUCTIONS);

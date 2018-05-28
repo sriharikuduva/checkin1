@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
 
@@ -59,41 +60,19 @@ public class BidItemsInAllAuctionScreen extends Observable {
      * @throws ClassNotFoundException
      */
     private JTable getItemTable() throws IOException, ClassNotFoundException {
-        List<Bid> itemsList = new ArrayList<>();
-        int itemCount = 0;
-        //for (Auction auc : dataControl.getAuctionsCurrBidderHasBids(currBidder)) {
-        //    for (Item itm : auc.getItems()) {
-        //        itemsList.add(itm);
-        //        itemCount++;
-        //    }
-        //}
-        for (Bid bid : currBidder.getBids()) {
-            itemsList.add(bid);
-            itemCount++;
-        }
-
-        //String[] columns = new String[] {"Item Name", "Bulk Quantity", "Bid Price", "Description", "Image"};
         String[] columns = new String[] {"Item Name", "Your Bid Price"};
-
-        //final Class[] columnClass = new Class[] {String.class, String.class, String.class, String.class, String.class};
         final Class[] columnClass = new Class[] {String.class, String.class};
+        Object[][] itemList = new Object[currBidder.getBids().size()][NUM_OF_PIECES_OF_INFO];
 
-        //Object[][] itemList = new Object[itemCount][NUM_OF_PIECES_OF_INFO];
-        Object[][] itemList = new Object[itemCount][NUM_OF_PIECES_OF_INFO];
+        System.out.println("bidder name: " + currBidder.getName()); // TODO remove
+        System.out.println("bidder name: " + currBidder.getUsername()); // TODO remove
+        System.out.println("bids[] size: " + currBidder.getBids().size()); // TODO remove
 
-        int counter = 0;
-        //for (Item item : itemsList) {
-        //    itemList[counter][NUM_OF_PIECES_OF_INFO-5] = item.getName();
-        //    itemList[counter][NUM_OF_PIECES_OF_INFO-4] = item.getQuantity();
-        //    itemList[counter][NUM_OF_PIECES_OF_INFO-3] = "$" + item.getCurrentBid();
-        //    itemList[counter][NUM_OF_PIECES_OF_INFO-2] = item.getDescription();
-        //    itemList[counter][NUM_OF_PIECES_OF_INFO-1] = item.getImagePath();
-        //    counter++;
-        //}
+
         for (Bid bid : currBidder.getBids()) {
-            itemList[counter][NUM_OF_PIECES_OF_INFO-2] = bid.getItem();
-            itemList[counter][NUM_OF_PIECES_OF_INFO-1] = "$" + bid.getAmount();
-            counter++;
+            System.out.println(bid.getItem()); // TODO remove
+            itemList[currBidder.getBids().size()][NUM_OF_PIECES_OF_INFO-2] = bid.getItem();
+            itemList[currBidder.getBids().size()][NUM_OF_PIECES_OF_INFO-1] = "$" + bid.getAmount();
         }
 
         DefaultTableModel model = new DefaultTableModel(itemList, columns) {
@@ -101,7 +80,6 @@ public class BidItemsInAllAuctionScreen extends Observable {
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
-
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 return columnClass[columnIndex];
