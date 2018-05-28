@@ -70,6 +70,7 @@ public class BidItemsInAllAuctionScreen extends Observable {
 
 
         for (Bid bid : currBidder.getBids()) {
+        //for (Bid bid : dataControl.getItemsCurrBidderHasBi(currBidder))
             System.out.println(bid.getItem()); // TODO remove
             itemList[currBidder.getBids().size()][NUM_OF_PIECES_OF_INFO-2] = bid.getItem();
             itemList[currBidder.getBids().size()][NUM_OF_PIECES_OF_INFO-1] = "$" + bid.getAmount();
