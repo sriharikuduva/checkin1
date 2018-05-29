@@ -48,7 +48,7 @@ public class CancelAuctionScreen extends Observable {
         confirm.addActionListener((ActionEvent e) -> {
             for (int i = 0; i < this.dataTable.getRowCount(); i++) {
                 if ((Boolean) this.dataTable.getValueAt(i, 0)) {
-                    Integer cancelAuctionId = (Integer) this.dataTable.getValueAt(i, 1);
+                    Integer cancelAuctionId = (Integer) this.dataTable.getValueAt(i, 2);
                     try {
                         Auction toCancel = this.dataControl.getAuctionById(cancelAuctionId);
                         this.dataControl.cancelAuction(toCancel);
@@ -99,8 +99,13 @@ public class CancelAuctionScreen extends Observable {
         DefaultTableModel model = new DefaultTableModel(auctionTiming, columns) {
             @Override
             public boolean isCellEditable(int row, int column) {
-
-                return true;
+                HashSet<Integer> areEditable = new HashSet<>();
+                for (int i = 0; i < this.getRowCount(); i++) {
+                    if (Integer.parseInt((String)this.getValueAt(i, 1)) == 0) {
+                        areEditable.add(i);
+                    }
+                }
+                return areEditable.contains(row);
             }
             @Override
             public Class<?> getColumnClass(int columnIndex) {

@@ -62,10 +62,17 @@ public class DataControlCenter {
         return null;
     }
 
-    public void cancelAuction(Auction auction) {
-        auction.setIsCanceled(true);
-        this.cancelledAuctions.add(auction);
-
+    public boolean cancelAuction(Auction auction) {
+        int bidCount = 0;
+        for (Item item : auction.getItems()) {
+            bidCount += item.getBids().size();
+        }
+        if (bidCount == 0) {
+            auction.setIsCanceled(true);
+            this.cancelledAuctions.add(auction);
+            return true;
+        }
+        return false;
     }
 
     private int deserializeMaxUpcomingAucAllowed() throws IOException, ClassNotFoundException {
