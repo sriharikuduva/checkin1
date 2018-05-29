@@ -47,7 +47,6 @@ public class UI_Starter {
     	case "Auction Central Employee":
     		if (dataControl.isAdminValid(username)) {
     			new AuctionCentralEmployeeFrame(dataControl.getAdminByUsername(username), dataControl);
-    			//System.out.println("It worked!");
 			}
     	}
     }
