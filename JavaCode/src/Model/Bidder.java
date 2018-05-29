@@ -8,7 +8,7 @@ import java.util.*;
  */
 public class Bidder extends User implements Serializable {
     /** List of bids the bidder has. **/
-    private ArrayList<Bid> bids;
+    private ArrayList<Bid> bids; // bid1 current bid 2 future  12 bid
     /** Bidder's name. **/
     private String name;
     /** Bidder's bank balance. **/
@@ -40,35 +40,35 @@ public class Bidder extends User implements Serializable {
         return this.name;
     }
 
-    public boolean bidPriceCheck(final Item item, final Bid bid) {
-        return (item.getCurrentBid() <= bid.getAmount());
-    }
+//    public boolean bidPriceCheck(final Item item, final Bid bid) {
+//        return (item.getCurrentBid() <= bid.getAmount());
+//    }
 
-    public boolean auctionDateCheck(final Auction auction) {
-        return (LocalDateTime.now().compareTo(auction.getStart()) < 0);
-    }
+//    public boolean auctionDateCheck(final Auction auction) { // TODO Remove for it's already been checked
+//        return (LocalDateTime.now().compareTo(auction.getStart()) < 0);
+//    }
 
 //    public boolean itemNumberPerAuctionCheck() {
 //        return true;
 //    }
 
-    public boolean itemNumberAllAuctionsCheck() {
-        return (this.bids.size() < MAX_ITEMS_WITH_BID_IN_ALL_AUCTIONS);
-    }
+//    public boolean itemNumberAllAuctionsCheck() {
+//        return (this.bids.size() < MAX_ITEMS_WITH_BID_IN_ALL_AUCTIONS);
+//    }
 
-    public boolean[] isBidPlacable(final Auction auction, final Item item, final Bid bid) {
-        final boolean[] errors = new boolean[] {true, true, true};
-        if (!bidPriceCheck(item, bid)) {
-            errors[0] = false;
-        } else if (!auctionDateCheck(auction)) {
-            errors[1] = false;
-        //} else if (!itemNumberPerAuctionCheck()) {
-        //    errors[2] = false;
-        } else if (!itemNumberAllAuctionsCheck()) {
-            errors[2] = false;
-        }
-        return errors;
-    }
+//    public boolean[] isBidPlacable(final Auction auction, final Item item, final Bid bid) {
+//        final boolean[] errors = new boolean[] {true, true, true};
+//        if (!bidPriceCheck(item, bid)) {
+//            errors[0] = false;
+//        } else if (!auctionDateCheck(auction)) {
+//            errors[1] = false;
+//        //} else if (!itemNumberPerAuctionCheck()) {
+//        //    errors[2] = false;
+//        } else if (!itemNumberAllAuctionsCheck()) {
+//            errors[2] = false;
+//        }
+//        return errors;
+//    }
 
     public int getBalance(){
         return this.balance;
