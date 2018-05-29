@@ -9,7 +9,6 @@ import java.util.*;
  * @version 5/7/2018
  */
 public class DataControlCenter {
-	//These values can be adjusted per company policy.
 	/**Sets the farthest date an auction can be scheduled.*/
 	private static final int MAX_SCHEDULE_OUT_DAYS = 60;
 	/**Sets the soonest date an auction can be scheduled.*/
@@ -21,11 +20,10 @@ public class DataControlCenter {
     private HashSet<Auction> addedAuctions;
     private HashSet<Auction> updatedAuctions;
     private HashSet<Auction> cancelledAuctions;
-    private Scanner inputScanner;
     private int nextAvailableAuctionId;
     private int maxAuctionAllowed;
 
-    private static final String MAURICE_SPECIAL_STRING = ".";
+    private static final String MAURICE_SPECIAL_STRING = "";
     // Maurice's special string should be "." for maurice, "" for others
 
 
@@ -76,16 +74,10 @@ public class DataControlCenter {
         return this.maxAuctionAllowed;
     }
 
-    public void setMaxAuctionAllowed (int max) {
+    public boolean setMaxAuctionAllowed (int max) {
+        if (max < 0) { return false; }
         this.maxAuctionAllowed = max;
-    }
-
-    public int getActiveAuctionNumber () throws IOException, ClassNotFoundException {
-        int toSend = 0;
-        for (Auction auction : this.deserializeAllAuctions()) {
-            toSend+= (auction.getEnd().isAfter(LocalDateTime.now())) ? 1 : 0;
-        }
-        return toSend;
+        return true;
     }
 
     public HashSet<Auction> getCancelAbleAuctions() throws IOException, ClassNotFoundException {
@@ -108,12 +100,8 @@ public class DataControlCenter {
 
     /** Finds the next available auction id when creating auctions.
      * @return next available auction id */
-    public int findNextAvailableAuctionId() {
-        int max = Integer.MIN_VALUE;
-        for (Auction auction : this.addedAuctions) {
-            max = (auction.getAuctionID() > max) ? auction.getAuctionID() : max;
-        }
-        return max + 1;
+    public int findNextAvailableAuctionId() throws IOException, ClassNotFoundException {
+        return this.deserializeAllAuctions().size() + this.addedAuctions.size() + 1;
     }
 
     /** Gets the next available auction id.
@@ -251,6 +239,7 @@ public class DataControlCenter {
      * @return set of auctions */
     public HashSet<Auction> getAuctionsCurrBidderCanBidOn(Bidder currBidder) throws ClassNotFoundException, IOException {
         HashSet<Auction> toSend = new HashSet<>();
+        HashSet<Auction> test = this.deserializeAllAuctions();
         for(Auction a : this.deserializeAllAuctions()) {
         	if(a.getStart().isAfter(LocalDateTime.now())) {
         		//if(a.getEnd().isAfter(LocalDateTime.now())) {
@@ -275,41 +264,41 @@ public class DataControlCenter {
         return toSend;
     }
 
-    public void makeBid (Auction auction, ArrayList<Item> items, Item item, Bid bid, Bidder currBidder) throws ClassNotFoundException, IOException {
-        boolean check1 = currBidder.isBidPlaceableAuctionDate(auction);
-        boolean check2 = currBidder.isBidPlaceableInFutureAuctions(auction, items);
-        
-        	HashSet<Item> itemsOfAuction = getItemsCurrBidderHasBidsOnInAnAuction(currBidder,  auction);
-        	int numberOfItemsWithBidInAnAuction = itemsOfAuction.size();
-        
-        boolean check3 = currBidder.isBidPlaceableItemWithBids(numberOfItemsWithBidInAnAuction);
-        boolean check4 = currBidder.isBidPlaceableMinimumBid(item, bid);
-        
-        if (!check1) {
-        		System.out.println("\tSorry, it has passed the auction end time, \n"
-    				+ "\tyou may no longer bid on this item.");
-        }
-        
-        if (!check2) {
-        		System.out.println("\tSorry, you have already reached the maximum number of items\n"
-    				+ "\tyou could bid on in all future auctions.");
-        }
-        
-        if (!check3) {
-        		System.out.println("\tSorry, you have already reached the maximum number of items\n"
-    				+ "\tyou could bid on in an auction.");
-        }
-        
-        if (!check4) {
-        		System.out.println("\tSorry, the amount you have entered is less than the\n"
-        				+ "\tbid price of this item."); 
-        }
-        
-        if (check1 && check2 && check3 && check4) {
-        		placeBid(auction, item, bid);
-        		System.out.println("Congradulations. You have placed a bid successfully!");
-        } 
-    }
+//    public void makeBid (Auction auction, ArrayList<Item> items, Item item, Bid bid, Bidder currBidder) throws ClassNotFoundException, IOException {
+//        boolean check1 = currBidder.isBidPlaceableAuctionDate(auction);
+//        boolean check2 = currBidder.isBidPlaceableInFutureAuctions(auction, items);
+//
+//        	HashSet<Item> itemsOfAuction = getItemsCurrBidderHasBidsOnInAnAuction(currBidder,  auction);
+//        	int numberOfItemsWithBidInAnAuction = itemsOfAuction.size();
+//
+//        boolean check3 = currBidder.isBidPlaceableItemWithBids(numberOfItemsWithBidInAnAuction);
+//        boolean check4 = currBidder.isBidPlaceableMinimumBid(item, bid);
+//
+//        if (!check1) {
+//        		System.out.println("\tSorry, it has passed the auction end time, \n"
+//    				+ "\tyou may no longer bid on this item.");
+//        }
+//
+//        if (!check2) {
+//        		System.out.println("\tSorry, you have already reached the maximum number of items\n"
+//    				+ "\tyou could bid on in all future auctions.");
+//        }
+//
+//        if (!check3) {
+//        		System.out.println("\tSorry, you have already reached the maximum number of items\n"
+//    				+ "\tyou could bid on in an auction.");
+//        }
+//
+//        if (!check4) {
+//        		System.out.println("\tSorry, the amount you have entered is less than the\n"
+//        				+ "\tbid price of this item.");
+//        }
+//
+//        if (check1 && check2 && check3 && check4) {
+//        		placeBid(auction, item, bid);
+//        		System.out.println("Congradulations. You have placed a bid successfully!");
+//        }
+//    }
 
     /** Gets a set of auctions that were submitted as requests by NPContact
      * @param currContact the NPContact
@@ -333,7 +322,6 @@ public class DataControlCenter {
         for (Auction a : this.addedAuctions) {
             toSerialize.add(a);
         }
-        
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(MAURICE_SPECIAL_STRING + "./JavaCode/Assets/auctions.bin"));
         oos.writeObject(toSerialize);
         this.addedAuctions.clear();
@@ -437,7 +425,7 @@ public class DataControlCenter {
     }
 
     /** Logs the bidder out and serializes the data. */
-    public void logOutBidder() throws IOException, ClassNotFoundException {
+    public void logOutBidder(Bidder currentBidder) throws IOException, ClassNotFoundException {
         // "../JavaCode/Assets/auctions.bin"
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(MAURICE_SPECIAL_STRING + "./JavaCode/Assets/auctions.bin"));
 
@@ -454,8 +442,22 @@ public class DataControlCenter {
                 toSerialize.add(original);
             }
         }
+
+        HashSet<Bidder> toSerializeBidders = new HashSet<>();
+        toSerializeBidders.add(currentBidder);
+
+
+        for (Bidder bidder : this.deserializeAllBidders()) {
+            if (!toSerializeBidders.contains(currentBidder)) {
+                toSerializeBidders.add(bidder);
+            }
+        }
+
         this.updatedAuctions.clear();
         oos.writeObject(toSerialize);
+
+        oos = new ObjectOutputStream(new FileOutputStream(MAURICE_SPECIAL_STRING + "./JavaCode/Assets/bidders.bin"));
+        oos.writeObject(toSerializeBidders);
     }
 
     public void logOutAdmin() throws IOException, ClassNotFoundException {
@@ -477,8 +479,8 @@ public class DataControlCenter {
      * @param item the item
      * @param bid the bid */
     public void placeBid(Auction auction, Item item, Bid bid) {
-		this.updatedAuctions.add(auction);
-    		item.addBid(bid);
+        item.addBid(bid);
+        this.updatedAuctions.add(auction);
     }
 
     public boolean isAdminValid(String username) throws IOException, ClassNotFoundException{
@@ -578,6 +580,7 @@ public class DataControlCenter {
     public HashSet<Auction> getAuctionsWithBounds(LocalDateTime startTime, LocalDateTime endTime)
             throws IOException, ClassNotFoundException {
         HashSet<Auction> toSend = new HashSet<>();
+        if (endTime.isBefore(startTime)) {return  null;}
         for (Auction auction : this.deserializeAllAuctions()) {
             boolean isStartInclusiveOrBeyond = auction.getStart().equals(startTime)
                                                 || auction.getStart().isAfter(startTime);
@@ -593,5 +596,29 @@ public class DataControlCenter {
             }
         }
         return toSend;
+    }
+
+    public void linkBidItemsWithAuctionID(Bidder currBidder) throws IOException, ClassNotFoundException {
+        for (Auction auction : this.deserializeAllAuctions()) {
+            for (Item item : auction.getItems()) {
+                for (Bid bid : item.getBids()) {
+                    if (currBidder.getName().equals(bid.getBidder())) {
+                        currBidder.addBid(bid);
+                    }
+                }
+            }
+        }
+
+    }
+
+    public Auction getAuctionNameByItem(String item) throws IOException, ClassNotFoundException {
+        for (Auction auction : this.deserializeAllAuctions()) {
+            for (Item items : auction.getItems()) {
+                if (item.equals(items.getName())) {
+                    return auction;
+                }
+            }
+        }
+        return null;
     }
 }
