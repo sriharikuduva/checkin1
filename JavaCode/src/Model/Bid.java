@@ -11,7 +11,8 @@ public class Bid implements Serializable {
     /** Bid amount. **/
     private int amount;
 
-    private int auctionId; //Maurice
+    private int auctionId;
+
 
 
     /** Creates a bid with 3 parameters
@@ -22,7 +23,7 @@ public class Bid implements Serializable {
         this.bidderName = bidderName;
         this.itemName = itemName;
         this.amount = amount;
-        this.auctionId = auctionId; // maurice
+        this.auctionId = auctionId;
     }
 
     public String getBidder(){

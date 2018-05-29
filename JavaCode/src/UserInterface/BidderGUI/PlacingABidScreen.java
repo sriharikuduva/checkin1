@@ -95,7 +95,7 @@ public class PlacingABidScreen extends Observable {
                         if (price != null && price != "") {
                             try {
                                 int bidderBidPrice = Integer.parseInt(price);
-                                Bid bid = new Bid(currBidder.getName(), itm.getName(), bidderBidPrice);
+                                Bid bid = new Bid(currBidder.getName(), itm.getName(), bidderBidPrice, auc.getAuctionID());
 
                                 boolean[] failCheck = this.currBidder.isBidPlacable(auc, itm, bid);
                                 boolean showErrorMsg = false;
