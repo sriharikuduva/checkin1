@@ -17,15 +17,14 @@ public class DataControlCenter {
 	private static final int MAX_AUCTIONS_PER_DAY = 2;
 	/**Time distance (minimum) between end of one auction and start of next.*/
 	private static final int STOP_TO_START_HOUR_GAP = 2;
+	private static final int DEFAULT_MAX_AUCTIONS = 25;
     private HashSet<Auction> addedAuctions;
     private HashSet<Auction> updatedAuctions;
     private HashSet<Auction> cancelledAuctions;
     private int nextAvailableAuctionId;
     private int maxAuctionAllowed;
-
     private static final String MAURICE_SPECIAL_STRING = "";
     // Maurice's special string should be "." for maurice, "" for others
-
 
 
     public DataControlCenter() throws IOException, ClassNotFoundException {
@@ -70,9 +69,9 @@ public class DataControlCenter {
         return (int) new ObjectInputStream(getClass().getResourceAsStream("system.bin")).readObject();
     }
 
-    public int getMaxAuctionAllowed () {
-        return this.maxAuctionAllowed;
-    }
+    public int getMaxAuctionAllowed () { return this.maxAuctionAllowed; }
+
+    public boolean isAuctionAllowed() { return (this.getMaxAuctionAllowed() < this.getAuctions().size()); }
 
     public boolean setMaxAuctionAllowed (int max) {
         if (max < 0) { return false; }
