@@ -28,7 +28,7 @@ public class UI_Starter implements Observer {
     
     private static void login() throws ClassNotFoundException, IOException{
     	//loginScreen.addObserver(this);
-		loginScreen.start();
+		//loginScreen.start();
 
 		//JOptionPane Login Code
     	JFrame frame = new JFrame("Auction Central");
