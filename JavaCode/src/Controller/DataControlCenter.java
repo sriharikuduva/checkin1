@@ -478,8 +478,8 @@ public class DataControlCenter {
      * @param item the item
      * @param bid the bid */
     public void placeBid(Auction auction, Item item, Bid bid) {
-		this.updatedAuctions.add(auction);
-    		item.addBid(bid);
+        item.addBid(bid);
+        this.updatedAuctions.add(auction);
     }
 
     public boolean isAdminValid(String username) throws IOException, ClassNotFoundException{
