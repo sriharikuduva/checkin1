@@ -8,19 +8,21 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-
-
 /* We have decided to break testing by user type.
     So Every test in this class is for AuctionCentralEmployee (Admin)
         Most of the methods are in DataControlCenter */
-
 public class AuctionCentralEmployeeTest {
 
     private DataControlCenter dataControl;
+    private Auction basicAuction;
+    private Item someItem;
 
     @Before
     public void setUp() throws IOException, ClassNotFoundException {
         this.dataControl = new DataControlCenter();
+        this.basicAuction = new Auction();
+        this.someItem = new Item("Baisal's Darkest Dirtiest Secret",
+                1, 50, "His deepest and darkest secrets", "imgPath");
     }
 
     @Test
@@ -74,6 +76,39 @@ public class AuctionCentralEmployeeTest {
         // We have no initial current auctions
         boolean future = this.dataControl.getFutureAuctions().size() >= 1;
         assertTrue(past && current && future);
+    }
+
+    /*As an employee of AuctionCentral, I want to cancel an auction.
+No auction can be cancelled that has any bids
+The auction has no bids
+The auction has one bid (Fail)
+The auction has many more than one bid (Fail)
+ */
+
+    @Test
+    public void cancelAuction_AuctionHasNoBids_True() {
+        //String name, int quantity, int startingBid, String description, String imagePath
+        /*auction.addItem(new Item("Baisal's Darkest Dirtiest Secret",
+                1, 50, "His deepest and darkest secrets", "imgPath"));*/
+        assertTrue(this.dataControl.cancelAuction(this.basicAuction));
+    }
+
+    @Test
+    public void cancelAuction_AuctionHasOneBid_False() {
+        this.someItem.addBid(new Bid("Maurice", "Baisal's Darkest Dirtiest Secret", 300,
+                this.basicAuction.getAuctionID(), this.basicAuction.getStart(), this.basicAuction.getEnd()));
+        this.basicAuction.addItem(this.someItem);
+        assertFalse(this.dataControl.cancelAuction(this.basicAuction));
+    }
+
+    @Test
+    public void cancelAuction_AuctionHasMoreThanOneBid_False() {
+        this.someItem.addBid(new Bid("Maurice", "Baisal's Darkest Dirtiest Secret", 300,
+                this.basicAuction.getAuctionID(), this.basicAuction.getStart(), this.basicAuction.getEnd()));
+        this.someItem.addBid(new Bid("Hari", "Baisal's Darkest Dirtiest Secret", 301,
+                this.basicAuction.getAuctionID(), this.basicAuction.getStart(), this.basicAuction.getEnd()));
+        this.basicAuction.addItem(this.someItem);
+        assertFalse(this.dataControl.cancelAuction(this.basicAuction));
     }
 
 

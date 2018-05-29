@@ -123,6 +123,14 @@ public class BidItemsInAnAuctionScreen extends Observable {
      * @return
      */
     public JPanel getItemsInAuctionScreen() {
+        this.itemsInAuctionScreen.removeAll();
+        try {
+            setupAuctions();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         return this.itemsInAuctionScreen;
     }
 }

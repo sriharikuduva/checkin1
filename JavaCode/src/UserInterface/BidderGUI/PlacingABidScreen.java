@@ -50,8 +50,6 @@ public class PlacingABidScreen extends Observable {
                 numOfBidsByAuctionID.put(bid.getAuctionID(), bids);
             } else {
                 numOfBidsByAuctionID.get(bid.getAuctionID()).add(bid);
-                //System.out.println(numOfBidsByAuctionID.get(bid.getAuctionID()));
-                //System.out.println(bid.getAuctionID());
             }
         }
 
@@ -61,9 +59,17 @@ public class PlacingABidScreen extends Observable {
         for (Auction auc : dataControl.getAuctionsCurrBidderCanBidOn(currBidder)){
             DateTimeFormatter dtformatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM);
             JButton auctionButton = new JButton(auc.getOrganization() + "\t\t(Auction Date: " + auc.getStart().format(dtformatter) + ")");
-            //System.out.println(auc.getAuctionID());
+
             if (numOfBidsByAuctionID.containsKey(auc.getAuctionID())) {
                 if (numOfBidsByAuctionID.get(auc.getAuctionID()).size() >= Bidder.MAX_ITEMS_WITH_BID_IN_AN_AUCTION) {
+                    auctionButton.setText("<html><center>"
+                            + auc.getOrganization()
+                            + "\t\t(Auction Date: "
+                            + auc.getStart().format(dtformatter)
+                            + ")"
+                            + "<br>"
+                            + "(You have reached maximum number of bids for this auction)"
+                            + "</html>");
                     auctionButton.setEnabled(false);
                 }
             }

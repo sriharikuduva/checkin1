@@ -94,6 +94,14 @@ public class BiddableAuctionsScreen extends Observable {
      * @return
      */
     public JPanel getBiddableAuctionsScreen() {
+        this.biddableAuctionScreen.removeAll();
+        try {
+            setupFrame();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         return this.biddableAuctionScreen;
     }
 }

@@ -50,9 +50,7 @@ public class AllItemsInAuctionScreen extends Observable {
                 itemsFrame.setLayout(new BorderLayout());
 
                 JPanel container = new JPanel();
-                //container.add();
                 container.add(new JScrollPane(this.getItemTable(auc)));
-                //getItemTable(auc);
 
                 itemsFrame.add(new JLabel("\tItems listed by " + auc.getOrganization() + "\t\t(Auction Date: " + auc.getStart().format(dtformatter) + "): "), BorderLayout.NORTH);
                 itemsFrame.add(container, BorderLayout.CENTER);
@@ -119,6 +117,14 @@ public class AllItemsInAuctionScreen extends Observable {
      * @return
      */
     public JPanel getItemsInAuctionScreen() {
+        this.itemsInAuctionScreen.removeAll();
+        try {
+            setupAuctions();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         return this.itemsInAuctionScreen;
     }
 }
