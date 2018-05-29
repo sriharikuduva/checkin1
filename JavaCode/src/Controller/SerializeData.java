@@ -129,7 +129,9 @@ public class SerializeData {
                     cleanParts(parts2);
                     if (auction.getAuctionID() == Integer.parseInt(parts2[1]) &&
                             temp.getName().equals(parts2[2])) {
-                        temp.addBid(new Bid(parts2[0], temp.getName(), Integer.parseInt(parts2[3]), auction.getAuctionID()));
+                        temp.addBid(new Bid(parts2[0], temp.getName(),
+                                Integer.parseInt(parts2[3]), auction.getAuctionID(),
+                                auction.getStart(), auction.getEnd()));
                     }
                 }
                 auction.addItem(temp);

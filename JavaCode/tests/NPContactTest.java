@@ -1,13 +1,12 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
-public class DataControlCenterTest {
+public class NPContactTest {
 
     //Fields
     private int setNumberOfDays;
@@ -34,24 +33,19 @@ public class DataControlCenterTest {
         setNumberOfDay = 15;
         setNumberOfDayTwo = 14;
         setNumberOfDayThree = 10;
-
         auctions = new ArrayList<Auction>();
         auctionsOne = new ArrayList<Auction>();
         auctionstwo = new ArrayList<Auction>();
-
         auction = new Auction("American Cancer Society", LocalDateTime.now().plusDays(1),
                 LocalDateTime.now().plusDays(20),  1);
         auctiontwo = new Auction("American Red Cross", LocalDateTime.now().plusDays(1),
                 LocalDateTime.now().plusDays(30),  2);
         auctionThree = new Auction("Outlook on India", LocalDateTime.now().plusDays(1),
                 LocalDateTime.now().plusDays(15),  2);
-
         auctions.add(auction); auctions.add(auctiontwo); auctions.add(auctionThree);
         auctionsOne.add(auction); auctionsOne.add(auctiontwo);
         auctionstwo.add(auction);
-
     }
-
 
     @Test
     public void isRequestedAuctionDateValid_forMaxSetNumberOfDateIsless_true() {
@@ -94,7 +88,7 @@ public class DataControlCenterTest {
     }
 
 
-    
+
+
 
 }
-
