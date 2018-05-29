@@ -35,6 +35,16 @@ public class Bidder extends User implements Serializable {
         this.bids = new ArrayList<Bid>();
     }
 
+    public boolean equals(Object obj) {
+        Bidder other = (Bidder) obj;
+        return this.name.equals(other.name);
+    }
+
+    public int hashCode() {
+        return this.getBids().size();
+    }
+
+
     //Shannon Weston
     public String getName() {
         return this.name;
