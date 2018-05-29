@@ -17,15 +17,19 @@ public class DataControlCenter {
 	private static final int MAX_AUCTIONS_PER_DAY = 2;
 	/**Time distance (minimum) between end of one auction and start of next.*/
 	private static final int STOP_TO_START_HOUR_GAP = 2;
+	private static final int DEFAULT_MAX_AUCTIONS = 25;
     private HashSet<Auction> addedAuctions;
     private HashSet<Auction> updatedAuctions;
     private HashSet<Auction> cancelledAuctions;
+    private HashSet<Auction> biddedAuctions;
+    private Item updateItem;
     private int nextAvailableAuctionId;
     private int maxAuctionAllowed;
 
-    private static final String MAURICE_SPECIAL_STRING = "";
-    // Maurice's special string should be "." for maurice, "" for others
 
+    private static final String MAURICE_SPECIAL_STRING = ".";
+
+    // Maurice's special string should be "." for maurice, "" for others
 
 
     public DataControlCenter() throws IOException, ClassNotFoundException {
@@ -34,6 +38,8 @@ public class DataControlCenter {
         this.cancelledAuctions = new HashSet<>();
         this.maxAuctionAllowed = this.deserializeMaxUpcomingAucAllowed();
         this.nextAvailableAuctionId = findNextAvailableAuctionId();
+        this.biddedAuctions = new HashSet<>();
+        this.updateItem = new Item();
     }
 
     public HashSet<Auction> getPastAuctions() throws IOException, ClassNotFoundException {
@@ -77,9 +83,13 @@ public class DataControlCenter {
         return (int) new ObjectInputStream(getClass().getResourceAsStream("system.bin")).readObject();
     }
 
-    public int getMaxAuctionAllowed () {
-        return this.maxAuctionAllowed;
-    }
+
+
+    
+
+    public int getMaxAuctionAllowed () { return this.maxAuctionAllowed; }
+
+    public boolean isAuctionAllowed() { return (this.getMaxAuctionAllowed() > this.getAuctions().size()); }
 
     public boolean setMaxAuctionAllowed (int max) {
         if (max < 0) { return false; }
@@ -254,7 +264,6 @@ public class DataControlCenter {
         		//}
         	}
         }
-
         return toSend;
     }
 
@@ -269,12 +278,37 @@ public class DataControlCenter {
         for(Auction a : this.deserializeAllAuctions()) {
             toSend.add(a);
         }
-        HashSet<Auction> newSend = this.updatedAuctions;
-        for (Auction auction : toSend) {
-            if (!newSend.contains(auction)) {
+        Auction old = this.getAuctionById(this.updateItem.getBidWithHighestBid().getAuctionID());
+        Auction toReplace = new Auction(old);
+
+        toReplace.addItem(this.updateItem);
+
+        HashSet<Auction> temp = new HashSet<>();
+        for (Item item : old.getItems()) {
+            if (!item.getName().equals(updateItem.getName())){
+                toReplace.addItem(item);
+            }
+        }
+
+        HashSet<Auction> newSend = new HashSet<>();
+        for (Auction auction : this.deserializeAllAuctions()) {
+            if (auction.getAuctionID() == toReplace.getAuctionID()) {
+                newSend.add(toReplace);
+            } else {
                 newSend.add(auction);
             }
         }
+
+
+//        for (Auction auc : toSend) {
+//            for (Item itm : auc.getItems()) {
+//                if (itm.getName().equals(this.updateItem.getName())){
+//
+//                }
+//            }
+//
+//        }
+
         return newSend;
     }
 
@@ -453,12 +487,24 @@ public class DataControlCenter {
         this.cancelledAuctions.clear();
     }
 
-    /** Places the bid
-     * @param item the item
-     * @param bid the bid */
+    /**
+     *
+     * @param auction
+     * @param itemName
+     * @param bid
+     */
     public void placeBid(Auction auction, Item item, Bid bid) {
         item.addBid(bid);
-        this.updatedAuctions.add(auction);
+        this.updateItem = item;
+//        for (Item item : auction.getItems()) {
+//            if (itemName.equals(item.getName())){
+//                item.addBid(bid);
+//                System.out.println(item.getCurrentBid());
+//            }
+//        }
+
+//        this.biddedAuctions.add(auction);
+
     }
 
     public boolean isAdminValid(String username) throws IOException, ClassNotFoundException{

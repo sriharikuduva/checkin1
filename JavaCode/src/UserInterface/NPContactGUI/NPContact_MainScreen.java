@@ -55,6 +55,7 @@ public class NPContact_MainScreen extends Observable {
         JPanel toSend = new JPanel(new GridLayout(4,2, 25, 25));
         JButton viewAllAuctions = new JButton("View all submitted auction requests");
         JButton submitAuctions = new JButton("Submit an auction request");
+        submitAuctions.setEnabled(dataControl.isAuctionAllowed());
         JButton logout = new JButton("Logout");
 
 

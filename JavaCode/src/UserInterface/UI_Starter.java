@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
  * BIN FILES MUST EXIST BEFORE EXECUTION!
  * @author Hari Kuduva
  */
-public class UI_Starter implements Observer {
+public class UI_Starter {
     /** Main Data Control. **/
     private static DataControlCenter dataControl;
     //private static LoginScreen loginScreen;
@@ -21,10 +21,6 @@ public class UI_Starter implements Observer {
         //SerializeData.main();
         login();
     }
-
-    public void update(Observable o, Object arg) {
-
-	}
     
     private static void login() throws ClassNotFoundException, IOException{
     	//loginScreen.addObserver(this);
