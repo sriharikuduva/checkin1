@@ -276,41 +276,41 @@ public class DataControlCenter {
         return toSend;
     }
 
-    public void makeBid (Auction auction, ArrayList<Item> items, Item item, Bid bid, Bidder currBidder) throws ClassNotFoundException, IOException {
-        boolean check1 = currBidder.isBidPlaceableAuctionDate(auction);
-        boolean check2 = currBidder.isBidPlaceableInFutureAuctions(auction, items);
-        
-        	HashSet<Item> itemsOfAuction = getItemsCurrBidderHasBidsOnInAnAuction(currBidder,  auction);
-        	int numberOfItemsWithBidInAnAuction = itemsOfAuction.size();
-        
-        boolean check3 = currBidder.isBidPlaceableItemWithBids(numberOfItemsWithBidInAnAuction);
-        boolean check4 = currBidder.isBidPlaceableMinimumBid(item, bid);
-        
-        if (!check1) {
-        		System.out.println("\tSorry, it has passed the auction end time, \n"
-    				+ "\tyou may no longer bid on this item.");
-        }
-        
-        if (!check2) {
-        		System.out.println("\tSorry, you have already reached the maximum number of items\n"
-    				+ "\tyou could bid on in all future auctions.");
-        }
-        
-        if (!check3) {
-        		System.out.println("\tSorry, you have already reached the maximum number of items\n"
-    				+ "\tyou could bid on in an auction.");
-        }
-        
-        if (!check4) {
-        		System.out.println("\tSorry, the amount you have entered is less than the\n"
-        				+ "\tbid price of this item."); 
-        }
-        
-        if (check1 && check2 && check3 && check4) {
-        		placeBid(auction, item, bid);
-        		System.out.println("Congradulations. You have placed a bid successfully!");
-        } 
-    }
+//    public void makeBid (Auction auction, ArrayList<Item> items, Item item, Bid bid, Bidder currBidder) throws ClassNotFoundException, IOException {
+//        boolean check1 = currBidder.isBidPlaceableAuctionDate(auction);
+//        boolean check2 = currBidder.isBidPlaceableInFutureAuctions(auction, items);
+//
+//        	HashSet<Item> itemsOfAuction = getItemsCurrBidderHasBidsOnInAnAuction(currBidder,  auction);
+//        	int numberOfItemsWithBidInAnAuction = itemsOfAuction.size();
+//
+//        boolean check3 = currBidder.isBidPlaceableItemWithBids(numberOfItemsWithBidInAnAuction);
+//        boolean check4 = currBidder.isBidPlaceableMinimumBid(item, bid);
+//
+//        if (!check1) {
+//        		System.out.println("\tSorry, it has passed the auction end time, \n"
+//    				+ "\tyou may no longer bid on this item.");
+//        }
+//
+//        if (!check2) {
+//        		System.out.println("\tSorry, you have already reached the maximum number of items\n"
+//    				+ "\tyou could bid on in all future auctions.");
+//        }
+//
+//        if (!check3) {
+//        		System.out.println("\tSorry, you have already reached the maximum number of items\n"
+//    				+ "\tyou could bid on in an auction.");
+//        }
+//
+//        if (!check4) {
+//        		System.out.println("\tSorry, the amount you have entered is less than the\n"
+//        				+ "\tbid price of this item.");
+//        }
+//
+//        if (check1 && check2 && check3 && check4) {
+//        		placeBid(auction, item, bid);
+//        		System.out.println("Congradulations. You have placed a bid successfully!");
+//        }
+//    }
 
     /** Gets a set of auctions that were submitted as requests by NPContact
      * @param currContact the NPContact
