@@ -85,7 +85,7 @@ public class DataControlCenter {
 
 
 
-    
+
 
     public int getMaxAuctionAllowed () { return this.maxAuctionAllowed; }
 
