@@ -31,7 +31,11 @@ public class DataControlCenter {
 
     // Maurice's special string should be "." for maurice, "" for others
 
-
+    /**
+     *
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public DataControlCenter() throws IOException, ClassNotFoundException {
         this.addedAuctions = new HashSet<>();
         this.updatedAuctions = new HashSet<>();
@@ -42,6 +46,12 @@ public class DataControlCenter {
         this.updateItem = null;
     }
 
+    /**
+     *
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public HashSet<Auction> getPastAuctions() throws IOException, ClassNotFoundException {
         HashSet<Auction> toSend = new HashSet<>();
         for (Auction auction : this.deserializeAllAuctions()) {
@@ -57,6 +67,13 @@ public class DataControlCenter {
         return toSend;
     }
 
+    /**
+     *
+     * @param auctionId
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public Auction getAuctionById(Integer auctionId) throws IOException, ClassNotFoundException {
         for (Auction auction : this.deserializeAllAuctions()) {
             if (auction.getAuctionID() == auctionId) {
@@ -66,6 +83,11 @@ public class DataControlCenter {
         return null;
     }
 
+    /**
+     *
+     * @param auction
+     * @return
+     */
     public boolean cancelAuction(Auction auction) {
         int bidCount = 0;
         for (Item item : auction.getItems()) {
@@ -79,24 +101,45 @@ public class DataControlCenter {
         return false;
     }
 
+    /**
+     *
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     private int deserializeMaxUpcomingAucAllowed() throws IOException, ClassNotFoundException {
         return (int) new ObjectInputStream(getClass().getResourceAsStream("system.bin")).readObject();
     }
 
-
-
-
-
+    /**
+     *
+     * @return
+     */
     public int getMaxAuctionAllowed () { return this.maxAuctionAllowed; }
 
+    /**
+     *
+     * @return
+     */
     public boolean isAuctionAllowed() { return (this.getMaxAuctionAllowed() > this.getAuctions().size()); }
 
+    /**
+     *
+     * @param max
+     * @return
+     */
     public boolean setMaxAuctionAllowed (int max) {
         if (max < 0) { return false; }
         this.maxAuctionAllowed = max;
         return true;
     }
 
+    /**
+     *
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public HashSet<Auction> getCancelAbleAuctions() throws IOException, ClassNotFoundException {
         HashSet<Auction> toSend = this.getActiveAuctions();
         for (Auction auction : this.getFutureAuctions()) {
@@ -115,8 +158,12 @@ public class DataControlCenter {
         return modifiedToSend;
     }
 
-    /** Finds the next available auction id when creating auctions.
-     * @return next available auction id */
+    /**
+     * Finds the next available auction id when creating auctions.
+     * @return next available auction id
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public int findNextAvailableAuctionId() throws IOException, ClassNotFoundException {
         return this.deserializeAllAuctions().size() + this.addedAuctions.size() + 1;
     }
@@ -327,7 +374,11 @@ public class DataControlCenter {
         return toSend;
     }
 
-    /** Logs out the NPContact and serializes their information */
+    /**
+     * Logs out the NPContact and serializes their information
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void logOutNP() throws IOException, ClassNotFoundException {
         HashSet<Auction> toSerialize = this.deserializeAllAuctions();
         for (Auction a : this.addedAuctions) {
@@ -421,8 +472,13 @@ public class DataControlCenter {
         }
     	return available;
     }
-	
 
+    /**
+     *
+     * @param inputDate
+     * @param auctions
+     * @return
+     */
     public boolean isAuctionAvailableForSubmissionRequest(LocalDateTime inputDate, ArrayList<Auction> auctions) {
         int counter = 0;
         for (Auction auction : auctions) {
@@ -435,7 +491,12 @@ public class DataControlCenter {
        return false;
     }
 
-    /** Logs the bidder out and serializes the data. */
+    /**
+     * Logs the bidder out and serializes the data.
+     * @param currentBidder
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void logOutBidder(Bidder currentBidder) throws IOException, ClassNotFoundException {
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(MAURICE_SPECIAL_STRING + "./JavaCode/Assets/auctions.bin"));
 
@@ -457,8 +518,6 @@ public class DataControlCenter {
 
         HashSet<Bidder> toSerializeBidders = this.deserializeAllBidders();
         //toSerializeBidders.add(currentBidder);
-
-
 //        for (Bidder bidder : this.deserializeAllBidders()) {
 //            if (!bidder.getName().equals(currentBidder.getName())){
 //            //if (!toSerializeBidders.contains(currentBidder)) {
@@ -473,6 +532,11 @@ public class DataControlCenter {
         oos.writeObject(toSerializeBidders);
     }
 
+    /**
+     *
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void logOutAdmin() throws IOException, ClassNotFoundException {
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(MAURICE_SPECIAL_STRING + "./JavaCode/Assets/system.bin"));
         oos.writeObject(this.maxAuctionAllowed);
@@ -499,6 +563,13 @@ public class DataControlCenter {
         this.updateItem = item;
     }
 
+    /**
+     *
+     * @param username
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public boolean isAdminValid(String username) throws IOException, ClassNotFoundException{
         for (AuctionCentralEmployee admin : this.deserializeAllAdmins()) {
             if (admin.getUsername().equals(username)) {
@@ -509,11 +580,24 @@ public class DataControlCenter {
         return false;
     }
 
+    /**
+     *
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     private HashSet<AuctionCentralEmployee> deserializeAllAdmins() throws IOException, ClassNotFoundException {
         return (HashSet<AuctionCentralEmployee>) new ObjectInputStream(getClass().
                 getResourceAsStream("admins.bin")).readObject();
     }
 
+    /**
+     *
+     * @param username
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public AuctionCentralEmployee getAdminByUsername(String username) throws IOException, ClassNotFoundException {
         for (AuctionCentralEmployee admin : this.deserializeAllAdmins()) {
             if (admin.getUsername().equals(username)) {
@@ -523,6 +607,12 @@ public class DataControlCenter {
         return null;
     }
 
+    /**
+     *
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public HashSet<Auction> getActiveAuctions() throws IOException, ClassNotFoundException {
         HashSet<Auction> toSend = new HashSet<>();
         for (Auction auction : this.deserializeAllAuctions()) {
@@ -543,6 +633,12 @@ public class DataControlCenter {
         return newSend;
     }
 
+    /**
+     *
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public HashSet<Auction> getFutureAuctions() throws IOException, ClassNotFoundException {
         HashSet<Auction> toSend = new HashSet<>();
         for (Auction auction : this.deserializeAllAuctions()) {
@@ -562,6 +658,11 @@ public class DataControlCenter {
         return newSend;
     }
 
+    /**
+     *
+     * @param toSort
+     * @return
+     */
     public ArrayList<Auction> sortAuctionSet(HashSet<Auction> toSort) {
         ArrayList<Auction> toSend = new ArrayList<>();
         for (Auction auc : toSort) { toSend.add(auc); }
@@ -576,7 +677,11 @@ public class DataControlCenter {
         return toSend;
     }
 
-
+    /**
+     *
+     * @param toSort
+     * @return
+     */
     public ArrayList<Auction> sortAuctionSetByStartDate (HashSet<Auction> toSort) {
         ArrayList<Auction> toSend = new ArrayList<>();
         for (Auction auc : toSort) {
@@ -593,6 +698,14 @@ public class DataControlCenter {
         return toSend;
     }
 
+    /**
+     *
+     * @param startTime
+     * @param endTime
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public HashSet<Auction> getAuctionsWithBounds(LocalDateTime startTime, LocalDateTime endTime)
             throws IOException, ClassNotFoundException {
         HashSet<Auction> toSend = new HashSet<>();
@@ -614,6 +727,12 @@ public class DataControlCenter {
         return toSend;
     }
 
+    /**
+     *
+     * @param currBidder
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void linkBidItemsWithAuctionID(Bidder currBidder) throws IOException, ClassNotFoundException {
         for (Auction auction : this.deserializeAllAuctions()) {
             for (Item item : auction.getItems()) {
@@ -627,6 +746,13 @@ public class DataControlCenter {
 
     }
 
+    /**
+     *
+     * @param item
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public Auction getAuctionNameByItem(String item) throws IOException, ClassNotFoundException {
         for (Auction auction : this.deserializeAllAuctions()) {
             for (Item items : auction.getItems()) {

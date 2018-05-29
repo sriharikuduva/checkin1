@@ -5,7 +5,9 @@ import java.util.HashSet;
 import java.util.Map;
 
 /** Represents a Auction Central User.
- * @author Hari G Kuduva */
+ * @author Hari G Kuduva
+ * @version May 29, 2018
+ */
 public class User implements Serializable {
     /** User's name **/
 	protected String name;

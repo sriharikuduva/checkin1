@@ -9,6 +9,7 @@ import java.util.*;
 /**
  * @author Hari G Kuduva
  * @author Shannon Weston
+ * @version May 29, 2018
  */
 public class Auction implements Serializable {
 	private static final int MIN_SCHEDULE_OUT_DAYS = 14;
@@ -43,10 +44,18 @@ public class Auction implements Serializable {
         this.isCanceled = false;
     }
 
+    /**
+     *
+     * @param isCanceled
+     */
     public void setIsCanceled(boolean isCanceled) {
         this.isCanceled = isCanceled;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isCanceled() {
         return isCanceled;
     }
@@ -91,6 +100,10 @@ public class Auction implements Serializable {
     	//onlineStart = start.minusDays(MIN_SCHEDULE_OUT_DAYS);
     }
 
+    /**
+     *
+     * @param other
+     */
     public Auction(Auction other) {
         this.organization = other.organization;
         this.auctionID = other.auctionID;
@@ -109,50 +122,98 @@ public class Auction implements Serializable {
         return this.auctionID;
     }
 
+    /**
+     *
+     * @param organization
+     */
     public void setOrganization(String organization) {
     	this.organization = organization;
     }
-    
+
+    /**
+     *
+     * @return
+     */
     public String getOrganization() {
     	return this.organization;
     }
 
+    /**
+     *
+     * @return
+     */
     public LocalDateTime getStart() {
         return this.start;
     }
-    
+
+    /**
+     *
+     * @param date
+     */
     public void setStart(LocalDateTime date) {
         this.start = date;
     }
-    
+
+    /**
+     *
+     * @param date
+     */
     public void setEnd(LocalDateTime date) {
         this.end = date;
     }
-    
+
+    /**
+     *
+     * @return
+     */
     public LocalDateTime getEnd() {
     	return this.end;
     }
-    
+
+    /**
+     *
+     * @param date
+     */
     public void setOnlineStart(LocalDateTime date) {
     	this.onlineStart = date;
     }
-    
+
+    /**
+     *
+     * @return
+     */
     public LocalDateTime getOnlineStart() {
     	return onlineStart;
     }
 
+    /**
+     *
+     * @param item
+     */
     public void addItem(Item item) {
         this.items.add(item);
     }
-    
+
+    /**
+     *
+     * @return
+     */
     public ArrayList<Item> getItems() {
     	return this.items;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getAuctionID() {
         return this.auctionID;
     }
 
+    /**
+     *
+     * @param nextAvailableAuctionId
+     */
     public void setAuctionId(int nextAvailableAuctionId) {
         this.auctionID = nextAvailableAuctionId;
     }

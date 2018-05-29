@@ -10,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 /**
  * This Panel displays the items of an auction chosen by the Bidder.
  * @author MauriceChiu
+ * @version May 29, 2018
  */
 public class AllItemsInAuctionScreen extends Observable {
     private JPanel itemsInAuctionScreen;
@@ -108,6 +109,11 @@ public class AllItemsInAuctionScreen extends Observable {
         return new JTable(model);
     }
 
+    /**
+     *
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public void update() throws IOException, ClassNotFoundException {
         setupAuctions();
     }

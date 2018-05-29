@@ -4,6 +4,7 @@ import java.util.*;
 
 /** Represents an item in an auction.
  * @author Hari G Kuduva
+ * @version May 29, 2018
  */
 public class Item implements Serializable {
     //Group
@@ -29,6 +30,7 @@ public class Item implements Serializable {
     public Item(){
         this("", 0, 0, "", "");
     }
+
     /** Creates an Item with 5 parameters
      * @param name  Item's name
      * @param quantity Item's quantity
@@ -45,35 +47,70 @@ public class Item implements Serializable {
         this.highestBid = startingBid;
         this.bidWithHighestBid = new Bid("", "", 0, 0, LocalDateTime.now(), LocalDateTime.now().plusDays(1));
     }
+
+    /**
+     *
+     * @return
+     */
     public Bid getBidWithHighestBid(){
         return this.bidWithHighestBid;
     }
+
+    /**
+     *
+     * @param name
+     */
     public void setName(String name){
         this.name = name;
     }
 
+    /**
+     *
+     * @param qty
+     */
     public void setQuantity(int qty) {
         this.quantity = qty;
     }
 
+    /**
+     *
+     * @param startingBid
+     */
     public void setStartingBid(int startingBid){
         this.startingBid = startingBid;
     }
 
+    /**
+     *
+     * @param description
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     *
+     * @param imagePath
+     */
     public void setImagePath(String imagePath){
         this.imagePath = imagePath;
     }
 
+    /**
+     *
+     * @return
+     */
     public String toString() {
         return "Item name: " + this.name + ", Quantity: " + this.quantity + ", StartingBid: " + this.startingBid +
                 ", Description: " + this.description;
     }
 
     //Group
+
+    /**
+     *
+     * @param bid
+     */
     public void addBid(Bid bid) {
         bids.add(bid);
         this.bidWithHighestBid = highestBid();
@@ -81,6 +118,10 @@ public class Item implements Serializable {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public Bid highestBid() {
         Bid toSend = bids.get(0);
         for (int i = 0; i < bids.size(); i++) {
@@ -92,25 +133,49 @@ public class Item implements Serializable {
     }
 
     //Group
+
+    /**
+     *
+     * @return
+     */
     public String getName() {
         return this.name;
     }
-    
+
+    /**
+     *
+     * @return
+     */
     public int getQuantity() {
     		return this.quantity;
     }
-    
+
+    /**
+     *
+     * @return
+     */
     public String getDescription() {
     		return this.description;
     }
-    
+
+    /**
+     *
+     * @return
+     */
     public ArrayList<Bid> getBids() {
     	return this.bids;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getImagePath() {return this.imagePath; }
-    
-    //Shannon Weston
+
+    /**
+     *
+     * @return
+     */
     public int getCurrentBid() {
         int bid = 0;
         

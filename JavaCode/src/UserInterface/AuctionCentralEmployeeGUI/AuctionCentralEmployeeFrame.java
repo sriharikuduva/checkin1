@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * @author Baisal
+ * @version May 29, 2018
+ */
 public class AuctionCentralEmployeeFrame implements Observer {
 
     private AuctionCentralEmployee currAdmin;
@@ -16,6 +20,13 @@ public class AuctionCentralEmployeeFrame implements Observer {
     private AuctionsInTimeFrameScreen timeFrameScreen;
 
 
+    /**
+     *
+     * @param currAdmin
+     * @param dataControl
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public AuctionCentralEmployeeFrame(AuctionCentralEmployee currAdmin, DataControlCenter dataControl) throws IOException, ClassNotFoundException {
         this.currAdmin = currAdmin;
         this.dataControl = dataControl;

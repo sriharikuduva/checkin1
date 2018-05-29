@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Observable;
 
+/**
+ * @author Baisal
+ * @version May 29, 2018
+ */
 public class AuctionsInTimeFrameScreen extends Observable {
     private JPanel auctionsInTimeFramePanel;
     private DataControlCenter dataControl;
@@ -18,6 +22,10 @@ public class AuctionsInTimeFrameScreen extends Observable {
     private LocalDateTime endTime;
     private HashSet<Auction> auctionInFrame;
 
+    /**
+     *
+     * @param dcc
+     */
     public AuctionsInTimeFrameScreen (DataControlCenter dcc) {
         this.dataControl = dcc;
         this.auctionsInTimeFramePanel = new JPanel(new BorderLayout());
@@ -29,6 +37,9 @@ public class AuctionsInTimeFrameScreen extends Observable {
         this.setElements();
     }
 
+    /**
+     *
+     */
     private void setElements() {
         JPanel instr = this.getInstructions();
         this.auctionsInTimeFramePanel.add(instr, BorderLayout.NORTH);
@@ -40,6 +51,10 @@ public class AuctionsInTimeFrameScreen extends Observable {
         this.auctionsInTimeFramePanel.add(btnContainer, BorderLayout.SOUTH);
     }
 
+    /**
+     *
+     * @return
+     */
     private JPanel getDatePanel() {
         JPanel container = new JPanel(new GridLayout(3,1));
 
@@ -61,6 +76,11 @@ public class AuctionsInTimeFrameScreen extends Observable {
         return container;
     }
 
+    /**
+     *
+     * @param auctions
+     * @return
+     */
     private JTable getAuctionTable(HashSet<Auction> auctions) {
         String[] columns = new String[] {"Auction Name", "Auction ID", "Number Items", "Start Date", "End Date"};
         final Class[] columnClass = new Class[] {
@@ -90,6 +110,10 @@ public class AuctionsInTimeFrameScreen extends Observable {
         return new JTable(model);
     }
 
+    /**
+     *
+     * @return
+     */
     private JPanel getButtonContainer() {
         JPanel toSend = new JPanel(new GridLayout(3,1));
         JButton verifyDates = new JButton("Verify");
@@ -119,6 +143,10 @@ public class AuctionsInTimeFrameScreen extends Observable {
         return toSend;
     }
 
+    /**
+     *
+     * @param showAuctionBtn
+     */
     private void verifyDates(JButton showAuctionBtn) {
         boolean isErrorShown = false;
         try {
@@ -154,13 +182,22 @@ public class AuctionsInTimeFrameScreen extends Observable {
         }
     }
 
-
+    /**
+     *
+     * @param message
+     */
     private void showErrorDialog(String message) {
         JOptionPane.showMessageDialog(auctionsInTimeFramePanel, message, "Error", JOptionPane.ERROR_MESSAGE);
         /*JOptionPane.showMessageDialog(maxAuctionScreen, "Value changed from " + prevVal +
                 " to " + possibleFutureValue);*/
     }
 
+    /**
+     *
+     * @param time
+     * @return
+     * @throws DateTimeException
+     */
     private LocalDateTime getDateFromText(String time) throws DateTimeException {
         String[] parts = time.split(" ");
         String[] temp = parts[0].split("/");
@@ -181,6 +218,12 @@ public class AuctionsInTimeFrameScreen extends Observable {
         return result;
     }
 
+    /**
+     *
+     * @param i
+     * @param s
+     * @return
+     */
     public int get24Hour(int i, String s) {
         int hour = 0;
         if(s.contains("P") && i <= 12) {
@@ -191,6 +234,10 @@ public class AuctionsInTimeFrameScreen extends Observable {
         return hour;
     }
 
+    /**
+     *
+     * @return
+     */
     private JPanel getInstructions () {
         JPanel toSend = new JPanel(new GridLayout(4, 1));
         String indent = "\t\t\t\t\t\t";
@@ -206,6 +253,10 @@ public class AuctionsInTimeFrameScreen extends Observable {
         return toSend;
     }
 
+    /**
+     * 
+     * @return
+     */
     public JPanel getAuctionsInTimeFramePanel() {
         return this.auctionsInTimeFramePanel;
     }

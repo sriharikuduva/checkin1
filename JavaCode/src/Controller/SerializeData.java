@@ -5,7 +5,9 @@ import java.util.HashSet;
 import java.util.Scanner;
 
 /** Responsible for serializing data and outputing bin files.
- * @author Hari Kuduva */
+ * @author Hari Kuduva
+ * @version May 29, 2018
+ * */
 public class SerializeData {
     /** Scanner to scan input. **/
     private static Scanner inputScanner;
@@ -19,6 +21,12 @@ public class SerializeData {
     // When Other people run constant should be "./JavaCode/Assets/"
     // ./JavaCode/Assets/
 
+    /**
+     *
+     * @param args
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public static void main(String... args) throws IOException, ClassNotFoundException {
         /* NOTICE::: ONLY RUN THIS WHEN BIDDERS.BIN AND NPCONTACT.BIN ARE NOT IN ASSETS FOLDER
             OR IF THEIR ORIGINAL TXT FILES HAVE BEEN UPDATED (THEN DELETE THE OLD .BIN FILES AND RUN THIS) */
@@ -29,6 +37,11 @@ public class SerializeData {
         serializeSystemDependencies(MAURICE_CONSTANT +"system.bin");
     }
 
+    /**
+     *
+     * @param output
+     * @throws IOException
+     */
     private static void serializeSystemDependencies(String output) throws IOException {
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(output));
         inputScanner = new Scanner(SerializeData.class

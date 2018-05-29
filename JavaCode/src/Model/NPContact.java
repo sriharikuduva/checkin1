@@ -2,6 +2,7 @@ import java.io.Serializable;
 
 /** Represents a Non-profit organization.
  * @author Hari G Kuduva
+ * @version May 29, 2018
  */
 public class NPContact extends User implements Serializable {
 
@@ -21,10 +22,18 @@ public class NPContact extends User implements Serializable {
         this.orgName = orgName;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getUsername() {
         return super.username;
     }
-    
+
+    /**
+     *
+     * @return
+     */
     public String getName() {
         return this.orgName;
     }

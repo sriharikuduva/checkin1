@@ -5,6 +5,7 @@ import java.util.*;
 
 /** Represents a bidder.
  * @author Hari G Kuduva
+ * @version May 29, 2018
  */
 public class Bidder extends User implements Serializable {
     /** List of bids the bidder has. **/
@@ -35,17 +36,31 @@ public class Bidder extends User implements Serializable {
         this.bids = new ArrayList<Bid>();
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     public boolean equals(Object obj) {
         Bidder other = (Bidder) obj;
         return this.name.equals(other.name);
     }
 
+    /**
+     *
+     * @return
+     */
     public int hashCode() {
         return this.getBids().size();
     }
 
 
     //Shannon Weston
+
+    /**
+     *
+     * @return
+     */
     public String getName() {
         return this.name;
     }
@@ -80,6 +95,10 @@ public class Bidder extends User implements Serializable {
 //        return errors;
 //    }
 
+    /**
+     *
+     * @return
+     */
     public int getBalance(){
         return this.balance;
     }
@@ -93,6 +112,11 @@ public class Bidder extends User implements Serializable {
     }
 
     //Group
+
+    /**
+     *
+     * @return
+     */
     public ArrayList<Bid> getBids() {
         return this.bids;
     }
@@ -103,10 +127,18 @@ public class Bidder extends User implements Serializable {
         return name + "\n" + email + "\n" + username + "\n" + address + "\n" + phoneNumber + "\n" + balance;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getUsername() {
         return this.username;
     }
 
+    /**
+     *
+     * @param bid
+     */
     public void addBid(Bid bid) {
         this.bids.add(bid);
     }

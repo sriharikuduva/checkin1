@@ -4,6 +4,7 @@ import java.util.Objects;
 
 /** Represents a bid.
  * @author Hari G Kuduva
+ * @version May 29, 2018
  */
 public class Bid implements Serializable {
     /** Name of the bidder. **/
@@ -36,26 +37,56 @@ public class Bid implements Serializable {
         this.end = end;
     }
 
+    /**
+     *
+     * @param bidderName
+     * @param itemName
+     * @param amount
+     */
     public Bid(String bidderName, String itemName, int amount) {
         this(bidderName, itemName, amount, -1, LocalDateTime.now(), LocalDateTime.now());
     }
 
+    /**
+     *
+     * @return
+     */
     public String getBidder(){
         return this.bidderName;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getItem() {
         return this.itemName;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getAmount() {
         return this.amount;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getAuctionID() { return this.auctionId; }
 
+    /**
+     *
+     * @return
+     */
     public LocalDateTime getStart() { return this.start; }
 
+    /**
+     *
+     * @return
+     */
     public LocalDateTime getEnd() { return this.end; }
 
     @Override
