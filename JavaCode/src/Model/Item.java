@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /** Represents an item in an auction.
@@ -19,8 +20,15 @@ public class Item implements Serializable {
     /** Item's current list of bids **/
     private ArrayList<Bid> bids;
 
+    private int highestBid;
+
+    private Bid bidWithHighestBid;
+
     private static final long serialVersionUID = 1;
 
+    public Item(){
+        this("", 0, 0, "", "");
+    }
     /** Creates an Item with 5 parameters
      * @param name  Item's name
      * @param quantity Item's quantity
@@ -34,6 +42,30 @@ public class Item implements Serializable {
         this.description = description;
         this.imagePath = imagePath;
         this.bids = new ArrayList<>();
+        this.highestBid = startingBid;
+        this.bidWithHighestBid = new Bid("", "", 0, 0, LocalDateTime.now(), LocalDateTime.now().plusDays(1));
+    }
+    public Bid getBidWithHighestBid(){
+        return this.bidWithHighestBid;
+    }
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public void setQuantity(int qty) {
+        this.quantity = qty;
+    }
+
+    public void setStartingBid(int startingBid){
+        this.startingBid = startingBid;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setImagePath(String imagePath){
+        this.imagePath = imagePath;
     }
 
     public String toString() {
@@ -44,6 +76,19 @@ public class Item implements Serializable {
     //Group
     public void addBid(Bid bid) {
         bids.add(bid);
+        this.bidWithHighestBid = highestBid();
+        this.highestBid = this.getCurrentBid();
+
+    }
+
+    public Bid highestBid() {
+        Bid toSend = bids.get(0);
+        for (int i = 0; i < bids.size(); i++) {
+            if (bids.get(i).getAmount() > toSend.getAmount()) {
+                toSend = bids.get(i);
+            }
+        }
+        return toSend;
     }
 
     //Group
@@ -77,10 +122,10 @@ public class Item implements Serializable {
             //Therefore, last value in bids will be the bid to beat.
             //To make this secure, bids must be immutable.
             //bid = bids.get(bids.size() - 1).getAmount();
-            int maxBid;
             for (Bid b : this.bids) {
                 if (b.getAmount() > bid) {
                     bid = b.getAmount();
+                    Arrays.toString(this.bids.toArray());
                 }
             }
         }

@@ -81,12 +81,22 @@ public class Auction implements Serializable {
     }
 
     /** Creates an empty auction with 0 parameters */
+    //(String organization, LocalDateTime startClock, LocalDateTime endClock, int auctionID)
     public Auction() {
         //Empty Auction for BidderConsole.java
-    	this.items = new ArrayList<Item>();
-    	this.creationDate = LocalDateTime.now();
-    	this.isCanceled = false;
+    	//this.items = new ArrayList<Item>();
+    	//this.creationDate = LocalDateTime.now();
+    	//this.isCanceled = false;
+        this("", LocalDateTime.now(), LocalDateTime.now().plusDays(1), -1);
     	//onlineStart = start.minusDays(MIN_SCHEDULE_OUT_DAYS);
+    }
+
+    public Auction(Auction other) {
+        this.organization = other.organization;
+        this.auctionID = other.auctionID;
+        this.items = new ArrayList<>();
+        this.start = other.start;
+        this.end = other.end;
     }
 
     @Override

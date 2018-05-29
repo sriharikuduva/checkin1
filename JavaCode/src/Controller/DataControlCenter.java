@@ -20,10 +20,12 @@ public class DataControlCenter {
     private HashSet<Auction> addedAuctions;
     private HashSet<Auction> updatedAuctions;
     private HashSet<Auction> cancelledAuctions;
+    private HashSet<Auction> biddedAuctions;
+    private Item updateItem;
     private int nextAvailableAuctionId;
     private int maxAuctionAllowed;
 
-    private static final String MAURICE_SPECIAL_STRING = "";
+    private static final String MAURICE_SPECIAL_STRING = ".";
     // Maurice's special string should be "." for maurice, "" for others
 
 
@@ -34,6 +36,8 @@ public class DataControlCenter {
         this.cancelledAuctions = new HashSet<>();
         this.maxAuctionAllowed = this.deserializeMaxUpcomingAucAllowed();
         this.nextAvailableAuctionId = findNextAvailableAuctionId();
+        this.biddedAuctions = new HashSet<>();
+        this.updateItem = new Item();
     }
 
     public HashSet<Auction> getPastAuctions() throws IOException, ClassNotFoundException {
@@ -268,44 +272,39 @@ public class DataControlCenter {
         for(Auction a : this.deserializeAllAuctions()) {
             toSend.add(a);
         }
-        return toSend;
-    }
+        Auction old = this.getAuctionById(this.updateItem.getBidWithHighestBid().getAuctionID());
+        Auction toReplace = new Auction(old);
 
-//    public void makeBid (Auction auction, ArrayList<Item> items, Item item, Bid bid, Bidder currBidder) throws ClassNotFoundException, IOException {
-//        boolean check1 = currBidder.isBidPlaceableAuctionDate(auction);
-//        boolean check2 = currBidder.isBidPlaceableInFutureAuctions(auction, items);
+        toReplace.addItem(this.updateItem);
+
+        HashSet<Auction> temp = new HashSet<>();
+        for (Item item : old.getItems()) {
+            if (!item.getName().equals(updateItem.getName())){
+                toReplace.addItem(item);
+            }
+        }
+
+        HashSet<Auction> newSend = new HashSet<>();
+        for (Auction auction : this.deserializeAllAuctions()) {
+            if (auction.getAuctionID() == toReplace.getAuctionID()) {
+                newSend.add(toReplace);
+            } else {
+                newSend.add(auction);
+            }
+        }
+
+
+//        for (Auction auc : toSend) {
+//            for (Item itm : auc.getItems()) {
+//                if (itm.getName().equals(this.updateItem.getName())){
 //
-//        	HashSet<Item> itemsOfAuction = getItemsCurrBidderHasBidsOnInAnAuction(currBidder,  auction);
-//        	int numberOfItemsWithBidInAnAuction = itemsOfAuction.size();
+//                }
+//            }
 //
-//        boolean check3 = currBidder.isBidPlaceableItemWithBids(numberOfItemsWithBidInAnAuction);
-//        boolean check4 = currBidder.isBidPlaceableMinimumBid(item, bid);
-//
-//        if (!check1) {
-//        		System.out.println("\tSorry, it has passed the auction end time, \n"
-//    				+ "\tyou may no longer bid on this item.");
 //        }
-//
-//        if (!check2) {
-//        		System.out.println("\tSorry, you have already reached the maximum number of items\n"
-//    				+ "\tyou could bid on in all future auctions.");
-//        }
-//
-//        if (!check3) {
-//        		System.out.println("\tSorry, you have already reached the maximum number of items\n"
-//    				+ "\tyou could bid on in an auction.");
-//        }
-//
-//        if (!check4) {
-//        		System.out.println("\tSorry, the amount you have entered is less than the\n"
-//        				+ "\tbid price of this item.");
-//        }
-//
-//        if (check1 && check2 && check3 && check4) {
-//        		placeBid(auction, item, bid);
-//        		System.out.println("Congradulations. You have placed a bid successfully!");
-//        }
-//    }
+
+        return newSend;
+    }
 
     /** Gets a set of auctions that were submitted as requests by NPContact
      * @param currContact the NPContact
@@ -482,12 +481,24 @@ public class DataControlCenter {
         this.cancelledAuctions.clear();
     }
 
-    /** Places the bid
-     * @param item the item
-     * @param bid the bid */
+    /**
+     *
+     * @param auction
+     * @param itemName
+     * @param bid
+     */
     public void placeBid(Auction auction, Item item, Bid bid) {
         item.addBid(bid);
-        this.updatedAuctions.add(auction);
+        this.updateItem = item;
+//        for (Item item : auction.getItems()) {
+//            if (itemName.equals(item.getName())){
+//                item.addBid(bid);
+//                System.out.println(item.getCurrentBid());
+//            }
+//        }
+
+//        this.biddedAuctions.add(auction);
+
     }
 
     public boolean isAdminValid(String username) throws IOException, ClassNotFoundException{

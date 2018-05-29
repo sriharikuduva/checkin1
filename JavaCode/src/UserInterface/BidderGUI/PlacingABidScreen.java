@@ -102,12 +102,11 @@ public class PlacingABidScreen extends Observable {
                                     dataControl.placeBid(auc, itm, bid);
                                     currBidder.payForBid(bid.getAmount());
                                     JOptionPane.showMessageDialog(itemsFrame, "You have placed your bid successfully!", "Success", JOptionPane.PLAIN_MESSAGE);
+                                    System.out.println("test");
                                 }
                             } catch (NumberFormatException e) {
                                 JOptionPane.showMessageDialog(itemsFrame, "Input Error! Please enter bid price in numbers and try again!", "Input Error", JOptionPane.ERROR_MESSAGE);
                             }
-
-
                         }
                     });
                     container.add(itemButton);
