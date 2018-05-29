@@ -34,7 +34,8 @@ public class CancelAuctionScreen extends Observable {
         JPanel toSend = new JPanel(new GridLayout(3, 1));
         String indent = "\t\t\t\t\t\t";
         JLabel title = new JLabel("\tInstructions:");
-        JLabel condition1 = new JLabel(indent + "1) Check all auctions you want to cancel");
+        JLabel condition1 = new JLabel(indent + "1) Check all auctions you" +
+                " want to cancel (You can only cancel auctions with 0 bids)");
         JLabel condition2 = new JLabel(indent + "2) Confirm");
         toSend.add(title);
         toSend.add(condition1);
