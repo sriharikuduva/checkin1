@@ -76,7 +76,13 @@ public class Item implements Serializable {
             //Bids will be added to the list in ascending order.
             //Therefore, last value in bids will be the bid to beat.
             //To make this secure, bids must be immutable.
-            bid = bids.get(bids.size() - 1).getAmount();
+            //bid = bids.get(bids.size() - 1).getAmount();
+            int maxBid;
+            for (Bid b : this.bids) {
+                if (b.getAmount() > bid) {
+                    bid = b.getAmount();
+                }
+            }
         }
         
         return bid;
