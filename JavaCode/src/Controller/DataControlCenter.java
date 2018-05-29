@@ -80,6 +80,10 @@ public class DataControlCenter {
 
     public boolean isAuctionAllowed() { return (this.getMaxAuctionAllowed() < this.getAuctions().size()); }
 
+    public int getMaxAuctionAllowed () { return this.maxAuctionAllowed; }
+
+    public boolean isAuctionAllowed() { return (this.getMaxAuctionAllowed() > this.getAuctions().size()); }
+
     public boolean setMaxAuctionAllowed (int max) {
         if (max < 0) { return false; }
         this.maxAuctionAllowed = max;
