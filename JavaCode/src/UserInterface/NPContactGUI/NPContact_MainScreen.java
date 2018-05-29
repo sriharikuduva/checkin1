@@ -10,6 +10,11 @@ public class NPContact_MainScreen extends Observable {
     private NPContact currContact;
     private DataControlCenter dataControl;
 
+    /**
+     *
+     * @param currContact
+     * @param dataControl
+     */
     public NPContact_MainScreen(NPContact currContact, DataControlCenter dataControl) {
 
         this.main = new JPanel(new BorderLayout());
@@ -23,6 +28,10 @@ public class NPContact_MainScreen extends Observable {
         this.main.add(options, BorderLayout.CENTER);
     }
 
+    /**
+     *
+     * Sets the User's account detail bi giving the name, user type
+     */
     private JPanel getAccountDetails() {
         JPanel toSend = new JPanel(new GridLayout(5, 2, 20, 20));
         JLabel title = new JLabel("\tAccount Details:");
@@ -37,7 +46,10 @@ public class NPContact_MainScreen extends Observable {
         return toSend;
     }
 
-
+    /**
+     *
+     * Sets up the screen with three buttons which corresponds to a user story
+     */
     private JPanel getOptions() {
 
         JPanel toSend = new JPanel(new GridLayout(4,2, 25, 25));
@@ -55,6 +67,12 @@ public class NPContact_MainScreen extends Observable {
         return toSend;
     }
 
+    /**
+     *
+     * @param viewAllAuctions button switches the screen to a different window
+     * @param submitAuctions button switches the screen to a different window
+     * @param logout button switches the screen to a different window
+     */
     private void setBehaviorForButtons(JButton viewAllAuctions, JButton submitAuctions, JButton logout) {
 
         viewAllAuctions.addActionListener((ActionEvent e) -> {

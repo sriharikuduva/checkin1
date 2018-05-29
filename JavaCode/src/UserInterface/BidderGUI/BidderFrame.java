@@ -25,6 +25,7 @@ public class BidderFrame implements Observer{
     public BidderFrame(Bidder currBidder, DataControlCenter dataControl) throws IOException, ClassNotFoundException {
         this.currBidder = currBidder;
         this.dataControl = dataControl;
+        this.dataControl.linkBidItemsWithAuctionID(this.currBidder);
 
         this.frame = new JFrame();
         this.frame.setLayout(new BorderLayout());
@@ -34,7 +35,6 @@ public class BidderFrame implements Observer{
         this.main = new MainScreen_Bidder(currBidder, dataControl);
         this.main.addObserver(this);
 
-        //System.out.println("before creating BiddableAuctionsScreen");
         this.biddableAuctionsScreen = new BiddableAuctionsScreen(currBidder, dataControl);
         this.biddableAuctionsScreen.addObserver(this);
 
@@ -90,34 +90,6 @@ public class BidderFrame implements Observer{
             this.frame.repaint();
             this.frame.revalidate();
         } else if (result == MainScreen_Bidder.BID_FOR_AN_ITEM_IN_AN_AUCTION) {
-            this.frame.getContentPane().removeAll();
-            this.frame.add(this.placingABidScreen.getPlacingABidScreen(), BorderLayout.CENTER);
-            this.frame.setTitle("Bidder - " + currBidder.getName() + " - " + MainScreen_Bidder.BID_FOR_AN_ITEM_IN_AN_AUCTION);
-            this.frame.pack();
-            this.frame.repaint();
-            this.frame.revalidate();
-        } else if (result == MainScreen_Bidder.BID_FOR_AN_ITEM_IN_AN_AUCTION) { // Error 1
-            this.frame.getContentPane().removeAll();
-            this.frame.add(this.placingABidScreen.getPlacingABidScreen(), BorderLayout.CENTER);
-            this.frame.setTitle("Bidder - " + currBidder.getName() + " - " + MainScreen_Bidder.BID_FOR_AN_ITEM_IN_AN_AUCTION);
-            this.frame.pack();
-            this.frame.repaint();
-            this.frame.revalidate();
-        } else if (result == MainScreen_Bidder.BID_FOR_AN_ITEM_IN_AN_AUCTION) { // Error 2
-            this.frame.getContentPane().removeAll();
-            this.frame.add(this.placingABidScreen.getPlacingABidScreen(), BorderLayout.CENTER);
-            this.frame.setTitle("Bidder - " + currBidder.getName() + " - " + MainScreen_Bidder.BID_FOR_AN_ITEM_IN_AN_AUCTION);
-            this.frame.pack();
-            this.frame.repaint();
-            this.frame.revalidate();
-        } else if (result == MainScreen_Bidder.BID_FOR_AN_ITEM_IN_AN_AUCTION) { // Error 3
-            this.frame.getContentPane().removeAll();
-            this.frame.add(this.placingABidScreen.getPlacingABidScreen(), BorderLayout.CENTER);
-            this.frame.setTitle("Bidder - " + currBidder.getName() + " - " + MainScreen_Bidder.BID_FOR_AN_ITEM_IN_AN_AUCTION);
-            this.frame.pack();
-            this.frame.repaint();
-            this.frame.revalidate();
-        } else if (result == MainScreen_Bidder.BID_FOR_AN_ITEM_IN_AN_AUCTION) { // Error 4
             this.frame.getContentPane().removeAll();
             this.frame.add(this.placingABidScreen.getPlacingABidScreen(), BorderLayout.CENTER);
             this.frame.setTitle("Bidder - " + currBidder.getName() + " - " + MainScreen_Bidder.BID_FOR_AN_ITEM_IN_AN_AUCTION);

@@ -32,6 +32,13 @@ public class SubmitAuctionRequest_Screen extends Observable implements ActionLis
    // private boolean valid;
     private LocalDateTime dateTime;
 
+    /**
+     *
+     * @param dcc
+     * @param currContact
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public SubmitAuctionRequest_Screen (DataControlCenter dcc, NPContact currContact) throws IOException, ClassNotFoundException {
 
         this.viewAllAuctions = new JPanel(new BorderLayout());
@@ -47,6 +54,12 @@ public class SubmitAuctionRequest_Screen extends Observable implements ActionLis
     }
 
 
+    /**
+     *
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public JPanel getSubmitAuctionRequest_Screen() throws IOException, ClassNotFoundException {
         this.viewAllAuctions.removeAll();
         this.setElements();
@@ -78,8 +91,9 @@ public class SubmitAuctionRequest_Screen extends Observable implements ActionLis
     }
 
 
-
-    /** Account Detail*/
+    /**
+     * Gives the user the welcome screen and the date which they can request an auction
+     */
     private JPanel getAccountDetails() {
         JPanel toSend = new JPanel(new GridLayout(5, 2, 20, 20));
         String farthestDateFormatted = farthestDate.format(fmt);

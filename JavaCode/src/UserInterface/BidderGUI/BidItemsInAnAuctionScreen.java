@@ -76,17 +76,34 @@ public class BidItemsInAnAuctionScreen extends Observable {
      * @return
      */
     private JTable getItemTable(Auction auc) {
-        String[] columns = new String[] {"Item Name", "Bulk Quantity", "Bid Price", "Description", "Image"};
-        final Class[] columnClass = new Class[] {String.class, String.class, String.class, String.class, String.class};
-        Object[][] itemList = new Object[auc.getItems().size()][NUM_OF_PIECES_OF_INFO];
-        int counter = 0;
-        for (Item item : auc.getItems()) {
-            itemList[counter][NUM_OF_PIECES_OF_INFO-5] = item.getName();
-            itemList[counter][NUM_OF_PIECES_OF_INFO-4] = item.getQuantity();
-            itemList[counter][NUM_OF_PIECES_OF_INFO-3] = "$" + item.getCurrentBid();
-            itemList[counter][NUM_OF_PIECES_OF_INFO-2] = item.getDescription();
-            itemList[counter][NUM_OF_PIECES_OF_INFO-1] = item.getImagePath();
-            counter++;
+//        String[] columns = new String[] {"Item Name", "Bulk Quantity", "Bid Price", "Description", "Image"};
+//        final Class[] columnClass = new Class[] {String.class, String.class, String.class, String.class, String.class};
+//        Object[][] itemList = new Object[auc.getItems().size()][NUM_OF_PIECES_OF_INFO];
+//        int counter = 0;
+//        for (Item item : auc.getItems()) {
+//            itemList[counter][NUM_OF_PIECES_OF_INFO-5] = item.getName();
+//            itemList[counter][NUM_OF_PIECES_OF_INFO-4] = item.getQuantity();
+//            itemList[counter][NUM_OF_PIECES_OF_INFO-3] = "$" + item.getCurrentBid();
+//            itemList[counter][NUM_OF_PIECES_OF_INFO-2] = item.getDescription();
+//            itemList[counter][NUM_OF_PIECES_OF_INFO-1] = item.getImagePath();
+//            counter++;
+//        }
+
+        String[] columns = new String[] {"Item Name", "Your Bid Price"};
+        final Class[] columnClass = new Class[] {String.class, String.class};
+        Object[][] itemList = new Object[currBidder.getBids().size()][NUM_OF_PIECES_OF_INFO];
+
+        System.out.println("bidder name: " + currBidder.getName()); // TODO remove
+        System.out.println("bidder name: " + currBidder.getUsername()); // TODO remove
+        System.out.println("bids[] size: " + currBidder.getBids().size()); // TODO remove
+
+        for (Bid bid : currBidder.getBids()) {
+            // TODO Hari, I would need a bid to save more information about an item. Auction ID is the minimum requirement.
+            //if (bid.auctionID == auc.getAuctionID()) {
+                System.out.println(bid.getItem()); // TODO remove
+                itemList[currBidder.getBids().size()][NUM_OF_PIECES_OF_INFO - 2] = bid.getItem();
+                itemList[currBidder.getBids().size()][NUM_OF_PIECES_OF_INFO - 1] = "$" + bid.getAmount();
+            //}
         }
 
         DefaultTableModel model = new DefaultTableModel(itemList, columns) {

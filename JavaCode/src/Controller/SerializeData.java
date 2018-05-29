@@ -17,15 +17,16 @@ public class SerializeData {
     private static final String MAURICE_CONSTANT = "./JavaCode/Assets/";
     // When Maurice runs constant should be "./"
     // When Other people run constant should be "./JavaCode/Assets/"
+    // ./JavaCode/Assets/
 
     public static void main(String... args) throws IOException, ClassNotFoundException {
         /* NOTICE::: ONLY RUN THIS WHEN BIDDERS.BIN AND NPCONTACT.BIN ARE NOT IN ASSETS FOLDER
             OR IF THEIR ORIGINAL TXT FILES HAVE BEEN UPDATED (THEN DELETE THE OLD .BIN FILES AND RUN THIS) */
-        serializeBidders(MAURICE_CONSTANT + "bidders.bin");
-        serializeNPContact(MAURICE_CONSTANT + "npcontact.bin");
-        serializeAuctions(MAURICE_CONSTANT + "auctions.bin");
-        serializeAdmins(MAURICE_CONSTANT + "admins.bin");
-        serializeSystemDependencies(MAURICE_CONSTANT + "system.bin");
+        serializeBidders(MAURICE_CONSTANT +"bidders.bin");
+        serializeNPContact(MAURICE_CONSTANT +"npcontact.bin");
+        serializeAuctions(MAURICE_CONSTANT +"auctions.bin");
+        serializeAdmins(MAURICE_CONSTANT +"admins.bin");
+        serializeSystemDependencies(MAURICE_CONSTANT +"system.bin");
     }
 
     private static void serializeSystemDependencies(String output) throws IOException {
@@ -115,20 +116,22 @@ public class SerializeData {
     private static void addItemsForAuction(Auction auction) {
         Scanner scanItem = new Scanner(SerializeData.class
                 .getResourceAsStream("masterItemList.txt"));
-        Scanner scanBidsOnItems = new Scanner(SerializeData.class
-                .getResourceAsStream("masterItemBiddingList.txt"));
         while (scanItem.hasNextLine()) {
             String parts[] = scanItem.nextLine().split(",");
             cleanParts(parts);
             if (auction.getAuctionID() == Integer.parseInt(parts[0])) {
                 Item temp = new Item(parts[1], Integer.parseInt(parts[2]),
                         Integer.parseInt(parts[3]), parts[4], parts[5]);
+                Scanner scanBidsOnItems = new Scanner(SerializeData.class
+                .getResourceAsStream("masterItemBiddingList.txt"));
                 while (scanBidsOnItems.hasNextLine()) {
                     String parts2[] = scanBidsOnItems.nextLine().split(",");
                     cleanParts(parts2);
                     if (auction.getAuctionID() == Integer.parseInt(parts2[1]) &&
                             temp.getName().equals(parts2[2])) {
-                        temp.addBid(new Bid(parts2[0], temp.getName(), Integer.parseInt(parts2[3])));
+                        temp.addBid(new Bid(parts2[0], temp.getName(),
+                                Integer.parseInt(parts2[3]), auction.getAuctionID(),
+                                auction.getStart(), auction.getEnd()));
                     }
                 }
                 auction.addItem(temp);
