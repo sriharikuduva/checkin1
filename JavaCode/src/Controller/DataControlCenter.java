@@ -85,7 +85,7 @@ public class DataControlCenter {
 
 
 
-    
+
 
     public int getMaxAuctionAllowed () { return this.maxAuctionAllowed; }
 
@@ -256,11 +256,12 @@ public class DataControlCenter {
      * @return set of auctions */
     public HashSet<Auction> getAuctionsCurrBidderCanBidOn(Bidder currBidder) throws ClassNotFoundException, IOException {
         HashSet<Auction> toSend = new HashSet<>();
-        HashSet<Auction> test = this.deserializeAllAuctions();
-        for(Auction a : this.deserializeAllAuctions()) {
-        	if(a.getStart().isAfter(LocalDateTime.now())) {
+        //HashSet<Auction> test = this.deserializeAllAuctions();
+        HashSet<Auction> allAuctions = this.getAllAuctions();
+        for(Auction auc : allAuctions) {
+        	if(auc.getStart().isAfter(LocalDateTime.now())) {
         		//if(a.getEnd().isAfter(LocalDateTime.now())) {
-                	toSend.add(a);
+                	toSend.add(auc);
         		//}
         	}
         }

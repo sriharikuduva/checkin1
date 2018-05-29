@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Observable;
 
 /**
@@ -42,7 +43,17 @@ public class BidItemsInAnAuctionScreen extends Observable {
     private void setupAuctions() throws IOException, ClassNotFoundException {
         JPanel auctionFrame = new JPanel(new GridLayout(dataControl.getAuctionsCurrBidderCanBidOn(currBidder).size(), 1));
         this.itemsInAuctionScreen.add(new JLabel("\tHere are all the auctions, please pick one to view the items that you have bid on: "), BorderLayout.NORTH);
-        for (Auction auc : dataControl.getAuctionsCurrBidderHasBids(currBidder)){
+
+        HashSet<Auction> auctionsCurrBidderHasBidsOn = new HashSet<>();
+        for (Bid bid : currBidder.getBids()){
+            auctionsCurrBidderHasBidsOn.add(dataControl.getAuctionById(bid.getAuctionID()));
+        }
+
+        for (Auction auc : auctionsCurrBidderHasBidsOn) {
+        //for (Auction auc : dataControl.getAuctionsCurrBidderHasBids(currBidder)){
+        //int checkID = currBidder.getBids().get(0).getAuctionID();
+        //for (Bid bid : currBidder.getBids()) {
+
             DateTimeFormatter dtformatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM);
             JButton but = new JButton(auc.getOrganization() + "\t\t(Auction Date: " + auc.getStart().format(dtformatter) + ")");
             but.addActionListener((ActionEvent e) -> {
