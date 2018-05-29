@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.ArrayList;
 import java.util.Observable;
 
 /**
@@ -65,8 +66,12 @@ public class PlacingABidScreen extends Observable {
                             try {
                                 int bidderBidPrice = Integer.parseInt(price);
                                 Bid bid = new Bid(currBidder.getName(), itm.getName(), bidderBidPrice);
+
                                 boolean[] failCheck = this.currBidder.isBidPlacable(auc, itm, bid);
                                 boolean showErrorMsg = false;
+
+
+
                                 StringBuilder errorMessage = new StringBuilder();
                                 if(failCheck[0] == false) {
                                     errorMessage.append("The amount you have entered is less than the bid price of this item. Please try again.\n");
@@ -77,13 +82,21 @@ public class PlacingABidScreen extends Observable {
                                     showErrorMsg = true;
                                 }
                                 if(dataControl.getItemsCurrBidderHasBidsOnInAnAuction(currBidder, auc).size() > Bidder.MAX_ITEMS_WITH_BID_IN_AN_AUCTION) {
-                                    errorMessage.append("You have already reached the maximum number of items you could bid on in this auction.\n" + dataControl.getItemsCurrBidderHasBidsOnInAnAuction(currBidder, auc).size() + "Items\n");
+                                    errorMessage.append("You have already reached the maximum number of items you could bid on in this auction.\n"
+                                            + "You already have " + dataControl.getItemsCurrBidderHasBidsOnInAnAuction(currBidder, auc).size() + "items in with this auction.\n");
                                     showErrorMsg = true;
                                 }
-                                if(failCheck[2] == false) {
-                                    errorMessage.append("You have already reached the maximum number of items you could bid on in all future auctions.\n");
+                                if(failCheck[2] == false) { // TODO This needs to be fixed!
+                                //ArrayList<Bid> futureBidsList = new ArrayList<>();
+                                //for (Item item : )
+
+                                //if () {}
+                                    errorMessage.append("You have already reached the maximum number of items you could bid on in all future auctions.\n"
+                                            + "You already have " + currBidder.getBids().size() + "items in all auctions.");
                                     showErrorMsg = true;
                                 }
+
+
 
                                 if (showErrorMsg == true) {
                                     JOptionPane.showMessageDialog(itemsFrame, errorMessage, "Failed to place bid", JOptionPane.ERROR_MESSAGE);
