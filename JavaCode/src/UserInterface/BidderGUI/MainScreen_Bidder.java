@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 
-
 /**
  * This is the top level main screen that shows all the options a Bidder have.
  * @author MauriceChiu
@@ -55,7 +54,6 @@ public class MainScreen_Bidder extends Observable{
         toSend.add(userName);
         toSend.add(status);
         toSend.add(balance);
-
 
         return toSend;
     }
@@ -111,8 +109,35 @@ public class MainScreen_Bidder extends Observable{
         toSend.add(bidForAnItemInAnAuction);
         toSend.add(logout);
 
-        if (currBidder.getBids().size() >= Bidder.MAX_ITEMS_WITH_BID_IN_ALL_AUCTIONS) {
-            bidForAnItemInAnAuction.setText("<html>" + "Bid for an item in an auction" + "<br>" + "(You have reached maximum number of bids for all future auctions.)" + "</html>");
+        Map<Integer, ArrayList<Bid>> numOfBidsByAuctionID = new HashMap<>();
+
+        for (Bid bid : currBidder.getBids()) {
+            if (!numOfBidsByAuctionID.containsKey(bid.getAuctionID())) {
+                ArrayList<Bid> bids = new ArrayList<>();
+                bids.add(bid);
+                numOfBidsByAuctionID.put(bid.getAuctionID(), bids);
+            } else {
+                numOfBidsByAuctionID.get(bid.getAuctionID()).add(bid);
+                System.out.println(numOfBidsByAuctionID.get(bid.getAuctionID()));
+                System.out.println(bid.getAuctionID());
+            }
+        }
+        int bidCount = 0;
+        try {
+
+            for (Auction auc : dataControl.getAuctionsCurrBidderCanBidOn(currBidder)) {
+                if (numOfBidsByAuctionID.containsKey(auc.getAuctionID())) {
+                    bidCount += numOfBidsByAuctionID.get(auc.getAuctionID()).size();
+                }
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (bidCount >= Bidder.MAX_ITEMS_WITH_BID_IN_ALL_AUCTIONS) {
+            bidForAnItemInAnAuction.setText("<html> <center>" + "Bid for an item in an auction" + "<br>" + "(You have reached maximum number of bids for all future auctions)" + "</html>");
             bidForAnItemInAnAuction.setEnabled(false);
         }
 

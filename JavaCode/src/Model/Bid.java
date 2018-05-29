@@ -52,4 +52,8 @@ public class Bid implements Serializable {
     }
 
     public int getAuctionID() { return this.auctionId; }
+
+    public LocalDateTime getStart() { return this.start; }
+
+    public LocalDateTime getEnd() { return this.end; }
 }
