@@ -110,6 +110,10 @@ public class AllItemsInAuctionScreen extends Observable {
         return new JTable(model);
     }
 
+    public void update() throws IOException, ClassNotFoundException {
+        setupAuctions();
+    }
+
     /**
      *
      * @return
