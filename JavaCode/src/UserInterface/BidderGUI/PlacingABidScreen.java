@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
 
 /**
@@ -42,11 +44,39 @@ public class PlacingABidScreen extends Observable {
      * @throws ClassNotFoundException
      */
     private void setupAuctions() throws IOException, ClassNotFoundException {
+        int numOfBidsInAnAuction = 0;
+        boolean reachedMaxBidInAnAuction = false;
+        Map<Integer, ArrayList<Bid>> numOfBidsByAuctionID = new HashMap<>();
+
+        for (Bid bid : currBidder.getBids()) {
+            if (!numOfBidsByAuctionID.containsKey(bid.getAuctionID())) {
+                ArrayList<Bid> bids = new ArrayList<>();
+                bids.add(bid);
+                numOfBidsByAuctionID.put(bid.getAuctionID(), bids);
+            } else {
+                numOfBidsByAuctionID.get(bid.getAuctionID()).add(bid);
+            }
+        }
+
+//        for(Map.Entry<Integer, ArrayList<Bid>> entry : numOfBidsByAuctionID.entrySet()) {
+//            Integer key = entry.getKey();
+//            ArrayList<Bid> value = entry.getValue();
+//
+//            // do what you have to do here
+//            // In your case, another loop.
+//        }
+
+
         JPanel auctionFrame = new JPanel(new GridLayout(dataControl.getAuctionsCurrBidderCanBidOn(currBidder).size(), 1));
         this.placingABidScreen.add(new JLabel("\tHere are all the auctions you can bid on, please pick one to view the items: "), BorderLayout.NORTH);
         for (Auction auc : dataControl.getAuctionsCurrBidderCanBidOn(currBidder)){
             DateTimeFormatter dtformatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM);
             JButton auctionButton = new JButton(auc.getOrganization() + "\t\t(Auction Date: " + auc.getStart().format(dtformatter) + ")");
+
+            if (numOfBidsByAuctionID.get(auc.getAuctionID()).size() >= Bidder.MAX_ITEMS_WITH_BID_IN_AN_AUCTION) {
+                auctionButton.setEnabled(false);
+            }
+
             auctionButton.addActionListener((ActionEvent e1) -> {
                 JFrame itemsFrame = new JFrame("Please select an item to bid on");
                 itemsFrame.setLayout(new BorderLayout());
@@ -56,10 +86,10 @@ public class PlacingABidScreen extends Observable {
                     itemButton.addActionListener((ActionEvent e2) -> {
                         String price = JOptionPane.showInputDialog(itemsFrame,
                                 "Item Name: " + itm.getName() + "\n"
-                                + "Current Bid Price: $" + itm.getCurrentBid()  + "\n"
-                                + "Bulk Quantity: " + itm.getQuantity()  + "\n"
-                                + "Description: " + itm.getDescription() + "\n\n"
-                                + "Please Enter Your Bid Price: ",
+                                        + "Current Bid Price: $" + itm.getCurrentBid() + "\n"
+                                        + "Bulk Quantity: " + itm.getQuantity() + "\n"
+                                        + "Description: " + itm.getDescription() + "\n\n"
+                                        + "Please Enter Your Bid Price: ",
                                 "Place a bid",
                                 JOptionPane.PLAIN_MESSAGE);
                         if (price != null && price != "") {
@@ -71,37 +101,36 @@ public class PlacingABidScreen extends Observable {
                                 boolean showErrorMsg = false;
 
 
-
                                 StringBuilder errorMessage = new StringBuilder();
-                                if(failCheck[0] == false) {
+                                if (failCheck[0] == false) {
                                     errorMessage.append("The amount you have entered is less than the bid price of this item. Please try again.\n");
                                     showErrorMsg = true;
                                 }
-                                if(failCheck[1] == false) {
+                                if (failCheck[1] == false) {
                                     errorMessage.append("It has passed the auction start time, you may no longer bid on this item.\n");
                                     showErrorMsg = true;
                                 }
-                                if(dataControl.getItemsCurrBidderHasBidsOnInAnAuction(currBidder, auc).size() > Bidder.MAX_ITEMS_WITH_BID_IN_AN_AUCTION) {
+                                if (dataControl.getItemsCurrBidderHasBidsOnInAnAuction(currBidder, auc).size() > Bidder.MAX_ITEMS_WITH_BID_IN_AN_AUCTION) {
                                     errorMessage.append("You have already reached the maximum number of items you could bid on in this auction.\n"
                                             + "You already have " + dataControl.getItemsCurrBidderHasBidsOnInAnAuction(currBidder, auc).size() + "items in with this auction.\n");
                                     showErrorMsg = true;
                                 }
-                                if(failCheck[2] == false) { // TODO This needs to be fixed!
-                                //ArrayList<Bid> futureBidsList = new ArrayList<>();
-                                //for (Item item : )
+                                if (failCheck[2] == false) { // TODO This needs to be fixed!
+                                    //ArrayList<Bid> futureBidsList = new ArrayList<>();
+                                    //for (Item item : )
 
-                                //if () {}
+                                    //if () {}
                                     errorMessage.append("You have already reached the maximum number of items you could bid on in all future auctions.\n"
                                             + "You already have " + currBidder.getBids().size() + "items in all auctions.");
                                     showErrorMsg = true;
                                 }
 
 
-
                                 if (showErrorMsg == true) {
                                     JOptionPane.showMessageDialog(itemsFrame, errorMessage, "Failed to place bid", JOptionPane.ERROR_MESSAGE);
                                 } else {
                                     dataControl.placeBid(auc, itm, bid);
+                                    currBidder.payForBid(bid.getAmount());
                                     JOptionPane.showMessageDialog(itemsFrame, "You have placed your bid successfully!", "Success", JOptionPane.PLAIN_MESSAGE);
                                 }
 

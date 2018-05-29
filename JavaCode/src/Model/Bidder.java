@@ -70,6 +70,17 @@ public class Bidder extends User implements Serializable {
         return errors;
     }
 
+    public int getBalance(){
+        return this.balance;
+    }
+
+    /**
+     *
+     * @param amount the amount that the bidder has entered to bid on an item.
+     */
+    public void payForBid(int amount) {
+        this.balance -= amount;
+    }
 //    /** Checks if the bid is placeable on the auction date.
 //     * @param auction used to check the auction date
 //     * @return if the bid is placeable or not */

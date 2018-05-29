@@ -1,4 +1,7 @@
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -37,7 +40,7 @@ public class MainScreen_Bidder extends Observable{
      * @return toSend is a panel containing Bidder's account information.
      */
     private JPanel getAccountDetails() {
-        JPanel toSend = new JPanel(new GridLayout(4,1));
+        JPanel toSend = new JPanel(new GridLayout(5,1));
 
         String indent = "\t\t\t\t\t\t";
 
@@ -45,11 +48,14 @@ public class MainScreen_Bidder extends Observable{
         JLabel name = new JLabel(indent + "Name: " + currBidder.getName());
         JLabel userName = new JLabel(indent + "Username: " + currBidder.getUsername());
         JLabel status = new JLabel(indent + "Type: Bidder");
+        JLabel balance = new JLabel(indent + "(Debugging purposes only) Account Balance: $" + currBidder.getBalance());
 
         toSend.add(title);
         toSend.add(name);
         toSend.add(userName);
         toSend.add(status);
+        toSend.add(balance);
+
 
         return toSend;
     }
@@ -58,7 +64,7 @@ public class MainScreen_Bidder extends Observable{
      * @return toSend is a panel containing all the buttons/options a Bidder have. Actions they can take.
      */
     public JPanel getOptions() {
-        JPanel toSend = new JPanel(new GridLayout(6,1));
+        JPanel toSend = new JPanel(new GridLayout(6, 1));
 
         JButton viewAuctionsICanBid = new JButton("View all auctions I can bid on");
         JButton viewAllItemsInAnAuction = new JButton("View all items in an auction");
@@ -104,6 +110,10 @@ public class MainScreen_Bidder extends Observable{
         toSend.add(viewAllItemsIHaveBidOnInAllAuctions);
         toSend.add(bidForAnItemInAnAuction);
         toSend.add(logout);
+
+        if (currBidder.getBids().size() >= Bidder.MAX_ITEMS_WITH_BID_IN_ALL_AUCTIONS) {
+            bidForAnItemInAnAuction.setEnabled(false);
+        }
 
         return toSend;
     }
