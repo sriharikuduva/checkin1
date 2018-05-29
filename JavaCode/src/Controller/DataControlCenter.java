@@ -595,4 +595,28 @@ public class DataControlCenter {
         }
         return toSend;
     }
+
+    public void linkBidItemsWithAuctionID(Bidder currBidder) throws IOException, ClassNotFoundException {
+        for (Auction auction : this.deserializeAllAuctions()) {
+            for (Item item : auction.getItems()) {
+                for (Bid bid : item.getBids()) {
+                    if (currBidder.getName().equals(bid.getBidder())) {
+                        currBidder.addBid(bid);
+                    }
+                }
+            }
+        }
+
+    }
+
+    public Auction getAuctionNameByItem(String item) throws IOException, ClassNotFoundException {
+        for (Auction auction : this.deserializeAllAuctions()) {
+            for (Item items : auction.getItems()) {
+                if (item.equals(items.getName())) {
+                    return auction;
+                }
+            }
+        }
+        return null;
+    }
 }

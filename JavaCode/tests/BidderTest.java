@@ -22,6 +22,7 @@ public class BidderTest {
     private Bid greaterBid;
     private Bid lessBid;
     private Item item;
+    private int dummyAucId;
 
     //Hari Kuduva
     private LocalDateTime auctionStartDate;
@@ -46,12 +47,13 @@ public class BidderTest {
         //Hari Kuduva
         this.auctionStartDate = LocalDateTime.now();
         this.auctionEndDate = this.auctionStartDate.plusDays(1);
+        this.dummyAucId = -1;
 
         //Shannon Weston
         this.item = new Item("Sweater", 1, STARTING_BID, "Blue Polka Dot Knit Sweater", "Path/To/File.jpg");
-        this.equalBid = new Bid(this.bidder.getName(), item.getName(), EQUAL_BID);
-        this.greaterBid = new Bid(this.bidder.getName(), item.getName(), GREATER_BID);
-        this.lessBid = new Bid(this.bidder.getName(), item.getName(), LESS_BID);
+        this.equalBid = new Bid(this.bidder.getName(), item.getName(), EQUAL_BID, this.dummyAucId);
+        this.greaterBid = new Bid(this.bidder.getName(), item.getName(), GREATER_BID, this.dummyAucId);
+        this.lessBid = new Bid(this.bidder.getName(), item.getName(), LESS_BID, this.dummyAucId);
 
         //Maurice Chiu
         this.bidderWithLessBiddedItemsThanMaximum =

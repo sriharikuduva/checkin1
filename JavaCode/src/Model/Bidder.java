@@ -125,4 +125,8 @@ public class Bidder extends User implements Serializable {
     public String getUsername() {
         return this.username;
     }
+
+    public void addBid(Bid bid) {
+        this.bids.add(bid);
+    }
 }

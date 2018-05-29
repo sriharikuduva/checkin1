@@ -25,6 +25,7 @@ public class BidderFrame implements Observer{
     public BidderFrame(Bidder currBidder, DataControlCenter dataControl) throws IOException, ClassNotFoundException {
         this.currBidder = currBidder;
         this.dataControl = dataControl;
+        this.dataControl.linkBidItemsWithAuctionID(this.currBidder);
 
         this.frame = new JFrame();
         this.frame.setLayout(new BorderLayout());

@@ -116,20 +116,20 @@ public class SerializeData {
     private static void addItemsForAuction(Auction auction) {
         Scanner scanItem = new Scanner(SerializeData.class
                 .getResourceAsStream("masterItemList.txt"));
-        Scanner scanBidsOnItems = new Scanner(SerializeData.class
-                .getResourceAsStream("masterItemBiddingList.txt"));
         while (scanItem.hasNextLine()) {
             String parts[] = scanItem.nextLine().split(",");
             cleanParts(parts);
             if (auction.getAuctionID() == Integer.parseInt(parts[0])) {
                 Item temp = new Item(parts[1], Integer.parseInt(parts[2]),
                         Integer.parseInt(parts[3]), parts[4], parts[5]);
+                Scanner scanBidsOnItems = new Scanner(SerializeData.class
+                .getResourceAsStream("masterItemBiddingList.txt"));
                 while (scanBidsOnItems.hasNextLine()) {
                     String parts2[] = scanBidsOnItems.nextLine().split(",");
                     cleanParts(parts2);
                     if (auction.getAuctionID() == Integer.parseInt(parts2[1]) &&
                             temp.getName().equals(parts2[2])) {
-                        temp.addBid(new Bid(parts2[0], temp.getName(), Integer.parseInt(parts2[3])));
+                        temp.addBid(new Bid(parts2[0], temp.getName(), Integer.parseInt(parts2[3]), auction.getAuctionID()));
                     }
                 }
                 auction.addItem(temp);
