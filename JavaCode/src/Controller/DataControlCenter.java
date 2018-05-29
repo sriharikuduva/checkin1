@@ -110,12 +110,8 @@ public class DataControlCenter {
 
     /** Finds the next available auction id when creating auctions.
      * @return next available auction id */
-    public int findNextAvailableAuctionId() {
-        int max = Integer.MIN_VALUE;
-        for (Auction auction : this.addedAuctions) {
-            max = (auction.getAuctionID() > max) ? auction.getAuctionID() : max;
-        }
-        return max + 1;
+    public int findNextAvailableAuctionId() throws IOException, ClassNotFoundException {
+        return this.deserializeAllAuctions().size() + this.addedAuctions.size() + 1;
     }
 
     /** Gets the next available auction id.
@@ -336,7 +332,6 @@ public class DataControlCenter {
         for (Auction a : this.addedAuctions) {
             toSerialize.add(a);
         }
-        
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(MAURICE_SPECIAL_STRING + "./JavaCode/Assets/auctions.bin"));
         oos.writeObject(toSerialize);
         this.addedAuctions.clear();
