@@ -97,7 +97,7 @@ public class BidderTest {
 
     @Test
     public void allItemOnSpecificAuction_AuctionDateIsCurrent() {
-        
+
     }
 
 

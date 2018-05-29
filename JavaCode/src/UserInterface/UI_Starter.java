@@ -41,7 +41,8 @@ public class UI_Starter {
 		//end JOptionPane login
     }
     
-    private static void verifyAndLaunchSpecificUser(String usertype, String username) throws IOException, ClassNotFoundException {
+    private static void verifyAndLaunchSpecificUser(String usertype, String username)
+			throws IOException, ClassNotFoundException {
     	switch (usertype) {
     	case "Bidder":
     		if(dataControl.isBidderValid(username)) {

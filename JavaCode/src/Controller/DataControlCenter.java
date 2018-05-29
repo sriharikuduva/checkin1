@@ -22,10 +22,10 @@ public class DataControlCenter {
     private HashSet<Auction> updatedAuctions;
     private HashSet<Auction> cancelledAuctions;
     private HashSet<Auction> biddedAuctions;
+    private HashSet<Item> itemUpdates;
     private Item updateItem;
     private int nextAvailableAuctionId;
     private int maxAuctionAllowed;
-
 
     private static final String MAURICE_SPECIAL_STRING = "";
 
@@ -433,7 +433,6 @@ public class DataControlCenter {
 
     /** Logs the bidder out and serializes the data. */
     public void logOutBidder(Bidder currentBidder) throws IOException, ClassNotFoundException {
-        // "../JavaCode/Assets/auctions.bin"
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(MAURICE_SPECIAL_STRING + "./JavaCode/Assets/auctions.bin"));
 
         HashSet<Auction> toSerialize = new HashSet<>();
@@ -485,21 +484,12 @@ public class DataControlCenter {
     /**
      *
      * @param auction
-     * @param itemName
+     * @param item
      * @param bid
      */
     public void placeBid(Auction auction, Item item, Bid bid) {
         item.addBid(bid);
         this.updateItem = item;
-//        for (Item item : auction.getItems()) {
-//            if (itemName.equals(item.getName())){
-//                item.addBid(bid);
-//                System.out.println(item.getCurrentBid());
-//            }
-//        }
-
-//        this.biddedAuctions.add(auction);
-
     }
 
     public boolean isAdminValid(String username) throws IOException, ClassNotFoundException{
