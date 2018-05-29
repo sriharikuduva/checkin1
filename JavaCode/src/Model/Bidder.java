@@ -8,7 +8,7 @@ import java.util.*;
  */
 public class Bidder extends User implements Serializable {
     /** List of bids the bidder has. **/
-    private ArrayList<Bid> bids;
+    private ArrayList<Bid> bids; // bid1 current bid 2 future  12 bid
     /** Bidder's name. **/
     private String name;
     /** Bidder's bank balance. **/

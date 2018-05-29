@@ -4,10 +4,7 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Observable;
+import java.util.*;
 
 /**
  * This Panel displays the items of an auction chosen by the Bidder.
@@ -44,8 +41,8 @@ public class PlacingABidScreen extends Observable {
      * @throws ClassNotFoundException
      */
     private void setupAuctions() throws IOException, ClassNotFoundException {
-        int numOfBidsInAnAuction = 0;
-        boolean reachedMaxBidInAnAuction = false;
+        //int numOfBidsInAnAuction = 0;
+        //boolean reachedMaxBidInAnAuction = false;
         Map<Integer, ArrayList<Bid>> numOfBidsByAuctionID = new HashMap<>();
 
         for (Bid bid : currBidder.getBids()) {
@@ -55,6 +52,8 @@ public class PlacingABidScreen extends Observable {
                 numOfBidsByAuctionID.put(bid.getAuctionID(), bids);
             } else {
                 numOfBidsByAuctionID.get(bid.getAuctionID()).add(bid);
+                System.out.println(numOfBidsByAuctionID.get(bid.getAuctionID()));
+                System.out.println(bid.getAuctionID());
             }
         }
 
@@ -72,9 +71,11 @@ public class PlacingABidScreen extends Observable {
         for (Auction auc : dataControl.getAuctionsCurrBidderCanBidOn(currBidder)){
             DateTimeFormatter dtformatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM);
             JButton auctionButton = new JButton(auc.getOrganization() + "\t\t(Auction Date: " + auc.getStart().format(dtformatter) + ")");
-
-            if (numOfBidsByAuctionID.get(auc.getAuctionID()).size() >= Bidder.MAX_ITEMS_WITH_BID_IN_AN_AUCTION) {
-                auctionButton.setEnabled(false);
+            System.out.println(auc.getAuctionID());
+            if (numOfBidsByAuctionID.containsKey(auc.getAuctionID())) {
+                if (numOfBidsByAuctionID.get(auc.getAuctionID()).size() >= Bidder.MAX_ITEMS_WITH_BID_IN_AN_AUCTION) {
+                    auctionButton.setEnabled(false);
+                }
             }
 
             auctionButton.addActionListener((ActionEvent e1) -> {

@@ -14,10 +14,10 @@ public class SerializeData {
     /** Private constructor to prevent instantiation. **/
     private SerializeData() { }
 
-    private static final String MAURICE_CONSTANT = "./JavaCode/Assets/";
+    private static final String MAURICE_CONSTANT = "/JavaCode/Assets/";
     // When Maurice runs constant should be "./"
     // When Other people run constant should be "./JavaCode/Assets/"
-    // MAURICE_CONSTANT +
+    // ./JavaCode/Assets/
 
     public static void main(String... args) throws IOException, ClassNotFoundException {
         /* NOTICE::: ONLY RUN THIS WHEN BIDDERS.BIN AND NPCONTACT.BIN ARE NOT IN ASSETS FOLDER

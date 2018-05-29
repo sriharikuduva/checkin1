@@ -112,6 +112,7 @@ public class MainScreen_Bidder extends Observable{
         toSend.add(logout);
 
         if (currBidder.getBids().size() >= Bidder.MAX_ITEMS_WITH_BID_IN_ALL_AUCTIONS) {
+            bidForAnItemInAnAuction.setText("<html>" + "Bid for an item in an auction" + "<br>" + "(You have reached maximum number of bids for all future auctions.)" + "</html>");
             bidForAnItemInAnAuction.setEnabled(false);
         }
 
