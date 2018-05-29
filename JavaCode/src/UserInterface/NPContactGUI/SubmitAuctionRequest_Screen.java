@@ -15,7 +15,6 @@ public class SubmitAuctionRequest_Screen extends Observable implements ActionLis
     private DataControlCenter dataControl;
     private NPContact currContact;
 
-
     //These values need to be adjusted per company policy.
     private static final int MAX_SCHEDULE_OUT_DAYS = 60;
     private static final int MIN_SCHEDULE_OUT_DAYS = 14;

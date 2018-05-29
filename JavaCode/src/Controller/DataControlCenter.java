@@ -76,8 +76,10 @@ public class DataControlCenter {
         return this.maxAuctionAllowed;
     }
 
-    public void setMaxAuctionAllowed (int max) {
+    public boolean setMaxAuctionAllowed (int max) {
+        if (max < 0) { return false; }
         this.maxAuctionAllowed = max;
+        return true;
     }
 
     public int getActiveAuctionNumber () throws IOException, ClassNotFoundException {
@@ -579,6 +581,7 @@ public class DataControlCenter {
     public HashSet<Auction> getAuctionsWithBounds(LocalDateTime startTime, LocalDateTime endTime)
             throws IOException, ClassNotFoundException {
         HashSet<Auction> toSend = new HashSet<>();
+        if (endTime.isBefore(startTime)) {return  null;}
         for (Auction auction : this.deserializeAllAuctions()) {
             boolean isStartInclusiveOrBeyond = auction.getStart().equals(startTime)
                                                 || auction.getStart().isAfter(startTime);
