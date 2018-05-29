@@ -10,14 +10,14 @@ import javax.swing.JOptionPane;
 public class UI_Starter implements Observer {
     /** Main Data Control. **/
     private static DataControlCenter dataControl;
-    private static LoginScreen loginScreen;
+    //private static LoginScreen loginScreen;
 
     /** Private constructor to prevent instantiation.*/
     private UI_Starter() { }
 
     public static void main(String... args) throws IOException, ClassNotFoundException {
         dataControl = new DataControlCenter();
-        loginScreen = new LoginScreen();
+        //loginScreen = new LoginScreen();
         //SerializeData.main();
         login();
     }
