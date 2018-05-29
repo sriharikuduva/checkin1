@@ -100,6 +100,7 @@ public class PlacingABidScreen extends Observable {
                                     JOptionPane.showMessageDialog(itemsFrame, errorMessage, "Failed to place bid", JOptionPane.ERROR_MESSAGE);
                                 } else {
                                     dataControl.placeBid(auc, itm, bid);
+                                    currBidder.addBid(bid);
                                     currBidder.payForBid(bid.getAmount());
                                     JOptionPane.showMessageDialog(itemsFrame, "You have placed your bid successfully!", "Success", JOptionPane.PLAIN_MESSAGE);
                                     System.out.println("test");

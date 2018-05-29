@@ -27,7 +27,7 @@ public class DataControlCenter {
     private int maxAuctionAllowed;
 
 
-    private static final String MAURICE_SPECIAL_STRING = ".";
+    private static final String MAURICE_SPECIAL_STRING = "";
 
     // Maurice's special string should be "." for maurice, "" for others
 
@@ -39,7 +39,7 @@ public class DataControlCenter {
         this.maxAuctionAllowed = this.deserializeMaxUpcomingAucAllowed();
         this.nextAvailableAuctionId = findNextAvailableAuctionId();
         this.biddedAuctions = new HashSet<>();
-        this.updateItem = new Item();
+        this.updateItem = null;
     }
 
     public HashSet<Auction> getPastAuctions() throws IOException, ClassNotFoundException {
@@ -264,6 +264,7 @@ public class DataControlCenter {
         		//}
         	}
         }
+
         return toSend;
     }
 
@@ -278,38 +279,31 @@ public class DataControlCenter {
         for(Auction a : this.deserializeAllAuctions()) {
             toSend.add(a);
         }
-        Auction old = this.getAuctionById(this.updateItem.getBidWithHighestBid().getAuctionID());
-        Auction toReplace = new Auction(old);
+        if (this.updateItem != null) {
+            Auction old = this.getAuctionById(this.updateItem.getBidWithHighestBid().getAuctionID());
+            Auction toReplace = new Auction(old);
 
-        toReplace.addItem(this.updateItem);
+            toReplace.addItem(this.updateItem);
 
-        HashSet<Auction> temp = new HashSet<>();
-        for (Item item : old.getItems()) {
-            if (!item.getName().equals(updateItem.getName())){
-                toReplace.addItem(item);
+            HashSet<Auction> temp = new HashSet<>();
+            for (Item item : old.getItems()) {
+                if (!item.getName().equals(updateItem.getName())){
+                    toReplace.addItem(item);
+                }
             }
-        }
 
-        HashSet<Auction> newSend = new HashSet<>();
-        for (Auction auction : this.deserializeAllAuctions()) {
-            if (auction.getAuctionID() == toReplace.getAuctionID()) {
-                newSend.add(toReplace);
-            } else {
-                newSend.add(auction);
+            HashSet<Auction> newSend = new HashSet<>();
+            for (Auction auction : this.deserializeAllAuctions()) {
+                if (auction.getAuctionID() == toReplace.getAuctionID()) {
+                    newSend.add(toReplace);
+                } else {
+                    newSend.add(auction);
+                }
             }
+            return newSend;
+
         }
-
-
-//        for (Auction auc : toSend) {
-//            for (Item itm : auc.getItems()) {
-//                if (itm.getName().equals(this.updateItem.getName())){
-//
-//                }
-//            }
-//
-//        }
-
-        return newSend;
+        return toSend;
     }
 
     /** Gets a set of auctions that were submitted as requests by NPContact

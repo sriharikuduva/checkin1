@@ -14,7 +14,7 @@ public class SerializeData {
     /** Private constructor to prevent instantiation. **/
     private SerializeData() { }
 
-    private static final String MAURICE_CONSTANT = "./";
+    private static final String MAURICE_CONSTANT = "./JavaCode/Assets/";
     // When Maurice runs constant should be "./"
     // When Other people run constant should be "./JavaCode/Assets/"
     // ./JavaCode/Assets/
