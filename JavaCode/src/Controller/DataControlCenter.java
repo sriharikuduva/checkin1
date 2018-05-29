@@ -145,6 +145,8 @@ public class DataControlCenter {
      * @throws ClassNotFoundException exception risk
      */
     private HashSet<Bidder> deserializeAllBidders() throws IOException, ClassNotFoundException {
+        HashSet<Bidder> bidderSet = (HashSet<Bidder>) new ObjectInputStream(getClass().
+                getResourceAsStream("bidders.bin")).readObject();
         return (HashSet<Bidder>) new ObjectInputStream(getClass().
                 getResourceAsStream("bidders.bin")).readObject();
     }
@@ -155,6 +157,8 @@ public class DataControlCenter {
      * @throws ClassNotFoundException exception risk
      */
     public HashSet<Auction> deserializeAllAuctions() throws IOException, ClassNotFoundException {
+        HashSet<Auction> auctionSet = (HashSet<Auction>) new ObjectInputStream(getClass()
+                .getResourceAsStream("auctions.bin")).readObject();
         return (HashSet<Auction>) new ObjectInputStream(getClass()
                 .getResourceAsStream("auctions.bin")).readObject();
     }
@@ -435,29 +439,32 @@ public class DataControlCenter {
     public void logOutBidder(Bidder currentBidder) throws IOException, ClassNotFoundException {
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(MAURICE_SPECIAL_STRING + "./JavaCode/Assets/auctions.bin"));
 
-        HashSet<Auction> toSerialize = new HashSet<>();
-        for (Auction replace : this.updatedAuctions) {
-            for (Auction original : this.deserializeAllAuctions()) {
-                if (replace.getAuctionID() == original.getAuctionID()) {
-                    toSerialize.add(replace);
-                }
-            }
-        }
-        for (Auction original : this.deserializeAllAuctions()) {
-            if (!toSerialize.contains(original)) {
-                toSerialize.add(original);
-            }
-        }
+        //HashSet<Auction> toSerialize = new HashSet<>();
+        HashSet<Auction> toSerialize = this.getAllAuctions();
 
-        HashSet<Bidder> toSerializeBidders = new HashSet<>();
-        toSerializeBidders.add(currentBidder);
+//        for (Auction replace : this.updatedAuctions) {
+//            for (Auction original : this.deserializeAllAuctions()) {
+//                if (replace.getAuctionID() == original.getAuctionID()) {
+//                    toSerialize.add(replace);
+//                }
+//            }
+//        }
+//        for (Auction original : this.deserializeAllAuctions()) {
+//            if (!toSerialize.contains(original)) {
+//                toSerialize.add(original);
+//            }
+//        }
+
+        HashSet<Bidder> toSerializeBidders = this.deserializeAllBidders();
+        //toSerializeBidders.add(currentBidder);
 
 
-        for (Bidder bidder : this.deserializeAllBidders()) {
-            if (!toSerializeBidders.contains(currentBidder)) {
-                toSerializeBidders.add(bidder);
-            }
-        }
+//        for (Bidder bidder : this.deserializeAllBidders()) {
+//            if (!bidder.getName().equals(currentBidder.getName())){
+//            //if (!toSerializeBidders.contains(currentBidder)) {
+//                toSerializeBidders.add(bidder);
+//            }
+//        }
 
         this.updatedAuctions.clear();
         oos.writeObject(toSerialize);

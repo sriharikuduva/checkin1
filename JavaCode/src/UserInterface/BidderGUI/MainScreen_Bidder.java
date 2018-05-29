@@ -47,13 +47,13 @@ public class MainScreen_Bidder extends Observable{
         JLabel name = new JLabel(indent + "Name: " + currBidder.getName());
         JLabel userName = new JLabel(indent + "Username: " + currBidder.getUsername());
         JLabel status = new JLabel(indent + "Type: Bidder");
-        JLabel balance = new JLabel(indent + "(Debugging purposes only) Account Balance: $" + currBidder.getBalance());
+        //JLabel balance = new JLabel(indent + "(Debugging purposes only) Account Balance: $" + currBidder.getBalance());
 
         toSend.add(title);
         toSend.add(name);
         toSend.add(userName);
         toSend.add(status);
-        toSend.add(balance);
+        //toSend.add(balance);
 
         return toSend;
     }

@@ -40,7 +40,7 @@ public class AllItemsInAuctionScreen extends Observable {
      * @throws ClassNotFoundException
      */
     private void setupAuctions() throws IOException, ClassNotFoundException {
-        JPanel auctionFrame = new JPanel(new GridLayout(dataControl.getAuctionsCurrBidderCanBidOn(currBidder).size(), 1));
+        JPanel auctionFrame = new JPanel(new GridLayout(dataControl.getAllAuctions().size(), 1));
         this.itemsInAuctionScreen.add(new JLabel("\tHere are all the auctions, please pick one to view the items: "), BorderLayout.NORTH);
         for (Auction auc : dataControl.getAllAuctions()){
             DateTimeFormatter dtformatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM);

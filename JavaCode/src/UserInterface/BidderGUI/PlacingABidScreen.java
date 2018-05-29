@@ -56,6 +56,13 @@ public class PlacingABidScreen extends Observable {
 
         JPanel auctionFrame = new JPanel(new GridLayout(dataControl.getAuctionsCurrBidderCanBidOn(currBidder).size(), 1));
         this.placingABidScreen.add(new JLabel("\tHere are all the auctions you can bid on, please pick one to view the items: "), BorderLayout.NORTH);
+        //HashSet<Auction> auctionsCurrBidderHasBidsOn = new HashSet<>();
+        //for (Bid bid : currBidder.getBids()){
+        //    auctionsCurrBidderHasBidsOn.add(dataControl.getAuctionById(bid.getAuctionID()));
+        //}
+
+        //for (Auction auc : auctionsCurrBidderHasBidsOn) {
+
         for (Auction auc : dataControl.getAuctionsCurrBidderCanBidOn(currBidder)){
             DateTimeFormatter dtformatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM);
             JButton auctionButton = new JButton(auc.getOrganization() + "\t\t(Auction Date: " + auc.getStart().format(dtformatter) + ")");

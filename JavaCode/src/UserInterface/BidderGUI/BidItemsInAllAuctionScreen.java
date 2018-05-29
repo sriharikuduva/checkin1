@@ -61,7 +61,13 @@ public class BidItemsInAllAuctionScreen extends Observable {
         final Class[] columnClass = new Class[] {String.class, String.class, String.class};
         Object[][] itemList = new Object[currBidder.getBids().size()][NUM_OF_PIECES_OF_INFO];
         int counter = 0;
+
+        HashSet<Bid> bidSet = new HashSet<>();
         for (Bid bid : currBidder.getBids()) {
+            bidSet.add(bid);
+        }
+
+        for (Bid bid : bidSet) {
             System.out.println(bid.getItem());
             itemList[counter][NUM_OF_PIECES_OF_INFO-3] = bid.getItem();
             itemList[counter][NUM_OF_PIECES_OF_INFO-2] = "$" + bid.getAmount();

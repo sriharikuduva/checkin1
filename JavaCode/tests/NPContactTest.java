@@ -16,8 +16,8 @@ public class NPContactTest {
     private int setNumberOfDayTwo;
     private int setNumberOfDayThree;
 
-    private ArrayList<Auction> auctions, auctionsOne, auctionstwo;
-    private Auction auction, auctiontwo, auctionThree;
+    private ArrayList<Auction> oneAuctions, twoAuctions, threeAuctions;
+    private Auction auctionOne, auctionTwo, auctionThree;
     private DataControlCenter dataControlCenter;
 
 
@@ -27,24 +27,30 @@ public class NPContactTest {
         dataControlCenter = new DataControlCenter();
         //No auction can be scheduled more than a set number of days from the current date, default of 60 days.
         //No auction can be scheduled less than a set number of days from the current date, default of 14.
-        setNumberOfDays = 55;
-        setNumberOfDaysTwo = 60;
-        setNumberOfDaysThree = 61;
-        setNumberOfDay = 15;
-        setNumberOfDayTwo = 14;
-        setNumberOfDayThree = 10;
-        auctions = new ArrayList<Auction>();
-        auctionsOne = new ArrayList<Auction>();
-        auctionstwo = new ArrayList<Auction>();
-        auction = new Auction("American Cancer Society", LocalDateTime.now().plusDays(1),
-                LocalDateTime.now().plusDays(20),  1);
-        auctiontwo = new Auction("American Red Cross", LocalDateTime.now().plusDays(1),
-                LocalDateTime.now().plusDays(30),  2);
-        auctionThree = new Auction("Outlook on India", LocalDateTime.now().plusDays(1),
-                LocalDateTime.now().plusDays(15),  2);
-        auctions.add(auction); auctions.add(auctiontwo); auctions.add(auctionThree);
-        auctionsOne.add(auction); auctionsOne.add(auctiontwo);
-        auctionstwo.add(auction);
+        setNumberOfDays = 55; // except true
+        setNumberOfDaysTwo = 60; // except true
+        setNumberOfDaysThree = 61; // expect false
+
+        setNumberOfDay = 15; // except true
+        setNumberOfDayTwo = 14; // except true
+        setNumberOfDayThree = 10; // except false
+
+        oneAuctions = new ArrayList<Auction>();
+        twoAuctions = new ArrayList<Auction>();
+        threeAuctions = new ArrayList<Auction>();
+
+        auctionOne = new Auction("American Cancer Society", LocalDateTime.now(),
+                LocalDateTime.now().plusDays(1),  1);
+        auctionTwo = new Auction("American Red Cross", LocalDateTime.now(),
+                LocalDateTime.now().plusDays(1),  2);
+        auctionThree = new Auction("Outlook on India", LocalDateTime.now(),
+                LocalDateTime.now().plusDays(1),  3);
+
+        threeAuctions.add(auctionOne); threeAuctions.add(auctionTwo); threeAuctions.add(auctionThree);
+
+        twoAuctions.add(auctionOne); twoAuctions.add(auctionTwo);
+
+        oneAuctions.add(auctionOne);
     }
 
     @Test
@@ -79,12 +85,12 @@ public class NPContactTest {
 
     @Test
     public void isAuctionAvailableForSubmissionRequest_forSetOfAuctionnumbers_fail() {
-        assertFalse(dataControlCenter.isAuctionAvailableForSubmissionRequest(LocalDateTime.now(), auctionstwo));
+        assertFalse(dataControlCenter.isAuctionAvailableForSubmissionRequest(LocalDateTime.now(), twoAuctions));
     }
 
     @Test
     public void isAuctionAvailableForSubmissionRequest_forSetOfAuctionnumbers_false() {
-        assertFalse(dataControlCenter.isAuctionAvailableForSubmissionRequest(LocalDateTime.now(), auctions));
+        assertFalse(dataControlCenter.isAuctionAvailableForSubmissionRequest(LocalDateTime.now(), oneAuctions));
     }
 
 

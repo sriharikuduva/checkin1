@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /** Represents a bid.
  * @author Hari G Kuduva
@@ -56,4 +57,14 @@ public class Bid implements Serializable {
     public LocalDateTime getStart() { return this.start; }
 
     public LocalDateTime getEnd() { return this.end; }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.itemName == ((Bid) obj).itemName;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.amount;
+    }
 }

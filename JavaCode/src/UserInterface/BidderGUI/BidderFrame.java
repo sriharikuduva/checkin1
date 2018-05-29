@@ -1,6 +1,7 @@
 import sun.applet.Main;
 
 import javax.swing.*;
+import java.util.HashSet;
 import java.util.Observer;
 import java.awt.*;
 import javax.swing.*;
@@ -21,11 +22,14 @@ public class BidderFrame implements Observer{
     private BidItemsInAnAuctionScreen bidItemsInAnAuctionScreen;
     private BidItemsInAllAuctionScreen bidItemsInAllAuctionScreen;
     private PlacingABidScreen placingABidScreen;
+    public static HashSet<Auction> auctionsCurrBidderCanBidOn;
 
     public BidderFrame(Bidder currBidder, DataControlCenter dataControl) throws IOException, ClassNotFoundException {
         this.currBidder = currBidder;
         this.dataControl = dataControl;
         this.dataControl.linkBidItemsWithAuctionID(this.currBidder);
+
+        auctionsCurrBidderCanBidOn = dataControl.getAuctionsCurrBidderCanBidOn(currBidder);
 
         this.frame = new JFrame();
         this.frame.setLayout(new BorderLayout());
