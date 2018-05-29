@@ -427,7 +427,7 @@ public class DataControlCenter {
     }
 
     /** Logs the bidder out and serializes the data. */
-    public void logOutBidder() throws IOException, ClassNotFoundException {
+    public void logOutBidder(Bidder currentBidder) throws IOException, ClassNotFoundException {
         // "../JavaCode/Assets/auctions.bin"
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(MAURICE_SPECIAL_STRING + "./JavaCode/Assets/auctions.bin"));
 
@@ -444,11 +444,22 @@ public class DataControlCenter {
                 toSerialize.add(original);
             }
         }
-        
 
+        HashSet<Bidder> toSerializeBidders = new HashSet<>();
+        toSerializeBidders.add(currentBidder);
+
+
+        for (Bidder bidder : this.deserializeAllBidders()) {
+            if (!toSerializeBidders.contains(currentBidder)) {
+                toSerializeBidders.add(bidder);
+            }
+        }
 
         this.updatedAuctions.clear();
         oos.writeObject(toSerialize);
+
+        oos = new ObjectOutputStream(new FileOutputStream(MAURICE_SPECIAL_STRING + "./JavaCode/Assets/bidders.bin"));
+        oos.writeObject(toSerializeBidders);
     }
 
     public void logOutAdmin() throws IOException, ClassNotFoundException {

@@ -93,7 +93,7 @@ public class MainScreen_Bidder extends Observable{
         });
         logout.addActionListener((ActionEvent e) -> {
             try {
-                this.dataControl.logOutBidder();
+                this.dataControl.logOutBidder(currBidder);
                 //this.dataControl.logOutNP();
             } catch (ClassNotFoundException e1) {
                 e1.printStackTrace();
