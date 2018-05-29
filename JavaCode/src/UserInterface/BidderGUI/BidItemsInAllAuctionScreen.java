@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Observable;
 
@@ -68,6 +69,15 @@ public class BidItemsInAllAuctionScreen extends Observable {
         //    }
         //}
 
+        for (Auction a : this.dataControl.getAllAuctions()) {
+            for (Item item : a.getItems()) {
+                if (item.getName().equals(currBidder.getName())) {
+                    itemsList.add(item);
+                }
+            }
+        }
+
+
         //String[] columns = new String[] {"Item Name", "Bulk Quantity", "Bid Price", "Description", "Image"};
         String[] columns = new String[] {"Item Name", "Your Bid Price"};
 
@@ -78,14 +88,14 @@ public class BidItemsInAllAuctionScreen extends Observable {
         Object[][] itemList = new Object[currBidder.getBids().size()][NUM_OF_PIECES_OF_INFO];
 
         int counter = 0;
-        //for (Item item : itemsList) {
-        //    itemList[counter][NUM_OF_PIECES_OF_INFO-5] = item.getName();
-        //    itemList[counter][NUM_OF_PIECES_OF_INFO-4] = item.getQuantity();
-        //    itemList[counter][NUM_OF_PIECES_OF_INFO-3] = "$" + item.getCurrentBid();
-        //    itemList[counter][NUM_OF_PIECES_OF_INFO-2] = item.getDescription();
-        //    itemList[counter][NUM_OF_PIECES_OF_INFO-1] = item.getImagePath();
-        //    counter++;
-        //}
+        for (Item item : itemsList) {
+            itemList[counter][NUM_OF_PIECES_OF_INFO-5] = item.getName();
+            itemList[counter][NUM_OF_PIECES_OF_INFO-4] = item.getQuantity();
+            itemList[counter][NUM_OF_PIECES_OF_INFO-3] = "$" + item.getCurrentBid();
+            itemList[counter][NUM_OF_PIECES_OF_INFO-2] = item.getDescription();
+            itemList[counter][NUM_OF_PIECES_OF_INFO-1] = item.getImagePath();
+            counter++;
+        }
         for (Bid bid : currBidder.getBids()) {
             itemList[counter][NUM_OF_PIECES_OF_INFO-2] = bid.getItem();
             itemList[counter][NUM_OF_PIECES_OF_INFO-1] = "$" + bid.getAmount();
