@@ -1,10 +1,10 @@
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.io.IOException;
 import java.time.*;
 import java.util.*;
+
 
 /**
  * Creates an auction from user input and adds it to the master list of auctions.
@@ -192,5 +192,8 @@ public class AuctionForm {
     	auction.setEnd(end);
 
     	dataControl.addAuction(auction);
+
+
     }
+
 }

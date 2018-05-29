@@ -227,5 +227,7 @@ public class SubmitAuctionRequest_Screen extends Observable implements ActionLis
         auction.setEnd(end);
 
         dataControl.addAuction(auction);
+
+        new AddItemScreen(auction);
     }
 }
