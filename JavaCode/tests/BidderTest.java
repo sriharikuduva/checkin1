@@ -31,9 +31,6 @@ public class BidderTest {
         this.future = new Auction();
         this.someBid = new Bid("Maurice", "Baisal's Darkest Dirtiest Secret",
                 100, -1, LocalDateTime.now(), LocalDateTime.now().plusDays(1));
-
-        /*String bidderName, String itemName, int amount, int auctionId,
-               LocalDateTime start, LocalDateTime end*/
     }
 
     @Test
@@ -88,6 +85,7 @@ public class BidderTest {
         Auction date is the current day and I have already bid on more than one item (Pass)
         Auction date in in the future and I have already bid on more than one item (Pass) */
 
+
     @Test
     public void allItemOnSpecifcAuction_AuctionDateIsPastAndAtLeastOneBid_True() {
         this.someItem.addBid(this.someBid);
@@ -96,11 +94,32 @@ public class BidderTest {
     }
 
     @Test
-    public void allItemOnSpecificAuction_AuctionDateIsCurrent() {
-
+    public void allItemOnSpecificAuction_AuctionDateIsCurrent_True() {
+        this.someItem.addBid(this.someBid);
+        this.current.addItem(this.someItem);
+        assertTrue(this.current.getItems().size() > 0);
     }
 
+    @Test
+    public void allItemOnSpecificAuction_AuctionDateIsFuture_True() {
+        this.someItem.addBid(this.someBid);
+        this.future.addItem(this.someItem);
+        assertTrue(this.future.getItems().size() > 0);
+    }
 
+    @Test
+    public void allItemOnAllAuction_NoBidsPlacedOnAnyAuction_True() {
+        int allItemCount = this.past.getItems().size() + this.current.getItems().size() +
+                this.future.getItems().size();
+        assertTrue(allItemCount == 0);
+    }
 
-
+    @Test
+    public void allItemOnAllAuction_BidPlacedOnlyInPastOrFuture_True() {
+        this.someItem.addBid(this.someBid);
+        this.future.addItem(this.someItem);
+        int allItemCount = this.past.getItems().size() + this.current.getItems().size() +
+                this.future.getItems().size();
+        assertTrue(allItemCount == 1);
+    }
 }
