@@ -86,7 +86,7 @@ public class NPContact_MainScreen extends Observable {
 
         logout.addActionListener((ActionEvent e) -> {
             try {
-                this.dataControl.logOutAdmin();
+                this.dataControl.logOutNP();
             } catch (IOException | ClassNotFoundException e1) { e1.printStackTrace(); }
             System.exit(0);
         });

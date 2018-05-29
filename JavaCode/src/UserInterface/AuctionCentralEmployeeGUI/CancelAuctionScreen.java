@@ -77,23 +77,29 @@ public class CancelAuctionScreen extends Observable {
     }
 
     private JTable getAuctionTable(HashSet<Auction> auctions) {
-        String[] columns = new String[] {"Cancel?", "ID", "Auction Name", "Start Date", "End Date"};
+        String[] columns = new String[] {"Cancel?", "Number of Bids", "ID", "Auction Name", "Start Date", "End Date"};
         final Class[] columnClass = new Class[] {
-                Boolean.class, String.class, String.class, String.class, String.class
+                Boolean.class, String.class, String.class, String.class, String.class, String.class
         };
-        Object[][] auctionTiming = new Object[auctions.size()][5];
+        Object[][] auctionTiming = new Object[auctions.size()][6];
         int counter = 0;
         for (Auction auction : this.dataControl.sortAuctionSet(auctions)) {
             auctionTiming[counter][0] = false;
-            auctionTiming[counter][1] = auction.getAuctionID();
-            auctionTiming[counter][2] = auction.getOrganization();
-            auctionTiming[counter][3] = auction.getStart().toString();
-            auctionTiming[counter][4] = auction.getEnd().toString();
+            int bidCount = 0;
+            for (Item item : auction.getItems()) {
+                bidCount += item.getBids().size();
+            }
+            auctionTiming[counter][1] = "" + bidCount;
+            auctionTiming[counter][2] = auction.getAuctionID();
+            auctionTiming[counter][3] = auction.getOrganization();
+            auctionTiming[counter][4] = auction.getStart().toString();
+            auctionTiming[counter][5] = auction.getEnd().toString();
             counter++;
         }
         DefaultTableModel model = new DefaultTableModel(auctionTiming, columns) {
             @Override
             public boolean isCellEditable(int row, int column) {
+
                 return true;
             }
             @Override

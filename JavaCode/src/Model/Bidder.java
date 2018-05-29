@@ -87,6 +87,7 @@ public class Bidder extends User implements Serializable {
         return this.bids;
     }
 
+
     @Override
     public String toString() {
         //For debugging
