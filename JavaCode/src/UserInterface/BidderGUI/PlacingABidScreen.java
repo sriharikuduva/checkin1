@@ -86,7 +86,7 @@ public class PlacingABidScreen extends Observable {
                                 }
 
                                 if (showErrorMsg == true) {
-                                    JOptionPane.showMessageDialog(itemsFrame, errorMessage, "Fail", JOptionPane.ERROR_MESSAGE);
+                                    JOptionPane.showMessageDialog(itemsFrame, errorMessage, "Failed to place bid", JOptionPane.ERROR_MESSAGE);
                                 } else {
                                     dataControl.placeBid(auc, itm, bid);
                                     JOptionPane.showMessageDialog(itemsFrame, "You have placed your bid successfully!", "Success", JOptionPane.PLAIN_MESSAGE);

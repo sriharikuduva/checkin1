@@ -1,6 +1,0 @@
-American Cancer Society, 2017-03-09 00:00, 2019-04-12 00:00, 1
-American Cancer Society, 2018-03-09 00:00, 2018-04-12 12:00, 2
-American Red Cross, 2016-05-19 00:00, 2019-05-06 00:00, 3
-American Red Cross, 2018-06-15 00:00, 2018-07-06 16:00, 4
-Outlook on India, 2015-03-23 00:00, 2020-01-12 00:00, 5
-Isha Foundation, 2019-03-23 00:00, 2020-01-12 00:00, 6
