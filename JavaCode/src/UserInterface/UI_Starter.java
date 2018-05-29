@@ -42,7 +42,6 @@ public class UI_Starter {
     		}
     	case "Non-Profit Contact":
     		if(dataControl.isNonProfitValid(username)) {
-    			//new NPConsole(dataControl.getNPContactByUsername(username), dataControl).invokeMenu();
 				new NPContactFrame(dataControl.getNPContactByUsername(username), dataControl);
     		}
     	case "Auction Central Employee":
