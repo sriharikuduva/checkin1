@@ -80,14 +80,6 @@ public class DataControlCenter {
         return true;
     }
 
-    public int getActiveAuctionNumber () throws IOException, ClassNotFoundException {
-        int toSend = 0;
-        for (Auction auction : this.deserializeAllAuctions()) {
-            toSend+= (auction.getEnd().isAfter(LocalDateTime.now())) ? 1 : 0;
-        }
-        return toSend;
-    }
-
     public HashSet<Auction> getCancelAbleAuctions() throws IOException, ClassNotFoundException {
         HashSet<Auction> toSend = this.getActiveAuctions();
         for (Auction auction : this.getFutureAuctions()) {
@@ -433,7 +425,7 @@ public class DataControlCenter {
     }
 
     /** Logs the bidder out and serializes the data. */
-    public void logOutBidder() throws IOException, ClassNotFoundException {
+    public void logOutBidder(Bidder currentBidder) throws IOException, ClassNotFoundException {
         // "../JavaCode/Assets/auctions.bin"
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(MAURICE_SPECIAL_STRING + "./JavaCode/Assets/auctions.bin"));
 
@@ -450,8 +442,22 @@ public class DataControlCenter {
                 toSerialize.add(original);
             }
         }
+
+        HashSet<Bidder> toSerializeBidders = new HashSet<>();
+        toSerializeBidders.add(currentBidder);
+
+
+        for (Bidder bidder : this.deserializeAllBidders()) {
+            if (!toSerializeBidders.contains(currentBidder)) {
+                toSerializeBidders.add(bidder);
+            }
+        }
+
         this.updatedAuctions.clear();
         oos.writeObject(toSerialize);
+
+        oos = new ObjectOutputStream(new FileOutputStream(MAURICE_SPECIAL_STRING + "./JavaCode/Assets/bidders.bin"));
+        oos.writeObject(toSerializeBidders);
     }
 
     public void logOutAdmin() throws IOException, ClassNotFoundException {
@@ -473,8 +479,8 @@ public class DataControlCenter {
      * @param item the item
      * @param bid the bid */
     public void placeBid(Auction auction, Item item, Bid bid) {
-		this.updatedAuctions.add(auction);
-    		item.addBid(bid);
+        item.addBid(bid);
+        this.updatedAuctions.add(auction);
     }
 
     public boolean isAdminValid(String username) throws IOException, ClassNotFoundException{

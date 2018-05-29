@@ -3,7 +3,6 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -55,7 +54,7 @@ public class AuctionCentralEmployeeTest {
             throws IOException, ClassNotFoundException {
         LocalDateTime startDate = LocalDateTime.now();
         LocalDateTime endDate = startDate;
-        assertTrue(this.dataControl.getAuctionsWithBounds(startDate, endDate).isEmpty());
+        assertTrue(this.dataControl.getAuctionsWithBounds(startDate, endDate).size() == 0);
         // The set of auctions should not exist if start and end dates are there
     }
 
@@ -67,28 +66,13 @@ public class AuctionCentralEmployeeTest {
         assertTrue(!this.dataControl.getAuctionsWithBounds(startDate, endDate).isEmpty());
     }
 
-    /*As an employee of AuctionCentral, I want a view in brief in chronological order of all auctions, past, present, and future.
-
-       There exists at least one auction in the past and at least one auction in the future. (Pass) */
-    //    public ArrayList<Auction> sortAuctionSet(HashSet<Auction> toSort) {
     @Test
     public void sortAuctionSet_PastCurrentFutureAuctionsExist_True()
             throws IOException, ClassNotFoundException {
-        boolean past = false, current = false, future = false;
-        for (Auction auction :
-                this.dataControl.sortAuctionSet(this.dataControl.deserializeAllAuctions())) {
-            if (past && current  && future) { break; }
-            if (auction.getEnd().isBefore(LocalDateTime.now())) { // past auction
-                past = true;
-            }
-            if (auction.getStart().isAfter(LocalDateTime.now())) { // future auction
-                future = true;
-            }
-            if (auction.getStart().isBefore(LocalDateTime.now())
-                    && auction.getEnd().isAfter(LocalDateTime.now())) {
-                current = true;
-            }
-        }
+        boolean past = this.dataControl.getPastAuctions().size() >= 1;
+        boolean current = this.dataControl.getActiveAuctions().size() >= 0;
+        // We have no initial current auctions
+        boolean future = this.dataControl.getFutureAuctions().size() >= 1;
         assertTrue(past && current && future);
     }
 

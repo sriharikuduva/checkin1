@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.ArrayList;
 import java.util.Observable;
 
 /**
@@ -16,7 +17,7 @@ public class BidItemsInAnAuctionScreen extends Observable {
     private Bidder currBidder;
     private DataControlCenter dataControl;
 
-    public static final int NUM_OF_PIECES_OF_INFO = 5;
+    public static final int NUM_OF_PIECES_OF_INFO = 3;
 
     /**
      *
@@ -49,7 +50,13 @@ public class BidItemsInAnAuctionScreen extends Observable {
                 itemsFrame.setLayout(new BorderLayout());
 
                 JPanel container = new JPanel();
-                container.add(new JScrollPane(this.getItemTable(auc)));
+                try {
+                    container.add(new JScrollPane(this.getItemTable(auc)));
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                } catch (ClassNotFoundException e1) {
+                    e1.printStackTrace();
+                }
 
                 itemsFrame.add(new JLabel("\tHere are all the items you have bid on with " + auc.getOrganization() + ": "), BorderLayout.NORTH);
                 itemsFrame.add(container, BorderLayout.CENTER);
@@ -75,49 +82,39 @@ public class BidItemsInAnAuctionScreen extends Observable {
      * @param auc
      * @return
      */
-    private JTable getItemTable(Auction auc) {
-//        String[] columns = new String[] {"Item Name", "Bulk Quantity", "Bid Price", "Description", "Image"};
-//        final Class[] columnClass = new Class[] {String.class, String.class, String.class, String.class, String.class};
-//        Object[][] itemList = new Object[auc.getItems().size()][NUM_OF_PIECES_OF_INFO];
-//        int counter = 0;
-//        for (Item item : auc.getItems()) {
-//            itemList[counter][NUM_OF_PIECES_OF_INFO-5] = item.getName();
-//            itemList[counter][NUM_OF_PIECES_OF_INFO-4] = item.getQuantity();
-//            itemList[counter][NUM_OF_PIECES_OF_INFO-3] = "$" + item.getCurrentBid();
-//            itemList[counter][NUM_OF_PIECES_OF_INFO-2] = item.getDescription();
-//            itemList[counter][NUM_OF_PIECES_OF_INFO-1] = item.getImagePath();
-//            counter++;
-//        }
-
-        String[] columns = new String[] {"Item Name", "Your Bid Price"};
-        final Class[] columnClass = new Class[] {String.class, String.class};
-        Object[][] itemList = new Object[currBidder.getBids().size()][NUM_OF_PIECES_OF_INFO];
-
-        System.out.println("bidder name: " + currBidder.getName()); // TODO remove
-        System.out.println("bidder name: " + currBidder.getUsername()); // TODO remove
-        System.out.println("bids[] size: " + currBidder.getBids().size()); // TODO remove
-
+    private JTable getItemTable(Auction auc) throws IOException, ClassNotFoundException {
+        ArrayList<Bid> bidsList = new ArrayList<>();
         for (Bid bid : currBidder.getBids()) {
-            // TODO Hari, I would need a bid to save more information about an item. Auction ID is the minimum requirement.
-            //if (bid.auctionID == auc.getAuctionID()) {
-                System.out.println(bid.getItem()); // TODO remove
-                itemList[currBidder.getBids().size()][NUM_OF_PIECES_OF_INFO - 2] = bid.getItem();
-                itemList[currBidder.getBids().size()][NUM_OF_PIECES_OF_INFO - 1] = "$" + bid.getAmount();
-            //}
+            if (bid.getAuctionID() == auc.getAuctionID()) {
+                bidsList.add(bid);
+            }
         }
 
+        String[] columns = new String[] {"Item Name", "Your Bid Price", "Auction Name"};
+        final Class[] columnClass = new Class[] {String.class, String.class, String.class};
+        Object[][] itemList = new Object[bidsList.size()][NUM_OF_PIECES_OF_INFO];
+
+        int counter = 0;
+        for (Bid bid : bidsList) {
+            //if (bid.getAuctionID() == auc.getAuctionID()) {
+                //System.out.println(bid.getItem()); // TODO remove
+                itemList[counter][NUM_OF_PIECES_OF_INFO - 3] = bid.getItem();
+                itemList[counter][NUM_OF_PIECES_OF_INFO - 2] = "$" + bid.getAmount();
+                Auction theAuction = dataControl.getAuctionNameByItem(bid.getItem());
+                itemList[counter][NUM_OF_PIECES_OF_INFO - 1] = theAuction.getOrganization();
+            //}
+            counter++;
+        }
         DefaultTableModel model = new DefaultTableModel(itemList, columns) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
-
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 return columnClass[columnIndex];
             }
         };
-
         return new JTable(model);
     }
 
