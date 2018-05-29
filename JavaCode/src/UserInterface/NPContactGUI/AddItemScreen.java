@@ -26,6 +26,9 @@ public class AddItemScreen {
     private void checkItemMax() {
         if(auction.getItems().size() < MAX_ITEMS_PER_AUCTION) {
            addItem();
+        } else {
+            JOptionPane.showMessageDialog(addItemFrame, "You have added the maximum number of items to this auction.");
+            addItemFrame.dispose();
         }
     }
 
