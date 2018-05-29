@@ -82,14 +82,6 @@ public class DataControlCenter {
         return true;
     }
 
-    public int getActiveAuctionNumber () throws IOException, ClassNotFoundException {
-        int toSend = 0;
-        for (Auction auction : this.deserializeAllAuctions()) {
-            toSend+= (auction.getEnd().isAfter(LocalDateTime.now())) ? 1 : 0;
-        }
-        return toSend;
-    }
-
     public HashSet<Auction> getCancelAbleAuctions() throws IOException, ClassNotFoundException {
         HashSet<Auction> toSend = this.getActiveAuctions();
         for (Auction auction : this.getFutureAuctions()) {
@@ -452,6 +444,9 @@ public class DataControlCenter {
                 toSerialize.add(original);
             }
         }
+        
+
+
         this.updatedAuctions.clear();
         oos.writeObject(toSerialize);
     }
