@@ -254,7 +254,7 @@ public class AuctionsInTimeFrameScreen extends Observable {
     }
 
     /**
-     * 
+     *
      * @return
      */
     public JPanel getAuctionsInTimeFramePanel() {
