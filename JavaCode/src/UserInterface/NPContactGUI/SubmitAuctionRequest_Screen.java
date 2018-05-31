@@ -213,8 +213,7 @@ public class SubmitAuctionRequest_Screen extends Observable implements ActionLis
     public void confirmAuctionDateTime() throws IOException, ClassNotFoundException {
         String inputFormatted = inputDate.format(fmt);
         JOptionPane.showMessageDialog(null, "Your auction is scheduled for: " +
-                inputFormatted.toString() + ". Thank you! " + "\nYour auction will be open "  +
-                        "for online bidding on: " +  inputDate.plusDays(MIN_SCHEDULE_OUT_DAYS).format(fmt));
+                inputFormatted.toString() + ". Thank you! ");
         createAuction();
     }
 
